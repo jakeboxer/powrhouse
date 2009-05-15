@@ -29,6 +29,9 @@ class AssignmentTest (PowrTest):
     
     def setUp (self):
         super(AssignmentTest, self).setUp()
+        
+        # Assign chore 0 to housemate 0, chore 1 to housemate 1 and chores 2 and
+        # 3 to housemate 2
         self.assigns.append(self.chores[0].assign_to(self.hmates[0]))
         self.assigns.append(self.chores[1].assign_to(self.hmates[1]))
         self.assigns.append(self.chores[2].assign_to(self.hmates[2]))
