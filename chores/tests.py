@@ -12,9 +12,12 @@ class ChoreTest (PowrTest):
         chore = self.chores[0]
         hmate = self.hmates[0]
         
+        # assign chore 0 to housemate 0
         assign = chore.assign_to(hmate)
         
+        # the assignment should have the expected chore and housemate
         self.failUnlessEqual(assign.chore, chore)
+        self.failUnlessEqual(assign.assigned_to, hmate)
     
     def test_get_interval_in_days (self):
         self.failUnlessEqual(self.chores[0].get_interval_in_days(), 1)
