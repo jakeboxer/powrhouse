@@ -1,6 +1,5 @@
 from django.http import Http404
 from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
 from chores.models import Chore
 
 try:
@@ -15,7 +14,7 @@ class must_own_chore (object):
     targetted chore
     """
     def __init__ (self, view_func):
-        self.view_func = login_required(view_func)
+        self.view_func = view_func
         update_wrapper(self, view_func)
     
     def __get__ (self, obj, cls=None):

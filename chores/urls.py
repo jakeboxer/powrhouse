@@ -29,14 +29,13 @@ chore_delete_dict = {
 
 
 urlpatterns = patterns('',
-    url(r'^assignment/', include('chores.assign_urls')),
     # Assignments
-    url(r'^assignment/(?P<object_id>[0-9]+)/done/(?P<hmate_id>[0-9]+)/$',
-        'chores.views.assign_done', name="assign_done"),
+    url(r'^assignment/', include('chores.assign_urls')),
     
-    # Chore
-    url(r"^(?P<object_id>[0-9]+)/$", must_own_chore(object_detail),
-        chore_detail_dict, name="chore_detail"),
+    # Chores
+    url(r"^(?P<object_id>[0-9]+)/$",
+        login_required(must_own_chore(object_detail)), chore_detail_dict,
+        name="chore_detail"),
     url(r"^add/$", "chores.views.add", name="chore_add"),
     url(r"^(?P<object_id>[0-9]+)/edit/$", 
         permission_required("chores.change_chore")(\
