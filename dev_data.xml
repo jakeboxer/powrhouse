@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+<!-- Users -->
+	<object pk="1" model="auth.user">
+		<field type="CharField" name="username">jake</field>
+		<field type="CharField" name="first_name">Jake</field>
+		<field type="CharField" name="last_name">Boxer</field>
+		<field type="CharField" name="email">jaked409@yahoo.com</field>
+		<field type="CharField" name="password">sha1$2b849$20f39a84d92ca8f5a3ac83d665db9188e9a01a1d</field>
+		<field type="BooleanField" name="is_staff">1</field>
+		<field type="BooleanField" name="is_active">1</field>
+		<field type="BooleanField" name="is_superuser">1</field>
+		<field type="DateTimeField" name="last_login">2009-05-04 00:36:06</field>
+		<field type="DateTimeField" name="date_joined">2009-05-04 00:35:49</field>
+		<field to="auth.group" name="groups" rel="ManyToManyRel"/>
+		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel">
+			<object pk="40"/>
+			<object pk="41"/>
+			<object pk="42"/>
+			<object pk="34"/>
+			<object pk="35"/>
+			<object pk="36"/>
+			<object pk="37"/>
+			<object pk="38"/>
+			<object pk="39"/>
+		</field>
+	</object>
+	<object pk="2" model="auth.user">
+		<field type="CharField" name="username">bfong</field>
+		<field type="CharField" name="first_name">Bethany</field>
+		<field type="CharField" name="last_name">Fong</field>
+		<field type="CharField" name="email">bfong@mailinator.com</field>
+		<field type="CharField" name="password">sha1$4dd94$04f18357659e3eaf7da33ef9119d423aaa27e21d</field>
+		<field type="BooleanField" name="is_staff">0</field>
+		<field type="BooleanField" name="is_active">1</field>
+		<field type="BooleanField" name="is_superuser">0</field>
+		<field type="DateTimeField" name="last_login">2009-05-04 00:48:43</field>
+		<field type="DateTimeField" name="date_joined">2009-05-04 00:48:43</field>
+		<field to="auth.group" name="groups" rel="ManyToManyRel"/>
+		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel">
+			<object pk="40"/>
+			<object pk="41"/>
+			<object pk="42"/>
+			<object pk="34"/>
+			<object pk="35"/>
+			<object pk="36"/>
+			<object pk="37"/>
+			<object pk="38"/>
+			<object pk="39"/>
+		</field>
+	</object>
+	<object pk="3" model="auth.user">
+		<field type="CharField" name="username">chonig</field>
+		<field type="CharField" name="first_name">Charlie</field>
+		<field type="CharField" name="last_name">Honig</field>
+		<field type="CharField" name="email">chonig@mailinator.com</field>
+		<field type="CharField" name="password">sha1$ae0a1$4db7264264d0ca30bde888187bee3b55dcec6244</field>
+		<field type="BooleanField" name="is_staff">0</field>
+		<field type="BooleanField" name="is_active">1</field>
+		<field type="BooleanField" name="is_superuser">0</field>
+		<field type="DateTimeField" name="last_login">2009-05-04 00:49:11</field>
+		<field type="DateTimeField" name="date_joined">2009-05-04 00:49:11</field>
+		<field to="auth.group" name="groups" rel="ManyToManyRel"/>
+		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel">
+			<object pk="40"/>
+			<object pk="41"/>
+			<object pk="42"/>
+			<object pk="34"/>
+			<object pk="35"/>
+			<object pk="36"/>
+			<object pk="37"/>
+			<object pk="38"/>
+			<object pk="39"/>
+		</field>
+	</object>
+	<object pk="4" model="auth.user">
+		<field type="CharField" name="username">dsashe</field>
+		<field type="CharField" name="first_name">Devin</field>
+		<field type="CharField" name="last_name">Ashe</field>
+		<field type="CharField" name="email">dsashe@mailinator.com</field>
+		<field type="CharField" name="password">sha1$fedae$3dc71320eafad43f4f62e1c07f020f27fbca886d</field>
+		<field type="BooleanField" name="is_staff">0</field>
+		<field type="BooleanField" name="is_active">1</field>
+		<field type="BooleanField" name="is_superuser">0</field>
+		<field type="DateTimeField" name="last_login">2009-05-04 00:49:37</field>
+		<field type="DateTimeField" name="date_joined">2009-05-04 00:49:37</field>
+		<field to="auth.group" name="groups" rel="ManyToManyRel"/>
+		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel"/>
+	</object>
+	<object pk="5" model="auth.user">
+		<field type="CharField" name="username">homeless</field>
+		<field type="CharField" name="first_name">Home</field>
+		<field type="CharField" name="last_name">Less</field>
+		<field type="CharField" name="email">homeless@mailinator.com</field>
+		<field type="CharField" name="password">sha1$95462$c23bb3a3ec11bb5bc252df294ea218e995e7d3c8</field>
+		<field type="BooleanField" name="is_staff">False</field>
+		<field type="BooleanField" name="is_active">True</field>
+		<field type="BooleanField" name="is_superuser">False</field>
+		<field type="DateTimeField" name="last_login">2009-05-10 14:35:25</field>
+		<field type="DateTimeField" name="date_joined">2009-05-10 14:35:25</field>
+		<field to="auth.group" name="groups" rel="ManyToManyRel"/>
+		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel"/>
+	</object>
+<!-- Housemates -->
+	<object pk="1" model="hmates.housemate">
+		<field to="auth.user" name="user" rel="ManyToOneRel">1</field>
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
+		<field type="CharField" name="first_name"/>
+		<field type="CharField" name="last_name"/>
+		<field type="FileField" name="pic"/>
+	</object>
+	<object pk="2" model="hmates.housemate">
+		<field to="auth.user" name="user" rel="ManyToOneRel">2</field>
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
+		<field type="CharField" name="first_name"/>
+		<field type="CharField" name="last_name"/>
+		<field type="FileField" name="pic"/>
+	</object>
+	<object pk="3" model="hmates.housemate">
+		<field to="auth.user" name="user" rel="ManyToOneRel">3</field>
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
+		<field type="CharField" name="first_name"/>
+		<field type="CharField" name="last_name"/>
+		<field type="FileField" name="pic"/>
+	</object>
+	<object pk="4" model="hmates.housemate">
+		<field to="auth.user" name="user" rel="ManyToOneRel">4</field>
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
+		<field type="CharField" name="first_name"/>
+		<field type="CharField" name="last_name"/>
+		<field type="FileField" name="pic"/>
+	</object>
+	<object pk="5" model="hmates.housemate">
+		<field to="auth.user" name="user" rel="ManyToOneRel">5</field>
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">
+			<None/>
+		</field>
+		<field type="CharField" name="first_name"/>
+		<field type="CharField" name="last_name"/>
+		<field type="FileField" name="pic"/>
+		<field type="DateTimeField" name="username_changed">
+			<None/>
+		</field>
+	</object>
+<!-- Households -->
+	<object pk="1" model="hholds.household">
+		<field type="CharField" name="name">Cambridge House</field>
+		<field type="PositiveSmallIntegerField" name="timezone_id">6</field>
+		<field type="CharField" name="addr_line1">4 Holworthy Terrace</field>
+		<field type="CharField" name="addr_line2"/>
+		<field type="CharField" name="town">Cambridge</field>
+		<field type="USStateField" name="state">MA</field>
+		<field type="CharField" name="zipcode">01082</field>
+		<field type="FileField" name="pic"/>
+	</object>
+<!-- Chores -->
+	<object pk="1" model="chores.chore">
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
+		<field type="CharField" name="name">Kitchen</field>
+		<field type="TextField" name="details">Clean the dishes</field>
+		<field type="PositiveIntegerField" name="interval">86400</field>
+	</object>
+	<object pk="2" model="chores.chore">
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
+		<field type="CharField" name="name">Downstairs</field>
+		<field type="TextField" name="details">Tidy the couches and unclutter the floor</field>
+		<field type="PositiveIntegerField" name="interval">86400</field>
+	</object>
+	<object pk="3" model="chores.chore">
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
+		<field type="CharField" name="name">Vacuum</field>
+		<field type="TextField" name="details">Self-explanatory</field>
+		<field type="PositiveIntegerField" name="interval">259200</field>
+	</object>
+	<object pk="4" model="chores.chore">
+		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
+		<field type="CharField" name="name">Bathrooms</field>
+		<field type="TextField" name="details">Clean the toilets, floor, and sink area</field>
+		<field type="PositiveIntegerField" name="interval">604800</field>
+	</object>
+</django-objects>

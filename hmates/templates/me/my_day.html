@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}My Day{% endblock %}
+
+{% block content %}
+<h1>My Day ({{ curr_hmate.hhold.get_local_datetime|date:"l, M jS" }})</h1>
+
+<h2>Chores To Do</h2>
+{% if curr_hmate.has_incomplete_assignments %}
+<ul class="chores">
+	{% for assign in curr_hmate.get_incomplete_assignments.all %}
+	<li>
+		<a href="{{ assign.chore.get_absolute_url }}">{{ assign.chore.name }}</a>
+		{% if assign.is_late %}
+		({{ assign.get_days_late }} day{{ assign.get_days_late|pluralize }} late)
+		{% endif %}
+		<ul>
+			<li>
+				<a href="{% url assign_done assign.pk %}">Done</a>
+			</li>
+		</ul>
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<p>None!</p>
+{% endif %}
+
+{% endblock %}

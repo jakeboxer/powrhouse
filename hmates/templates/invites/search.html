@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Invite a New Housemate{% endblock %}
+
+{% block content %}
+<h1>Invite a New Housemate to Your Household</h1>
+
+<form action="" method="GET">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+			<th>{{ form.email.label }}</th>
+			<td>{{ form.email }}{{ form.email.errors }}</td>
+            <td><input type="submit" name="submit" value="Search" /></td>
+        </tr>
+    </table>
+</form>
+
+{% if searched %}
+<hr>
+{% if hmate %}
+		{% if hmate.hhold %}
+		<p>The user you searched for is already in another household. If this person is moving in with you soon (or already has), he or she will need to leave his or her current household (<a href="#">click here for help</a>) before joining yours.</p>
+		{% else %}
+		<p>Is this who you were looking for?</p>
+		<div class="search_result">
+			<h2>{{ hmate.get_full_name }}</h2>
+			<p><a href="{% url invite hmate.pk %}">Invite to your household</a></p>
+		</div>
+		{% endif %}
+{% else %}
+	<p>Sorry, there are no PowrHouse users with this email address.</p>
+{% endif %} 
+{% endif %}
+{% endblock %}

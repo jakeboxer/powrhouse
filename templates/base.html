@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>{% block site_title %}PowrHouse - {% block title %}{% endblock %}{% endblock %}</title>
+</head>
+
+{% block main_stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
+{% endblock %}
+{% block extra_stylesheets %}{% endblock %}
+
+{% block main_javascript %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/base.js"></script>
+{% endblock %}
+{% block extra_javascript %}
+{% endblock %}
+
+{% block extra_header %}
+{% endblock %}
+
+</head>
+
+<body id="{% block body_id %}{% endblock %}">
+
+<div id="container">
+    <h1 id="logo"><a href="/">PowrHouse</a></h1>
+    <div id="account_nav">
+        <ul>
+        {% if not user.is_anonymous %}
+            <li><a href="{% url auth_logout %}">Log Out</a></li>
+        {% else %}
+            <li><a href="{% url auth_login %}">Log In</a></li>
+			<li><a href="{% url registration_register %}">Register</a></li>
+        {% endif %}
+        </ul>
+    </div>
+
+    <div id="nav">
+        <ul>
+        {% if not user.is_anonymous %}
+			<li>
+			{% if curr_hmate.hhold %}
+				<a href="{% url my_hhold %}">My Household</a>
+			{% else %}
+				<a href="{% url hhold_create %}">Create My Household</a>
+			{% endif %}
+			</li>
+			<li>
+				<a href="{% url my_day %}">My Day</a>
+			</li>
+			<li>
+				<a href="{% url me %}">My Account</a>
+			</li>
+        {% endif %}
+        </ul>
+    </div>
+    
+    <hr />
+    
+    <div id="content">
+        <div id="top_content"></div>
+        <div id="inner_content">
+			{% if messages %}
+			<ul id="messages">
+				{% for msg in messages %}
+				<li>{{ msg|safe }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+			
+			{% if notices %}
+			<ul id="notices">
+				{% for notice in notices %}
+				<li>{{ notice|safe }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+			
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div id="bottom_content"></div>
+    </div>
+</div>
+
+</body>
+</html>

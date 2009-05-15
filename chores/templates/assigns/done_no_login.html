@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Completed {{ assign.chore.name }}{% endblock %}
+
+{% block content %}
+
+<h1>Completed {{ assign.chore.name }}</h1>
+
+<p>It has been recorded that you ({{ hmate.get_full_name }}) completed {{ assign.chore.name }} at {{ assign.get_local_done_datetime|time:"g:iA" }} on {{ assign.get_local_done_datetime|date:"l, M jS" }}.</p>
+
+{% endblock %}

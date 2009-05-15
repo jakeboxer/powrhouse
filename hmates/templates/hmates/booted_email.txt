@@ -1,0 +1,9 @@
+Dear {{ hmate.get_full_name }},
+Unfortunately, you have been booted from {{ hmate.hhold }}. Hopefully, this is because you're moving out. If not, please speak with the rest of your household.
+
+If you're moving into a new household, why not log in to PowrHouse ( http://powrhouse.net/ ) and create your household on it?
+
+If your new household has already been created, ask one of your new housemates to invite you to it. You'll need to give them your email address ({{ hmate.user.email }}) so they can find you.
+
+Thanks
+- The PowrHouse Team

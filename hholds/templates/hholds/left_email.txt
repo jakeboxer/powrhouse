@@ -1,0 +1,9 @@
+Dear Residents of {{ hhold }},
+We'd just like to inform you that {{ hmate.get_full_name }} has left your household. Hopefully, this is because he or she is moving out. If not, please speak with him or her.
+
+If you'd like to add new housemates (or invite ones who already have PowrHouse accounts), why not log in to PowrHouse ( http://powrhouse.net/ ) and do it now?
+
+If you believe {{ hmate.get_full_name }} accidentally left, you should log in to PowrHouse and invite him or her back to your household using his or her email address ( {{ hmate.user.email }} ).
+
+Thanks
+- The PowrHouse Team

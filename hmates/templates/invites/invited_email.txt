@@ -1,0 +1,5 @@
+Dear {{ hmate.get_full_name }}
+{{ curr_hmate.get_full_name }} has invited you to join {{ curr_hmate.hhold }}. To accept or decline this invitation, please log in to PowrHouse ( http://powrhouse.net/ ).
+
+Thanks
+- The PowrHouse Team

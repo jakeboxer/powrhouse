@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Activation {% if account %}Successful{% else %}Unsuccessful{% endif %}!{% endblock %}
+
+{% block content %}
+
+<h1>Activation {% if account %}Successful{% else %}Unsuccessful{% endif %}</h1>
+
+<p>
+{% if account %}
+	You're all set! You can now <a href="{% url auth_login %}">log in</a>.
+{% else %}
+	Sorry, but your activation couldn't be completed. Either your registration expired (we only hold on to them for {{ expiration_days }} day{{ expiration_days|pluralize }}), your activation link had a problem (make sure your link wasn't split into two lines by your email program), or there's something wrong on our end.
+{% endif %}
+</p>
+
+{% endblock %}

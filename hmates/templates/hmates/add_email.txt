@@ -1,0 +1,16 @@
+Dear {{ hmate.user.first_name }},
+
+{{ adder.get_full_name }} has added you to his/her household on PowrHouse!
+If you're in his/her household, go to PowrHouse ( http://www.powrhouse.net/ )
+and log in with this info:
+
+Username: {{ hmate.user.username }}
+Password: {{ password }}
+
+Once you've logged in, be sure to change your password to something you'll
+remember. Then, you're good to go!
+
+Note: If you aren't a part of {{ adder.get_full_name }}'s household, please disregard this email. If you receive it more than once, please send an email to treachery@powrhouse.net and tell us what's been happening, so that we can resolve the issue.
+
+Thanks
+- The PowrHouse team

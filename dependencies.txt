@@ -1,0 +1,18 @@
+Python
+- pytz
+- cmemcache or (if unavailable) python-memcached
+- PIL (Python Imaging Library) 1.1.6
+
+Django
+- django-registration
+- django-timezones
+- django-debug-toolbar
+
+JavaScript
+- jQuery
+- jQuery UI
+
+Other
+- memcached (for caching)
+- libjpeg 6b (http://www.ijg.org/files/jpegsrc.v6b.tar.gz) (for jpg support)
+- zlib >= 1.2.3 (http://www.gzip.org/zlib/) (for png support)

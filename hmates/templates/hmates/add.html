@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Add Housemates{% endblock %}
+
+{% block content %}
+<h1>Add {{ num_hmates }} Housemate{{ num_hmates|pluralize }}</h1>
+
+<p>Note: This form is for adding users who don't already have PowrHouse accounts. If one of your housemates already has a PowrHouse account, you should <a href="{% url invite_search %}">invite him or her</a> to your household.</p>
+
+<form action="" method="POST">
+    <table cellpadding="0" cellspacing="0">
+        {{ fset }}
+        <tr>
+            <td><input type="submit" name="submit" value="Save" /></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

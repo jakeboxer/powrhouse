@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}My Account{% endblock %}
+
+{% block content %}
+<h1>My Account</h1>
+
+<p><a href="{% url me_edit %}">Edit</a></p>
+<p><a href="{% url pw_edit %}">Change Password</a></p>
+
+<p>{{ curr_hmate.get_full_name }}</p>
+
+{% if curr_hmate.pic %}
+<img src="{{ MEDIA_URL }}{{ curr_hmate.pic }}">
+{% endif %}
+
+{% endblock %}

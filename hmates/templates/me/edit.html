@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Edit My Account{% endblock %}
+
+{% block content %}
+<h1>Edit My Account</h1>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    <table cellpadding="0" cellspacing="0">
+        {{ form.as_table }}
+		<tr>
+			<th><label>Password:</label></th>
+			<td>Hidden. <a href="{% url pw_edit %}">Change it here.</a></td>
+		</tr>
+        <tr>
+            <td><input type="submit" name="submit" value="Save" /></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

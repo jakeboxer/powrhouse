@@ -1,0 +1,13 @@
+Hello,
+You've been registered for {{ site.name }}. Before you can log in and begin managing your household, you'll need to activate your account. To do this, please click here:
+
+----------
+http://{{ site.domain }}{% url registration_activate activation_key %}
+----------
+
+We clear out inactive accounts after {{ expiration_days }} day{{ expiration_days|pluralize }}, so please do this soon.
+
+Note: If you didn't register for {{ site.name }}, please disregard this email. If you receive it more than once, please send an email to treachery@{{ site.domain }} and tell us what's been happening, so that we can resolve the issue.
+
+Thanks
+- The PowrHouse Team

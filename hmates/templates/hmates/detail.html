@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{{ hmate.get_full_name }}{% endblock %}
+
+{% block content %}
+<h1>{{ hmate.get_full_name }}</h1>
+
+{% if not hmate.has_logged_in and perms.hmates.change_housemate %}
+	<p><a href="{% url hmate_edit_inactive hmate.pk %}">Edit</a></p>
+{% endif %}
+
+{% if perms.hmates.delete_housemate %}
+	<p><a href="{% url hmate_boot hmate.pk %}">Boot from household (anonymously)</a></p>
+{% endif %}
+
+<p>A member of <a href="{% url my_hhold %}">{{ hmate.get_hhold_name }}</a></p>
+
+<h2>Chores To Do</h2>
+{% if hmate.has_incomplete_assignments %}
+<ul class="chores">
+	{% for assign in hmate.get_incomplete_assignments.all %}
+	<li>
+		<a href="{{ assign.chore.get_absolute_url }}">{{ assign.chore.name }}</a>
+		{% if assign.is_late %}
+		({{ assign.get_days_late }} day{{ assign.get_days_late|pluralize }} late)
+		{% endif %}
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<p>None!</p>
+{% endif %}
+
+{% endblock %}

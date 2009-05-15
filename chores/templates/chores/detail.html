@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ chore.name }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ chore.name }}</h1>
+<h2>Done every {{ chore.get_humanized_interval }}</h2>
+
+<p>{{ chore.details }}</p>
+
+{% if perms.chores.edit_chore %}
+<p><a href="{% url chore_edit chore.pk %}">Edit</a></p>
+{% endif %}
+
+{% if perms.chores.delete_chore %}
+<p><a href="{% url chore_delete chore.pk %}">Delete</a></p>
+{% endif %}
+
+<p>
+{% if chore.has_assignments and not chore.get_newest_assignment.is_done %}
+	Currently assigned to
+	
+	{% ifequal chore.get_newest_assignment.assigned_to curr_hmate %}
+	you{% else %}
+	<a href="{{ chore.get_newest_assignment.assigned_to.get_absolute_url }}">{{ chore.get_newest_assignment.assigned_to.get_full_name }}</a>{% endifequal %}{% if chore.get_newest_assignment.is_late %}
+	({{ chore.get_newest_assignment.get_days_late }} day{{ chore.get_newest_assignment.get_days_late|pluralize }} late){% endif %}.
+	
+	<a href="{% url assign_done chore.get_newest_assignment.pk %}">I did {{ chore.name }} today.</a>
+{% else %}
+	This chore isn't due yet.
+{% endif %}
+</p>
+
+{% endblock %}

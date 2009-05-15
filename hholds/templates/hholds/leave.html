@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Leaving {{ curr_hmate.hhold }}{% endblock %}
+
+{% block content %}
+<h1>Are you sure you want to leave {{ curr_hmate.hhold }}?</h1>
+
+<p>This is not intended for argument resolution, but to remove yourself from your old household when you're moving out. If you're having disagreements, please settle them in person.</p>
+
+<form action="" method="POST">
+<input type="submit" name="submit" value="Leave {{ curr_hmate.hhold }}">
+</form>
+<p><a href="{% url my_hhold %}">&laquo; Cancel and go back</a></p>
+
+{% endblock %}
