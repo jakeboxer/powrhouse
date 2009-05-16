@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from hmates.models import Housemate, Invite
-from notices.generic import Notice, itr_to_notices
+from notices import Notice, itr_to_notices
 
 def hmate (request):
     """
