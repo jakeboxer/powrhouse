@@ -59,6 +59,48 @@ class Housemate (models.Model):
     def __unicode__ (self):
         return self.get_full_name()
 
+class AnonymousHousemate (object):
+    id         = None
+    pk         = None
+    user       = None
+    hhold      = None
+    first_name = u""
+    last_name  = u""
+    pic        = ""
+    
+    def __init__ (self): pass
+    
+    def __unicode__ (self): return "AnonymousHousemate"
+    
+    def __str__ (self): return unicode(self).encode("utf-8")
+    
+    def __eq__ (self, other):
+        return isinstance(other, self.__class__)
+    
+    def __ne__ (self, other):
+        return not self.__eq__(other)
+    
+    def __hash__ (self):
+        return 1 # instances always return the same hash val
+    
+    def save (self): raise NotImplementedError
+    
+    def delete (self): raise NotImplementedError
+    
+    def get_incomplete_assignments (self): return []
+    
+    def has_incomplete_assignments (self): return False
+    
+    def get_full_name (self): return self.__unicode__()
+    
+    def get_hhold_name (self): return ""
+    
+    def is_active (self): return False
+    
+    def has_logged_in (self): return False
+    
+    def get_absolute_url (self): raise NotImplementedError
+
 class Invite (models.Model):
     """
     An invitation from one housemate to another to join her household
