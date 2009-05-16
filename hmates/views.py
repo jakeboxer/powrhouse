@@ -13,8 +13,7 @@ from hmates.forms import HousemateForm, SmallHousemateAddForm,\
     SmallHousemateEditForm, HousemateEmailSearchForm, send_user_added_email,\
     get_random_password
 from hmates.decorators import target_must_be_inactive, target_must_be_active,\
-    target_cant_have_logged_in, must_live_together, target_must_be_user,\
-    must_be_invitee
+    must_live_together, target_must_be_user
 from hholds.decorators import must_have_hhold, target_cant_have_hhold
 from hmates.models import Housemate, Invite
 import datetime
@@ -76,12 +75,16 @@ def num (request):
     # wrong with the request
     raise Http404
 
+@login_required
 @permission_required("hmates.edit_housemate")
-@target_cant_have_logged_in
+@target_must_be_user
 @must_live_together
 def edit_inactive (request, object_id):
     context  = RequestContext(request)
-    hmate_id = int(object_id)
+    hmate    = get_object_or_404(int(object_id))
+    
+    # make sure the housemate hasn't logged in
+    if hmate.has_logged_in(): raise Http404
 
     if request.method == "POST":
         form = SmallHousemateEditForm(hmate_id, request.POST)
@@ -95,8 +98,9 @@ def edit_inactive (request, object_id):
     return render_to_response(
         "hmates/edit.html", {"form": form}, context_instance=context)
 
+@login_required
 @permission_required("hmates.add_housemate")
-@target_cant_have_logged_in
+@target_must_be_user
 @target_must_be_active
 @must_live_together
 def resend_add_email (request, object_id):
@@ -104,6 +108,9 @@ def resend_add_email (request, object_id):
     
     # Find the housemate
     hmate = get_object_or_404(Housemate, pk=int(object_id))
+    
+    # make sure the housemate hasn't logged in
+    if hmate.has_logged_in(): raise Http404
     
     # Reset her password
     pw = get_random_password(ConfigOption.vals.get(
@@ -121,6 +128,7 @@ def resend_add_email (request, object_id):
     
     return redirect("my_hhold")
 
+@login_required
 @permission_required("hmates.delete_housemate")
 @must_live_together
 def boot (request, object_id):
@@ -156,6 +164,7 @@ def boot (request, object_id):
     return render_to_response(
         "hmates/confirm_boot.html", {"hmate": hmate}, context_instance=context)
 
+@login_required
 @permission_required("hmates.add_housemate")
 @must_have_hhold
 def invite_search (request):
@@ -173,6 +182,7 @@ def invite_search (request):
     return render_to_response("invites/search.html", value_dict,
         context_instance=RequestContext(request))
 
+@login_required
 @permission_required("hmates.add_housemate")
 @target_cant_have_hhold
 @target_must_be_user
@@ -197,26 +207,36 @@ def invite (request, object_id):
     
     return redirect("my_hhold")
 
-@must_be_invitee
+@login_required
 def invite_accept (request, object_id):
+    context = RequestContext(request)
+    
     # get the invite
     invite = get_object_or_404(Invite, pk=int(object_id))
     
+    # make sure the logged-in housemate is the invitee on the invite
+    curr_hmate = context["curr_hmate"]
+    if invite.invitee != curr_hmate: raise Http404
+    
     # put the housemate in the household and remove write permissions
-    context = RequestContext(request)
-    hhold   = invite.hhold
-    context["curr_hmate"].hhold = hhold
-    context["curr_hmate"].prevent_changes()
-    context["curr_hmate"].save()
+    hhold = invite.hhold
+    curr_hmate.hhold = hhold
+    curr_hmate.prevent_changes()
+    curr_hmate.save()
     
     # delete the invitation and redirect to her new household
     invite.delete()
     return redirect("hhold_branch")
 
-@must_be_invitee
+@login_required
 def invite_decline (request, object_id):
+    context = RequestContext(request)
+    
     # get the invite
     invite = get_object_or_404(Invite, pk=int(object_id))
+    
+    # make sure the logged-in housemate is the invitee on the invite
+    if invite.invitee != context["curr_hmate"]: raise Http404
     
     # set the invite to declined
     invite.declined = datetime.datetime.utcnow()

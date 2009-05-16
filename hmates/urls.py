@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from django.template import RequestContext
 from django.views.generic.list_detail import object_detail
 from django.views.generic.create_update import update_object, delete_object
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import login_required, permission_required
 from hmates.decorators import must_live_together, target_must_be_inactive
 from hmates.models import Housemate
 
@@ -13,7 +13,8 @@ hmate_detail_dict = {
 }
 
 urlpatterns = patterns('',
-    url(r'^(?P<object_id>[0-9]+)/$', must_live_together(object_detail), 
+    url(r'^(?P<object_id>[0-9]+)/$',
+        login_required(must_live_together(object_detail)), 
         hmate_detail_dict, name='hmate_detail'),
     url(r'^(?P<object_id>[0-9]+)/edit/$', "hmates.views.edit_inactive", 
         name='hmate_edit_inactive'),

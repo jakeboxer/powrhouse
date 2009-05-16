@@ -1,7 +1,6 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
 from hholds.models import Household
 from hmates.models import Housemate
 
@@ -16,7 +15,7 @@ class cannot_have_hhold (object):
     Requires the logged-in housemate to have no household
     """
     def __init__ (self, view_func):
-        self.view_func = login_required(view_func)
+        self.view_func = view_func
         update_wrapper(self, view_func)
     
     def __get__ (self, obj, cls=None):
@@ -36,7 +35,7 @@ class must_have_hhold (object):
     Requires the logged-in housemate to have no household
     """
     def __init__ (self, view_func):
-        self.view_func = login_required(view_func)
+        self.view_func = view_func
         update_wrapper(self, view_func)
 
     def __get__ (self, obj, cls=None):

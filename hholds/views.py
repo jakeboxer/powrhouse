@@ -15,8 +15,8 @@ def hhold_branch (request):
     
     return redirect(url_name)
 
-@permission_required("hholds.change_household")
 @login_required
+@permission_required("hholds.change_household")
 def edit (request):
     context = RequestContext(request)
     hhold   = context["curr_hmate"].hhold
@@ -34,6 +34,7 @@ def edit (request):
     return render_to_response(
         "hholds/edit.html", {"form": form}, context_instance=context)
 
+@login_required
 @cannot_have_hhold
 def create (request):
     context = RequestContext(request)
@@ -57,6 +58,7 @@ def create (request):
     return render_to_response(
         "hholds/create.html", {"form": form}, context_instance=context)
 
+@login_required
 @must_have_hhold
 def leave (request):
     context = RequestContext(request)
