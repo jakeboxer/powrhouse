@@ -6,7 +6,7 @@ from django.template import RequestContext, Context
 from django.template.loader import get_template
 from django.core.mail import send_mail
 from hholds.forms import HouseholdForm
-from hholds.decorators import cannot_have_hhold, must_have_hhold
+from hholds.decorators import cannot_have_hhold, hhold_required
 
 @login_required
 def hhold_branch (request):
@@ -16,7 +16,7 @@ def hhold_branch (request):
     return redirect(url_name)
 
 @login_required
-@must_have_hhold
+@hhold_required
 def edit (request):
     context = RequestContext(request)
     hhold   = context["curr_hmate"].hhold
@@ -58,7 +58,7 @@ def create (request):
         "hholds/create.html", {"form": form}, context_instance=context)
 
 @login_required
-@must_have_hhold
+@hhold_required
 def leave (request):
     context = RequestContext(request)
     curr_hmate = context["curr_hmate"]

@@ -30,7 +30,7 @@ class cannot_have_hhold (object):
         
         return self.view_func(request, *args, **kwargs)
 
-class must_have_hhold (object):
+class hhold_required (object):
     """
     Requires the logged-in housemate to have no household
     """
@@ -40,7 +40,7 @@ class must_have_hhold (object):
 
     def __get__ (self, obj, cls=None):
         view_func = self.view_func.__get__(obj, cls)
-        return must_have_hhold(view_func)
+        return hhold_required(view_func)
 
     def __call__ (self, request, *args, **kwargs):
         context = RequestContext(request)

@@ -14,7 +14,7 @@ from hmates.forms import HousemateForm, SmallHousemateAddForm,\
     get_random_password
 from hmates.decorators import target_must_be_inactive, target_must_be_active,\
     must_live_together, target_must_be_user
-from hholds.decorators import must_have_hhold, target_cant_have_hhold
+from hholds.decorators import hhold_required, target_cant_have_hhold
 from hmates.models import Housemate, Invite
 import datetime
 
@@ -37,7 +37,7 @@ def me_edit (request):
         "me/edit.html", {"form": form}, context_instance=context)
 
 @login_required
-@must_have_hhold
+@hhold_required
 def add_multiple (request, num_hmates):
     context    = RequestContext(request)
     hhold      = context["curr_hmate"].hhold
@@ -162,7 +162,7 @@ def boot (request, object_id):
         "hmates/confirm_boot.html", {"hmate": hmate}, context_instance=context)
 
 @login_required
-@must_have_hhold
+@hhold_required
 def invite_search (request):
     value_dict = {}
     
@@ -181,7 +181,7 @@ def invite_search (request):
 @login_required
 @target_cant_have_hhold
 @target_must_be_user
-@must_have_hhold
+@hhold_required
 def invite (request, object_id):
     context = RequestContext(request)
     
