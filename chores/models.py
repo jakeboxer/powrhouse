@@ -57,6 +57,12 @@ class Chore (models.Model):
         
         if days == 1:
             return "day"
+        elif days == 2:
+            return "other day"
+        elif days == 7:
+            return "week"
+        elif days % 7 == 0:
+            return "%s weeks" % (days / 7)
         else:
             return "%s days" % days
     
