@@ -83,6 +83,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'registration',
     'configoptions',
+    'notices',
     'hholds',
     'hmates',
     'chores',
