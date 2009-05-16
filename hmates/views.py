@@ -140,8 +140,9 @@ def boot (request, object_id):
         msg = u"%s was successfully booted from your household." \
             % hmate.get_full_name()
         
-        if hmate.user:
-            # if she has a user, save her and send an email
+        if hmate.user and hmate.has_logged_in():
+            # if she has a user, and she has logged in, save her and send an
+            # email
             subj    = u"You've been booted from %s" % curr_hmate.hhold
             tpl     = get_template("hmates/booted_email.txt")
             email_context = Context({"hmate": hmate})
@@ -151,6 +152,7 @@ def boot (request, object_id):
             hmate.hhold = None
             hmate.save()
         else:
+            if hmate.user: hmate.user.delete()
             hmate.delete() # otherwise, delete her
         
         context["user"].message_set.create(message=msg)
