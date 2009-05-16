@@ -11,14 +11,12 @@
 </address>
 {% endif %}
 
-<p>Current Date: {{ curr_hmate.hhold.get_local_datetime|date }}</p>
-<p>Current Time: {{ curr_hmate.hhold.get_local_datetime|time }}</p>
-
-{% if perms.hholds.change_household %}
-<p><a href="{% url hhold_edit %}">Edit</a></p>
-{% endif %}
-
-<p><a href="{% url hhold_leave %}">Leave</a></p>
+<ul>
+	<li>Current Date: {{ curr_hmate.hhold.get_local_datetime|date }}</li>
+	<li>Current Time: {{ curr_hmate.hhold.get_local_datetime|time }}</li>
+	<li><a href="{% url hhold_edit %}">Edit</a></li>
+	<li><a href="{% url hhold_leave %}">Leave</a></li>
+</ul>
 
 <h2>Housemates ({{ curr_hmate.hhold.hmates.count }})</h2>
 <ul>
@@ -26,7 +24,7 @@
     <li>
 		{% ifnotequal curr_hmate hmate %}
 			<a href="{{ hmate.get_absolute_url }}">{{ hmate.get_full_name }}</a>
-			{% if hmate.user and not hmate.has_logged_in and perms.hmates.add_housemate %}
+			{% if hmate.user and not hmate.has_logged_in %}
 			(Hasn't logged in yet. <a href="{% url resend_add_email hmate.pk %}">Resend {{ hmate.get_full_name }}'s registration email</a>.)
 			{% endif %}
 		{% else %}
@@ -37,23 +35,17 @@
 {% for invite in curr_hmate.hhold.invites.all %}
 	<li>
 		{{ invite.invitee.get_full_name }} (Hasn't accepted invitation yet.
-		{% if perms.hmates.delete_housemate %}
-			<a href="{% url invite_cancel invite.pk %}">
-				Cancel invitation</a>.
-		{% endif %}
-		)
+		<a href="{% url invite_cancel invite.pk %}">Cancel invitation</a>.)
 	</li>
 {% endfor %}
 </ul>
 
-{% if perms.hmates.add_housemate %}
 <p>
 <form action="{% url num_hmates %}" method="POST">
 	Add <input type="text" name="num_hmates" value="1" size="1" /> new housemate(s)
 	<input type="submit" name="submit" value="Go!" /> or <a href="{% url invite_search %}">invite a housemate</a>.
 </form>
 </p>
-{% endif %}
 
 <h2>Chores</h2>
 <ul>
@@ -62,9 +54,7 @@
 {% endfor %}
 </ul>
 
-{% if perms.chores.add_chore %}
 <p><a href="{% url chore_add %}">Add a chore</a></p>
-{% endif %}
 
 <img src="{{ MEDIA_URL }}{{ curr_hmate.hhold.pic }}" />
 {% endblock %}

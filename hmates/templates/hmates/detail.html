@@ -5,13 +5,11 @@
 {% block content %}
 <h1>{{ hmate.get_full_name }}</h1>
 
-{% if not hmate.has_logged_in and perms.hmates.change_housemate %}
+{% if not hmate.has_logged_in %}
 	<p><a href="{% url hmate_edit_inactive hmate.pk %}">Edit</a></p>
 {% endif %}
 
-{% if perms.hmates.delete_housemate %}
-	<p><a href="{% url hmate_boot hmate.pk %}">Boot from household (anonymously)</a></p>
-{% endif %}
+<p><a href="{% url hmate_boot hmate.pk %}">Boot from household (anonymously)</a></p>
 
 <p>A member of <a href="{% url my_hhold %}">{{ hmate.get_hhold_name }}</a></p>
 

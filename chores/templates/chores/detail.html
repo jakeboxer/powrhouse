@@ -9,13 +9,10 @@
 
 <p>{{ chore.details }}</p>
 
-{% if perms.chores.edit_chore %}
-<p><a href="{% url chore_edit chore.pk %}">Edit</a></p>
-{% endif %}
-
-{% if perms.chores.delete_chore %}
-<p><a href="{% url chore_delete chore.pk %}">Delete</a></p>
-{% endif %}
+<ul>
+	<li><a href="{% url chore_edit chore.pk %}">Edit</a></li>
+	<li><a href="{% url chore_delete chore.pk %}">Delete</a></li>
+</ul>
 
 <p>
 {% if chore.has_assignments and not chore.get_newest_assignment.is_done %}
