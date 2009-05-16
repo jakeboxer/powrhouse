@@ -108,9 +108,6 @@
 		<field type="CharField" name="first_name"/>
 		<field type="CharField" name="last_name"/>
 		<field type="FileField" name="pic"/>
-		<field type="DateTimeField" name="username_changed">
-			<None/>
-		</field>
 	</object>
 <!-- Households -->
 	<object pk="1" model="hholds.household">
