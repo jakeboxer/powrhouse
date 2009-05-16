@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.template import RequestContext, Context
 from django.template.loader import get_template
 from django.core.mail import send_mail
@@ -16,7 +16,7 @@ def hhold_branch (request):
     return redirect(url_name)
 
 @login_required
-@permission_required("hholds.change_household")
+@must_have_hhold
 def edit (request):
     context = RequestContext(request)
     hhold   = context["curr_hmate"].hhold
@@ -48,7 +48,6 @@ def create (request):
             
             # attach the housemate to the household
             context["curr_hmate"].hhold = hhold
-            context["curr_hmate"].allow_changes()
             context["curr_hmate"].save()
             
             return redirect("my_hhold")

@@ -13,17 +13,7 @@
 		<field type="DateTimeField" name="last_login">2009-05-04 00:36:06</field>
 		<field type="DateTimeField" name="date_joined">2009-05-04 00:35:49</field>
 		<field to="auth.group" name="groups" rel="ManyToManyRel"/>
-		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel">
-			<object pk="40"/>
-			<object pk="41"/>
-			<object pk="42"/>
-			<object pk="34"/>
-			<object pk="35"/>
-			<object pk="36"/>
-			<object pk="37"/>
-			<object pk="38"/>
-			<object pk="39"/>
-		</field>
+		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel"/>
 	</object>
 	<object pk="2" model="auth.user">
 		<field type="CharField" name="username">bfong</field>
@@ -37,17 +27,7 @@
 		<field type="DateTimeField" name="last_login">2009-05-04 00:48:43</field>
 		<field type="DateTimeField" name="date_joined">2009-05-04 00:48:43</field>
 		<field to="auth.group" name="groups" rel="ManyToManyRel"/>
-		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel">
-			<object pk="40"/>
-			<object pk="41"/>
-			<object pk="42"/>
-			<object pk="34"/>
-			<object pk="35"/>
-			<object pk="36"/>
-			<object pk="37"/>
-			<object pk="38"/>
-			<object pk="39"/>
-		</field>
+		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel"/>
 	</object>
 	<object pk="3" model="auth.user">
 		<field type="CharField" name="username">chonig</field>
@@ -61,17 +41,7 @@
 		<field type="DateTimeField" name="last_login">2009-05-04 00:49:11</field>
 		<field type="DateTimeField" name="date_joined">2009-05-04 00:49:11</field>
 		<field to="auth.group" name="groups" rel="ManyToManyRel"/>
-		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel">
-			<object pk="40"/>
-			<object pk="41"/>
-			<object pk="42"/>
-			<object pk="34"/>
-			<object pk="35"/>
-			<object pk="36"/>
-			<object pk="37"/>
-			<object pk="38"/>
-			<object pk="39"/>
-		</field>
+		<field to="auth.permission" name="user_permissions" rel="ManyToManyRel"/>
 	</object>
 	<object pk="4" model="auth.user">
 		<field type="CharField" name="username">dsashe</field>

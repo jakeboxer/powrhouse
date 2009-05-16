@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 from django.template import RequestContext, Context
 from django.template.loader import get_template
@@ -36,8 +36,8 @@ def me_edit (request):
     return render_to_response(
         "me/edit.html", {"form": form}, context_instance=context)
 
-@permission_required("hmates.add_housemate")
 @login_required
+@must_have_hhold
 def add_multiple (request, num_hmates):
     context    = RequestContext(request)
     hhold      = context["curr_hmate"].hhold
@@ -76,7 +76,6 @@ def num (request):
     raise Http404
 
 @login_required
-@permission_required("hmates.edit_housemate")
 @target_must_be_user
 @must_live_together
 def edit_inactive (request, object_id):
@@ -99,7 +98,6 @@ def edit_inactive (request, object_id):
         "hmates/edit.html", {"form": form}, context_instance=context)
 
 @login_required
-@permission_required("hmates.add_housemate")
 @target_must_be_user
 @target_must_be_active
 @must_live_together
@@ -129,7 +127,6 @@ def resend_add_email (request, object_id):
     return redirect("my_hhold")
 
 @login_required
-@permission_required("hmates.delete_housemate")
 @must_live_together
 def boot (request, object_id):
     context = RequestContext(request)
@@ -165,7 +162,6 @@ def boot (request, object_id):
         "hmates/confirm_boot.html", {"hmate": hmate}, context_instance=context)
 
 @login_required
-@permission_required("hmates.add_housemate")
 @must_have_hhold
 def invite_search (request):
     value_dict = {}
@@ -183,7 +179,6 @@ def invite_search (request):
         context_instance=RequestContext(request))
 
 @login_required
-@permission_required("hmates.add_housemate")
 @target_cant_have_hhold
 @target_must_be_user
 @must_have_hhold
@@ -218,10 +213,8 @@ def invite_accept (request, object_id):
     curr_hmate = context["curr_hmate"]
     if invite.invitee != curr_hmate: raise Http404
     
-    # put the housemate in the household and remove write permissions
-    hhold = invite.hhold
-    curr_hmate.hhold = hhold
-    curr_hmate.prevent_changes()
+    # put the housemate in the household
+    curr_hmate.hhold = invite.hhold
     curr_hmate.save()
     
     # delete the invitation and redirect to her new household

@@ -17,9 +17,6 @@ class Housemate (models.Model):
     pic        = models.ImageField(_("Upload a picture"), 
         upload_to="img/uploads/hmates/%Y/%m/%d", blank=True)
     
-    # Used to prevent the user from changing her username more than once
-    username_changed = models.DateTimeField(blank=True, null=True)
-    
     def get_incomplete_assignments (self):
         """
         Returns a QuerySet containing all the housemate's incomplete assignments
@@ -55,37 +52,6 @@ class Housemate (models.Model):
     
     def has_logged_in (self):
         return self.user and self.user.last_login > self.user.date_joined
-    
-    def allow_changes (self):
-        from chores.perms import perms as chore_perms
-        from hholds.perms import perms as hhold_perms
-        from hmates.perms import perms as hmate_perms
-        
-        for perm in chore_perms + hmate_perms + hhold_perms:
-            self.user.user_permissions.add(perm)
-        
-        self.save()
-    
-    def prevent_changes (self):
-        from chores.perms import perms as chore_perms
-        from hholds.perms import perms as hhold_perms
-        from hmates.perms import perms as hmate_perms
-        
-        for perm in chore_perms + hmate_perms + hhold_perms:
-            self.user.user_permissions.remove(perm)
-        
-        self.save()
-    
-    def can_make_changes (self):
-        from chores.perms import perms as chore_perms
-        from hholds.perms import perms as hhold_perms
-        from hmates.perms import perms as hmate_perms
-        
-        perms    = chore_perms + hhold_perms + hmate_perms
-        perm_pks = [perm.pk for perm in perms]
-        
-        return self.user.user_permissions.filter(pk__in=perm_pks).count() > 0
-            
     
     def get_absolute_url (self):
         return reverse("hmate_detail", args=[self.pk])

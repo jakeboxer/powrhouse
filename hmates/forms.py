@@ -109,10 +109,6 @@ class SmallHousemateForm (forms.Form):
         required=False)
     email      = forms.CharField(label=_("E-mail"), max_length=255,
         required=False)
-    changes    = forms.BooleanField(label=_("Can make changes"), required=False,
-        help_text=_("If this is checked, this person will be able to make\
-        changes to the chores, add and remove housemates, change the\
-        household's address, and more."))
     
     
     def clean_username (self):
@@ -144,18 +140,12 @@ class SmallHousemateForm (forms.Form):
         valid_email = has_email and self.cleaned_data["email"]
         valid_user = valid_uname and valid_email
         
-        
         # make sure that there's either an email AND username, or neither
         if valid_uname and not valid_email:
             msg = "If a housemate has a username, he/she needs an email."
             raise forms.ValidationError(msg)
         elif valid_email and not valid_uname:
             msg = "If a housemate has an email, he/she needs a username."
-            raise forms.ValidationError(msg)
-        
-        # make sure we only make changes if we've got an account
-        if not valid_user and self.cleaned_data["changes"]:
-            msg = "Only housemates with usernames and emails can make changes."
             raise forms.ValidationError(msg)
         
         return self.cleaned_data
@@ -166,9 +156,6 @@ class SmallHousemateForm (forms.Form):
         hmate.user = create_user(self.cleaned_data["username"],
             self.cleaned_data["email"], self.cleaned_data["first_name"], 
             self.cleaned_data["last_name"], pw)
-        
-        if self.cleaned_data["changes"]:
-            hmate.allow_changes()
         
         # Send an email
         send_user_added_email(hmate, pw, adder)
@@ -204,7 +191,6 @@ class SmallHousemateEditForm (SmallHousemateForm):
                 self.initial["email"]      = self.instance.user.email
                 self.initial["first_name"] = self.instance.user.first_name
                 self.initial["last_name"]  = self.instance.user.last_name
-                self.initial["changes"]    = self.instance.can_make_changes()
             else:
                 self.initial["first_name"] = self.instance.first_name
                 self.initial["last_name"]  = self.instance.last_name
@@ -273,11 +259,6 @@ class SmallHousemateEditForm (SmallHousemateForm):
             self.instance.first_name = self.cleaned_data["first_name"]
             self.instance.last_name  = self.cleaned_data["last_name"]
         
-        if self.cleaned_data["changes"]:
-            self.instance.allow_changes()
-        else:
-            self.instance.prevent_changes()
-        
         self.instance.save()
         return self.instance
 
@@ -295,8 +276,6 @@ class HousemateRegForm (RegistrationFormUniqueEmail):
          user = super(HousemateRegForm, self).save()
          user.first_name = self.cleaned_data["first_name"]
          user.last_name  = self.cleaned_data["last_name"]
-         
-         hmate.allow_changes()
          
          user.save()
 

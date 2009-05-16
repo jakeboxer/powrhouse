@@ -34,19 +34,6 @@ class HousemateTest (PowrTest):
         # After completing another, he should be back to no incompletes
         a2.complete()
         self.failUnlessEqual(hm.get_incomplete_assignments().count(), 0)
-    
-    def test_can_make_changes (self):
-        self.hmates[0].prevent_changes()
-        self.hmates[1].allow_changes()
-        
-        self.failIf(self.hmates[0].can_make_changes())
-        self.failUnless(self.hmates[1].can_make_changes())
-        
-        self.hmates[0].allow_changes()
-        self.hmates[1].prevent_changes()
-        
-        self.failUnless(self.hmates[0].can_make_changes())
-        self.failIf(self.hmates[1].can_make_changes())
 
 
 class InviteTest (PowrTest):

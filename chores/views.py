@@ -1,13 +1,12 @@
 from django.http import Http404
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from chores.forms import ChoreForm
 from hmates.models import Housemate
 from chores.models import Assignment
 
-@permission_required('chores.add_chore')
 @login_required
 def add (request):
     context = RequestContext(request)

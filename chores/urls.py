@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from django.template import RequestContext
 from django.views.generic.list_detail import object_detail
 from django.views.generic.create_update import update_object, delete_object
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from chores.models import Chore
 from chores.forms import ChoreForm
 from chores.decorators import must_own_chore
@@ -37,12 +37,8 @@ urlpatterns = patterns('',
         login_required(must_own_chore(object_detail)), chore_detail_dict,
         name="chore_detail"),
     url(r"^add/$", "chores.views.add", name="chore_add"),
-    url(r"^(?P<object_id>[0-9]+)/edit/$", 
-        permission_required("chores.change_chore")(\
-            must_own_chore(update_object)),
+    url(r"^(?P<object_id>[0-9]+)/edit/$", must_own_chore(update_object),
         chore_edit_dict, name="chore_edit"),
-    url(r"^(?P<object_id>[0-9]+)/delete/$",
-        permission_required("chores.delete_chore")(\
-            must_own_chore(delete_object)),
+    url(r"^(?P<object_id>[0-9]+)/delete/$", must_own_chore(delete_object),
         chore_delete_dict, name="chore_delete"),
 )

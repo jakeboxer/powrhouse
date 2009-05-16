@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import Permission, get_hexdigest
+from django.contrib.auth.models import get_hexdigest
 from hholds.models import Household
 from hmates.models import Housemate
 import datetime, pytz

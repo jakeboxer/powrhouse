@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from django.views.generic.create_update import delete_object
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from hmates.decorators import must_own_invite
 from hmates.models import Invite
 
@@ -15,9 +15,8 @@ urlpatterns = patterns('',
     url(r'^(?P<object_id>[0-9]+)/$', 'hmates.views.invite',
         name='invite'),
     url(r'^(?P<object_id>[0-9]+)/cancel/$',
-        login_required(permission_required("hmates.delete_housemate")(\
-            must_own_invite(delete_object))),
-        invite_decline_dict, name='invite_cancel'),
+        login_required(must_own_invite(delete_object)), invite_decline_dict, 
+        name='invite_cancel'),
     url(r'^(?P<object_id>[0-9]+)/accept/$', 'hmates.views.invite_accept',
         name='invite_accept'),
     url(r'^(?P<object_id>[0-9]+)/decline/$', 
