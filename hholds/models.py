@@ -66,6 +66,20 @@ class Household (models.Model):
         """
         return self._tz.fromutc(utc_dt or datetime.datetime.utcnow())
     
+    def get_unfinished_chores (self):
+        """
+        Returns all chores that are currently assigned but not finished
+        """
+        return [chore for chore in self.chores.all() if chore.is_assigned()]
+    
+    def get_unassigned_due_chores (self):
+        """
+        Returns all chores that are currently unassigned and due
+        """
+        # get all the chores and filter out the ones that shouldnt be assigned
+        return [c for c in self.chores.all() if chore.should_be_assigned()]
+        
+    
     def __unicode__ (self):
         return self.name
 

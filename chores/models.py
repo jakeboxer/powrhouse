@@ -74,11 +74,66 @@ class Chore (models.Model):
         Returns this chore's most recent assignment.
         """
         if self.has_assignments():
-            assign = self.assignments.order_by('-assigned_to')[0]
+            assign = self.assignments.order_by("-assigned_at")[0]
         else:
             assign = None
         
         return assign
+    
+    def get_last_done_assignment (self):
+        """
+        Returns this chore's most recent assignment that was completed
+        """
+        if self.has_assignments():
+            done   = self.assignments.exclude(done_by=None)
+            assign = done.order_by("-assigned_at")[0]
+        else:
+            assign = None
+        
+        return assign
+    
+    def is_assigned (self):
+        """
+        Returns whether or not this chore is currently assigned
+        """
+        return not self.get_newest_assignment().is_done()
+    
+    def _get_assignment_threshold (self):
+        """
+        Returns the number of seconds that can elapse after completing this
+        chore before it should be reassigned
+        """
+        # We subtract one day from the interval since we don't count the current
+        # day
+        return self.interval - SECS_PER_DAY
+    
+    def get_secs_passed_since_completion (self):
+        """
+        Returns the number of seconds that have passed since the last time this
+        chore was completed
+        """
+        assign = self.get_last_done_assignment()
+        
+        # find the last time the chore was done (min date if never done)
+        last = assign.done_at if assign else datetime.datetime.min
+        
+        # find and return the number of seconds between now and the last time
+        # the chore was done
+        td = datetime.datetime.utcnow() - last
+        return (td.days * SECS_PER_DAY) + td.seconds
+    
+    def should_be_assigned (self):
+        """
+        Returns whether or not it's time to do this chore
+        """
+        # Make sure the chore isn't already assigned
+        if self.is_assigned():
+            return False
+        
+        # if at least as many seconds as the threshold have passed, then the
+        # chore should be assigned
+        secs_passed = self.get_secs_passed_since_completion()
+        return secs_passed >= self._get_assignment_threshold()
     
     def get_absolute_url (self):
         return reverse("chore_detail", args=[self.pk])
