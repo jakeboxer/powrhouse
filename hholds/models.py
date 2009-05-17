@@ -72,12 +72,12 @@ class Household (models.Model):
         """
         return [chore for chore in self.chores.all() if chore.is_assigned()]
     
-    def get_unassigned_due_chores (self):
+    def get_chores_to_assign (self):
         """
-        Returns all chores that are currently unassigned and due
+        Returns all chores that should be assigned
         """
         # get all the chores and filter out the ones that shouldnt be assigned
-        return [c for c in self.chores.all() if chore.should_be_assigned()]
+        return [c for c in self.chores.all() if c.should_be_assigned()]
         
     
     def __unicode__ (self):

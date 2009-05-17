@@ -96,7 +96,10 @@ class Chore (models.Model):
         """
         Returns whether or not this chore is currently assigned
         """
-        return not self.get_newest_assignment().is_done()
+        if self.has_assignments():
+            return not self.get_newest_assignment().is_done()
+        else:
+            return False
     
     def _get_assignment_threshold (self):
         """
