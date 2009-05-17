@@ -10,16 +10,14 @@ from hholds.decorators import cannot_have_hhold, hhold_required
 
 @login_required
 def hhold_branch (request):
-    context = RequestContext(request)
-    url_name = "my_hhold" if context["curr_hmate"].hhold else "hhold_create"
+    url_name = "my_hhold" if request.hmate.hhold else "hhold_create"
     
     return redirect(url_name)
 
 @login_required
 @hhold_required
 def edit (request):
-    context = RequestContext(request)
-    hhold   = context["curr_hmate"].hhold
+    hhold   = request.hmate.hhold
     
     if request.method == "POST":
         form = HouseholdForm(request.POST, request.FILES, instance=hhold)
@@ -32,13 +30,12 @@ def edit (request):
         form = HouseholdForm(instance=hhold)
     
     return render_to_response(
-        "hholds/edit.html", {"form": form}, context_instance=context)
+        "hholds/edit.html", {"form": form}, 
+        context_instance=RequestContext(request))
 
 @login_required
 @cannot_have_hhold
 def create (request):
-    context = RequestContext(request)
-    
     if request.method == "POST":
         form = HouseholdForm(request.POST, request.FILES)
         
@@ -47,21 +44,21 @@ def create (request):
             hhold = form.save()
             
             # attach the housemate to the household
-            context["curr_hmate"].hhold = hhold
-            context["curr_hmate"].save()
+            request.hmate.hhold = hhold
+            request.hmate.save()
             
             return redirect("my_hhold")
     else:
         form = HouseholdForm()
     
     return render_to_response(
-        "hholds/create.html", {"form": form}, context_instance=context)
+        "hholds/create.html", {"form": form},
+        context_instance=RequestContext(request))
 
 @login_required
 @hhold_required
 def leave (request):
-    context = RequestContext(request)
-    curr_hmate = context["curr_hmate"]
+    curr_hmate = request.hmate
     
     if request.method == "POST":
         # Remove the housemate from the household
@@ -82,5 +79,6 @@ def leave (request):
         
         return redirect("hhold_branch")
     
-    return render_to_response("hholds/leave.html", context_instance=context)
+    return render_to_response("hholds/leave.html",
+        context_instance=RequestContext(request))
             

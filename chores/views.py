@@ -9,34 +9,32 @@ from chores.models import Assignment
 
 @login_required
 def add (request):
-    context = RequestContext(request)
-    
     if request.method == "POST":
         form = ChoreForm(request.POST)
         
         if form.is_valid():
             chore = form.save(commit=False)
-            chore.hhold = context["curr_hmate"].hhold
+            chore.hhold = request.hmate.hhold
             chore.save()
             return redirect(chore)
     else:
         form = ChoreForm()
     
     return render_to_response(
-        "chores/add.html", {"form": form}, context_instance=context)
+        "chores/add.html", {"form": form},
+        context_instance=RequestContext(request))
 
 @login_required
 def assign_done (request, object_id):
-    context = RequestContext(request)
-    
     # get the assignment
     assign = get_object_or_404(Assignment, pk=int(object_id))
     
     # make sure the housemate is in the same household as the chore
-    if context["curr_hmate"].hhold != assign.chore.hhold: raise Http404
+    if request.hmate.hhold != assign.chore.hhold:
+        raise Http404
     
     # finish the assignment
-    if not assign.is_done(): assign.complete(context["curr_hmate"])
+    if not assign.is_done(): assign.complete(request.hmate)
     
     return redirect("my_day")
 

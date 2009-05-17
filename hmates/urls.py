@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import *
-from django.template import RequestContext
 from django.views.generic.list_detail import object_detail
 from django.views.generic.create_update import update_object, delete_object
 from django.contrib.auth.decorators import login_required
