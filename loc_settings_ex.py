@@ -63,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'hmates.middleware.HousemateMiddleware',
+#    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'powr_local.urls'
@@ -81,6 +82,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'django.contrib.sessions',
     'django.contrib.sites',
+#    'debug_toolbar',
     'debug_toolbar',
     'registration',
     'configoptions',
@@ -107,8 +109,12 @@ EMAIL_PORT = 1025
 # for django_registration
 ACCOUNT_ACTIVATION_DAYS = 7
 
+def custom_show_toolbar (request):
+    return request.status_code not in (302, 301)
+
 # for django toolbar
 INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': True
+    'INTERCEPT_REDIRECTS': True,
+    'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
 }
