@@ -16,8 +16,10 @@ def notices (request):
     """
     # if there's no logged in housemate, return an empty list. otherwise, return
     # a list of all the notices
-    hmate   = get_hmate(request)
-    notices = [] if not hmate else get_notices(hmate)
+    if request.hmate.is_anonymous():
+        notices = []
+    else:
+        notices = get_notices(request.hmate)
     
     return {"notices": notices}
 
