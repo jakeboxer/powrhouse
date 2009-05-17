@@ -17,6 +17,13 @@ class Housemate (models.Model):
     pic        = models.ImageField(_("Upload a picture"), 
         upload_to="img/uploads/hmates/%Y/%m/%d", blank=True)
     
+    def is_anonymous (self):
+        """
+        Always returns False, since Housemates are not anonymous
+        (AnonymousHousemate will return True)
+        """
+        return False
+    
     def get_incomplete_assignments (self):
         """
         Returns a QuerySet containing all the housemate's incomplete assignments
@@ -67,6 +74,13 @@ class AnonymousHousemate (object):
     first_name = u""
     last_name  = u""
     pic        = ""
+    
+    def is_anonymous (self):
+        """
+        Always returns True, since AnonymousHousemates are always anonymous
+        (Housemate returns False)
+        """
+        return True
     
     def __init__ (self): pass
     
