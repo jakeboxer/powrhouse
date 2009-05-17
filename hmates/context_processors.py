@@ -7,7 +7,7 @@ def hmate (request):
     """
     Sets the 'curr_hmate' key to the user's housemate account
     """
-    return {"curr_hmate": get_hmate(request)}
+    return {"curr_hmate": request.hmate}
 
 def notices (request):
     """
@@ -29,14 +29,3 @@ def get_notices (hmate):
     notices += itr_to_notices(invites)
     
     return notices
-
-def get_hmate (request):
-    if hasattr(request, "user") and not request.user.is_anonymous():
-        try:
-            hmate = Housemate.objects.get(user=request.user)
-        except Housemate.DoesNotExist:
-            hmate = None
-    else:
-        hmate = None
-    
-    return hmate
