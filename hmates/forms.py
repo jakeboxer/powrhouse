@@ -7,7 +7,7 @@ from django.template.loader import get_template
 from django.core.mail import send_mail
 from registration.forms import RegistrationFormUniqueEmail
 from configoptions.models import ConfigOption
-from hmates.models import Housemate
+from hmates.models import Housemate, Invite
 from random import choice
 import string
 
@@ -287,10 +287,16 @@ class HousemateRegForm (RegistrationFormUniqueEmail):
 class HousemateEmailSearchForm (forms.Form):
     email = forms.EmailField(label=_("E-mail"), max_length=30)
     
-    def get_result (self):
+    def get_result (self, hhold):
         try:
             user = User.objects.get(email=self.cleaned_data["email"])
         except User.DoesNotExist:
             return None
         
-        return user.hmates.all()[0]
+        hmate = user.hmates.all()[0]
+        
+        # see if there are any invites for the housemate, in the current
+        # household
+        invites = Invite.objects.filter(invitee=hmate, hhold=hhold)
+        
+        return hmate if invites.count() < 1 else None
