@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404
 from chores.models import Chore
 
 try:
@@ -25,12 +25,12 @@ class must_own_chore (object):
         # make sure we were passed an object id
         if "object_id" not in kwargs: raise Http404
         
-        chore_id = int(kwargs["object_id"])
-        context  = RequestContext(request)
+        # get the chore
+        chore = get_object_or_404(Chore, int(kwargs["object_id"]))
         
-        try:
-            chore = context["curr_hmate"].hhold.chores.get(pk=chore_id)
-        except Chore.DoesNotExist:
+        # make sure the chore and the logged-in housemate are in the same
+        # household
+        if chore.hhold != request.hmate.hhold:
             raise Http404
         
         return self.view_func(request, *args, **kwargs)

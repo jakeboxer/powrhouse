@@ -1,6 +1,5 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.template import RequestContext
 from hmates.models import Housemate, Invite
 
 try:
@@ -24,14 +23,13 @@ class must_live_together (object):
         # make sure we were passed an object id
         if "object_id" not in kwargs: raise Http404
         
-        # make sure the housemate represented by the object ID lives in the same
-        # household as the logged-in housemate
-        hmate_id   = int(kwargs["object_id"])
-        context    = RequestContext(request)
-        curr_hmate = context["curr_hmate"]
-        
         # get the housemate represented by the object ID
-        hmate = get_object_or_404(Housemate, pk=hmate_id)
+        hmate = get_object_or_404(Housemate, pk=int(kwargs["object_id"]))
+        
+        # make sure this housemate and the logged-in housemate live in the same
+        # household
+        if hmate.hhold != request.hmate.hhold:
+            raise Http404
         
         return self.view_func(request, *args, **kwargs)
 
@@ -56,7 +54,8 @@ class target_must_be_inactive (object):
         hmate = get_object_or_404(Housemate, pk=int(kwargs["object_id"]))
 
         # make sure the housemate isn't an active user
-        if hmate.is_active(): raise Http404
+        if hmate.is_active():
+            raise Http404
 
         return self.view_func(request, *args, **kwargs)
 
@@ -81,7 +80,8 @@ class target_must_be_active (object):
         hmate = get_object_or_404(Housemate, pk=int(kwargs["object_id"]))
 
         # make sure the housemate isn't an active user
-        if not hmate.is_active(): raise Http404
+        if not hmate.is_active():
+            raise Http404
 
         return self.view_func(request, *args, **kwargs)
 
@@ -105,7 +105,8 @@ class target_must_be_user (object):
         hmate = get_object_or_404(Housemate, pk=int(kwargs["object_id"]))
 
         # make sure the housemate isn't an active user
-        if not hmate.user: raise Http404
+        if not hmate.user:
+            raise Http404
 
         return self.view_func(request, *args, **kwargs)
 
@@ -131,7 +132,7 @@ class must_own_invite (object):
         
         # make sure the logged-in housemate is in the household that the invite
         # is for
-        if invite.hhold != RequestContext(request)["curr_hmate"].hhold:
+        if invite.hhold != request.hmate.hhold:
             raise Http404
 
         return self.view_func(request, *args, **kwargs)

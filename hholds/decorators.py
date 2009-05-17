@@ -1,6 +1,5 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.template import RequestContext
 from hholds.models import Household
 from hmates.models import Housemate
 
@@ -23,10 +22,8 @@ class cannot_have_hhold (object):
         return cannot_have_hhold(view_func)
     
     def __call__ (self, request, *args, **kwargs):
-        context = RequestContext(request)
-        
-        if context["curr_hmate"].hhold is not None:
-            raise Http404
+        # Make sure the housemate doesn't have a household
+        if request.hmate.hhold: raise Http404
         
         return self.view_func(request, *args, **kwargs)
 
@@ -43,10 +40,8 @@ class hhold_required (object):
         return hhold_required(view_func)
 
     def __call__ (self, request, *args, **kwargs):
-        context = RequestContext(request)
-        
-        if not context["curr_hmate"]: raise Http404
-        if not context["curr_hmate"].hhold: raise Http404
+        if not request.hmate.hhold:
+            raise Http404
 
         return self.view_func(request, *args, **kwargs)
 
