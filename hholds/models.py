@@ -48,7 +48,7 @@ class Household (models.Model):
         if self.addr_line2: addr_list.append(self.addr_line2)
         
         if self.town and self.state:
-            addr_list.append(u"%s, %s" % (self.town, self.state))
+            addr_list.append(_("%s, %s") % (self.town, self.state))
         elif self.town or self.state:
             addr_list.append(self.town or self.state)
         
