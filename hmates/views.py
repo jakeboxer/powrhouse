@@ -102,8 +102,6 @@ def edit_inactive (request, object_id):
 @target_must_be_active
 @must_live_together
 def resend_add_email (request, object_id):
-    context = RequestContext(request)
-    
     # Find the housemate
     hmate = get_object_or_404(Housemate, pk=int(object_id))
     
@@ -111,18 +109,18 @@ def resend_add_email (request, object_id):
     if hmate.has_logged_in(): raise Http404
     
     # Reset her password
-    pw = get_random_password(ConfigOption.vals.get(
-        "starting_pw_length", type=int, default=10))
+    pw = get_random_password(ConfigOption.vals.get("starting_pw_length", 
+        type=int, default=10))
     hmate.user.set_password(pw)
     hmate.user.save()
     
     # Send her a new email
-    send_user_added_email(hmate, pw, context["curr_hmate"])
+    send_user_added_email(hmate, pw, request.hmate)
     
     # Set the message to be shown to the user
     msg = u"A new registration email has been sent to %s." \
         % hmate.get_full_name()
-    context["user"].message_set.create(message=msg)
+    request.user.message_set.create(message=msg)
     
     return redirect("my_hhold")
 

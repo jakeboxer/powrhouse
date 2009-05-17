@@ -62,6 +62,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'hmates.middleware.HousemateMiddleware',
 )
 
 ROOT_URLCONF = 'powr_local.urls'
