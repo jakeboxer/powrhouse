@@ -123,7 +123,8 @@ class ChoreScheduler (object):
         # For each chore, find the housemate who's done it least and assign it
         # to her
         for chore in self.chores:
-            assigns[chore.get_hmate_with_fewest_completions()].append(chore)
+            hmate = chore.get_hmate_with_fewest_completions()
+            self.assigns[hmate].append(chore)
     
     def _balance_assigns (self):
         # While the number of chores remains unbalanced, do a balancing step
@@ -199,7 +200,7 @@ class ChoreScheduler (object):
         # Pop it off the first housemate's list and put it on the second's
         self.assigns[to_hmate].append(self.assigns[from_hmate].pop(idx))
     
-    def _do_balancing_step (self, assigns):
+    def _do_balancing_step (self):
         """
         Takes a chore from the person with the most chores and gives it to the
         person with the fewest. If there's a tie for who has the fewest chores,
@@ -208,15 +209,15 @@ class ChoreScheduler (object):
         who are tied).
         """
         # Find the hmates with the most and fewest chores
-        from_hmate    = self._get_hmate_with_most_chores()
-        fewest_hmates = self._get_hmates_tied_for_fewest_chores()
+        from_hmate           = self._get_hmate_with_most_chores()
+        fewest_chores_hmates = self._get_hmates_tied_for_fewest_chores()
 
         # Find the chore that the person has done the most (of the ones he's
         # been assigned)
-        chore = self._get_chore_to_swap(most_hmate)
+        chore = self._get_chore_to_swap(from_hmate)
 
         # Find the hmate (amongst the fewest list) who has done it the least
-        to_hmate = self._get_hmate_to_give_chore_to(chore, fewest_hmates)
+        to_hmate = self._get_hmate_to_give_chore_to(chore, fewest_chores_hmates)
 
         # Take the chore from the person who's done it the most and give it to
         # the person who's done it the least
