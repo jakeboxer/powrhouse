@@ -138,6 +138,14 @@ class Chore (models.Model):
         secs_passed = self.get_secs_passed_since_completion()
         return secs_passed >= self._get_assignment_threshold()
     
+    def get_hmate_with_fewest_completions (self):
+        """
+        Returns the housemate who's completed this chore the fewest times. If
+        there's a tie, results are arbitrary.
+        """
+        hmates = self.hhold.hmates.all()
+        return min(hmates, key=lambda x: x.get_num_completions(self))
+    
     def get_absolute_url (self):
         return reverse("chore_detail", args=[self.pk])
     
