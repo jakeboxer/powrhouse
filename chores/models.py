@@ -144,7 +144,16 @@ class Chore (models.Model):
         there's a tie, results are arbitrary.
         """
         hmates = self.hhold.hmates.all()
-        return min(hmates, key=lambda x: x.get_num_completions(self))
+        return min(hmates, key=lambda x: self.get_num_completions_by(x))
+    
+    def get_num_completions_by (self, hmate):
+        """
+        Returns the number of times this chore has been completed by the
+        specified housemate
+        
+        @param: hmate Housemate to check completions by
+        """
+        return hmate.completed_chores.filter(chore=self).count()
     
     def get_absolute_url (self):
         return reverse("chore_detail", args=[self.pk])

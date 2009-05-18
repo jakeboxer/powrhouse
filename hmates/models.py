@@ -63,9 +63,6 @@ class Housemate (models.Model):
     def get_absolute_url (self):
         return reverse("hmate_detail", args=[self.pk])
     
-    def get_num_completions (self, chore):
-        return self.completed_chores.filter(chore=chore).count()
-    
     def __unicode__ (self):
         return self.get_full_name()
 
