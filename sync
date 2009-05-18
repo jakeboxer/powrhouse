@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+./manage.py syncdb --noinput
+./manage.py loaddata prod_data.xml dev_data.xml
