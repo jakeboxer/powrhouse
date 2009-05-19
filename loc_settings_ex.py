@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'hholds',
     'hmates',
     'chores',
+    'autoassign',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
