@@ -4,8 +4,60 @@ from powr_tests import *
 from chores.models import *
 from hholds.models import *
 from hmates.models import *
+from hholds.timezones import get_id_by_tz
 from autoassign.classes import *
 from autoassign.functions import *
+from datetime import datetime, timedelta
+
+class FunctionsTest (PowrTest):
+    
+    def _check_tz_of_hholds (self, hholds, tzid):
+        for hhold in hholds:
+            self.failUnlessEqual(hhold.timezone_id, tzid)
+    
+    def test_get_hholds_by_local_hr (self):
+        pacific  = get_id_by_tz("US/Pacific")
+        mountain = get_id_by_tz("US/Mountain")
+        central  = get_id_by_tz("US/Central")
+        eastern  = get_id_by_tz("US/Eastern")
+        
+        e = Household.objects.create(name="East", timezone_id=eastern)
+        c = Household.objects.create(name="Cent", timezone_id=central)
+        m = Household.objects.create(name="Moun", timezone_id=mountain)
+        p = Household.objects.create(name="Paci", timezone_id=pacific)
+        
+        # assume this is in UTC: 12/21/2009 at 4:00AM
+        dt = datetime(2009, 12, 21, 4, 0)
+        
+        # at this time, there should be no households that are midnight, since
+        # it's out of the US
+        hholds = get_hholds_by_local_hr(0, dt)
+        self.failUnlessEqual(len(hholds), 0)
+        
+        # adding an hr should put us in EST, so we'll get the two EST hholds
+        dt += timedelta(hours=1)
+        hholds = get_hholds_by_local_hr(0, dt)
+        self.failUnlessEqual(len(hholds), 2)
+        self._check_tz_of_hholds(hholds, eastern)
+        
+        # adding an hr should put us in CST, so we'll get the CST hhold
+        dt += timedelta(hours=1)
+        hholds = get_hholds_by_local_hr(0, dt)
+        self.failUnlessEqual(len(hholds), 1)
+        self._check_tz_of_hholds(hholds, central)
+        
+        # adding an hr should put us in MST, so we'll get the MST hhold
+        dt += timedelta(hours=1)
+        hholds = get_hholds_by_local_hr(0, dt)
+        self.failUnlessEqual(len(hholds), 1)
+        self._check_tz_of_hholds(hholds, mountain)
+        
+        # adding an hr should put us in PST, so we'll get the PST hhold
+        dt += timedelta(hours=1)
+        hholds = get_hholds_by_local_hr(0, dt)
+        self.failUnlessEqual(len(hholds), 1)
+        self._check_tz_of_hholds(hholds, pacific)
+        
 
 class ChoreSchedulerTest (PowrTest):
     
