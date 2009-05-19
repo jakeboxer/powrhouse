@@ -228,6 +228,10 @@ class Assignment (models.Model):
             return self.chore.hhold.get_local_datetime(self.done_at)
         else:
             return None
+    
+    def get_email_done_url (self):
+        return reverse("assign_done_no_login", args=[
+            self.pk, self.assigned_to.pk, self.url_key])
         
     
     def __unicode__ (self):

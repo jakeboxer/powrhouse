@@ -26,7 +26,7 @@ class must_own_chore (object):
         if "object_id" not in kwargs: raise Http404
         
         # get the chore
-        chore = get_object_or_404(Chore, int(kwargs["object_id"]))
+        chore = get_object_or_404(Chore, pk=int(kwargs["object_id"]))
         
         # make sure the chore and the logged-in housemate are in the same
         # household
