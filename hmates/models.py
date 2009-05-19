@@ -60,6 +60,25 @@ class Housemate (models.Model):
     def has_logged_in (self):
         return self.user and self.user.last_login > self.user.date_joined
     
+    def get_incomplete_assigns (self):
+        """
+        Returns all the assignments for the housemate that are currently
+        incomplete
+        """
+        return self.assigned_chores.filter(done_by=None)
+    
+    def get_chore_done_most (self, chores=None):
+        """
+        Returns the chore that this housemate has done the most. If a list of
+        chores is passed, only chores in that list will be considered.
+        Otherwise, all chores in the housemate's household will be considered.
+        
+        @param: chores Chores to consider
+        """
+        potential = chores or self.hhold.chores.all()
+        
+        return max(potential, key=lambda c: c.get_num_completions_by(self))
+    
     def get_absolute_url (self):
         return reverse("hmate_detail", args=[self.pk])
     

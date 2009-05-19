@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.localflavor.us.models import USStateField
 from hholds.timezones import get_choices_tuple, get_tz_by_id
-import datetime, pytz
+import datetime, pytz, sys
 
 TZ_CHOICES = get_choices_tuple()
 
@@ -66,7 +66,18 @@ class Household (models.Model):
         """
         return self._tz.fromutc(utc_dt or datetime.datetime.utcnow())
     
+    def get_unfinished_chores (self):
+        """
+        Returns all chores that are currently assigned but not finished
+        """
+        return [chore for chore in self.chores.all() if chore.is_assigned()]
+    
+    def get_chores_to_assign (self):
+        """
+        Returns all chores that should be assigned
+        """
+        # get all the chores and filter out the ones that shouldnt be assigned
+        return [c for c in self.chores.all() if c.should_be_assigned()]
+        
     def __unicode__ (self):
         return self.name
-
-
