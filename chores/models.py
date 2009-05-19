@@ -155,6 +155,12 @@ class Chore (models.Model):
         """
         return hmate.completed_chores.filter(chore=self).count()
     
+    def get_recent_history (self):
+        """
+        Returns the last 10 assignments of this chore.
+        """
+        return self.assignments.order_by("-assigned_at")[:10]
+    
     def get_absolute_url (self):
         return reverse("chore_detail", args=[self.pk])
     

@@ -14,19 +14,40 @@
 	<li><a href="{% url chore_delete chore.pk %}">Delete</a></li>
 </ul>
 
-<p>
-{% if chore.has_assignments and not chore.get_newest_assignment.is_done %}
-	Currently assigned to
-	
-	{% ifequal chore.get_newest_assignment.assigned_to curr_hmate %}
-	you{% else %}
-	<a href="{{ chore.get_newest_assignment.assigned_to.get_absolute_url }}">{{ chore.get_newest_assignment.assigned_to.get_full_name }}</a>{% endifequal %}{% if chore.get_newest_assignment.is_late %}
-	({{ chore.get_newest_assignment.get_days_late }} day{{ chore.get_newest_assignment.get_days_late|pluralize }} late){% endif %}.
-	
-	<a href="{% url assign_done chore.get_newest_assignment.pk %}">I did {{ chore.name }} today.</a>
+<h2>History</h2>
+{% if chore.has_assignments %}
+	<ul>
+	{% for assign in chore.get_recent_history %}
+		<li>
+		{# When was it done (or is it still not done) #}
+		{% if not assign.is_done %}
+			Currently assigned to
+		{% else %}
+			Done on {{ assign.done_at|date:"l, M jS, Y" }} by
+		{% endif %}
+		
+		{# Who was it done by (or assigned to, if it's not done) #}
+		{% ifequal assign.assigned_to curr_hmate %}
+			you
+		{% else %}
+			<a href="{{ assign.assigned_to.get_absolute_url }}">{{ assign.assigned_to.get_full_name }}</a>
+		{% endifequal %}
+		
+		{# Is/was it late? #}
+		{% if assign.is_late %}
+			({{ assign.get_days_late }} 
+			day{{ assign.get_days_late|pluralize }} late)
+		{% endif %}
+		
+		{# If it hasn't been done, allow the viewer to mark it done #}
+		{% if not assign.is_done %}
+			(<a href="{% url assign_done assign.pk %}">I did {{ chore.name }} today.</a>)
+		{% endif %}
+		</li>
+	{% endfor %}
+	</ul>
 {% else %}
-	This chore isn't due yet.
+	<p>No one has had this chore yet.</p>
 {% endif %}
-</p>
 
 {% endblock %}
