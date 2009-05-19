@@ -62,6 +62,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'xua_middleware.XUACompatibleMiddleware',
     'hmates.middleware.HousemateMiddleware',
 #    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
