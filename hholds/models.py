@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.localflavor.us.models import USStateField
 from hholds.timezones import get_choices_tuple, get_tz_by_id
-from auto
 import datetime, pytz, sys
 
 TZ_CHOICES = get_choices_tuple()
