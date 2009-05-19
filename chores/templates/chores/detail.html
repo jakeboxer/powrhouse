@@ -22,16 +22,21 @@
 		{# When was it done (or is it still not done) #}
 		{% if not assign.is_done %}
 			Currently assigned to
+			{# Who is it assigned to? #}
+			{% ifequal assign.assigned_to curr_hmate %}
+				you
+			{% else %}
+				<a href="{{ assign.assigned_to.get_absolute_url }}">{{ assign.assigned_to.get_full_name }}</a>
+			{% endifequal %}
 		{% else %}
 			Done on {{ assign.done_at|date:"l, M jS, Y" }} by
+			{# Who was it done by? #}
+			{% ifequal assign.done_by curr_hmate %}
+				you
+			{% else %}
+				<a href="{{ assign.done_by.get_absolute_url }}">{{ assign.assigned_to.get_full_name }}</a>
+			{% endifequal %}
 		{% endif %}
-		
-		{# Who was it done by (or assigned to, if it's not done) #}
-		{% ifequal assign.assigned_to curr_hmate %}
-			you
-		{% else %}
-			<a href="{{ assign.assigned_to.get_absolute_url }}">{{ assign.assigned_to.get_full_name }}</a>
-		{% endifequal %}
 		
 		{# Is/was it late? #}
 		{% if assign.is_late %}
