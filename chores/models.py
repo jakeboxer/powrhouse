@@ -69,7 +69,7 @@ class Chore (models.Model):
     def has_assignments (self):
         return self.assignments.count() > 0
     
-    def get_newest_assignment (self):
+    def get_last_assign (self):
         """
         Returns this chore's most recent assignment.
         """
@@ -80,7 +80,7 @@ class Chore (models.Model):
         
         return assign
     
-    def get_last_done_assignment (self):
+    def get_last_done_assign (self):
         """
         Returns this chore's most recent assignment that was completed
         """
@@ -97,7 +97,7 @@ class Chore (models.Model):
         Returns whether or not this chore is currently assigned
         """
         if self.has_assignments():
-            return not self.get_newest_assignment().is_done()
+            return not self.get_last_assign().is_done()
         else:
             return False
     
@@ -115,7 +115,7 @@ class Chore (models.Model):
         Returns the number of seconds that have passed since the last time this
         chore was completed
         """
-        assign = self.get_last_done_assignment()
+        assign = self.get_last_done_assign()
         
         # find the last time the chore was done (min date if never done)
         last = assign.done_at if assign else datetime.datetime.min

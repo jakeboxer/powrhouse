@@ -37,14 +37,14 @@ class HouseholdTest (PowrTest):
         
         # After completing the 1-day interval chore, there should be one more
         # chore up for assignment
-        c1.get_newest_assignment().complete()
+        c1.get_last_assign().complete()
         num_unassigned_chores = len(hhold.get_chores_to_assign())
         self.failUnlessEqual(num_unassigned_chores, num_chores - 1)
         
         # After completing the > 1-day interval chore, there should still be the
         # same number of chores up for assignment, since it's not yet time to
         # reassign that chore
-        c2.get_newest_assignment().complete()
+        c2.get_last_assign().complete()
         num_unassigned_chores = len(hhold.get_chores_to_assign())
         self.failUnlessEqual(num_unassigned_chores, num_chores - 1)
         
