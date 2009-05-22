@@ -1,3 +1,4 @@
+from hmates.models import Housemate
 
 def get_hmate(request):
     from hmates.models import AnonymousHousemate
@@ -14,6 +15,9 @@ def get_hmate(request):
             hmate = Housemate.objects.get(user=user)
     except KeyError:
         # If there was no user, the housemate should be anonymous
+        hmate = AnonymousHousemate()
+    except Housemate.DoesNotExist:
+        # If the housemate doesn't exist, the housemate should be anonymous
         hmate = AnonymousHousemate()
     
     return hmate
