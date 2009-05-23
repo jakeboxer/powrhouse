@@ -2,6 +2,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.models import Site
 from django.template import RequestContext, Context
 from django.template.loader import get_template
 from django.core.mail import send_mail
@@ -67,12 +68,16 @@ def leave (request):
         curr_hmate.save()
         
         if hhold.hmates.count() > 0:
+            site = Site.objects.get_current()
+            
             # Send an email to all the remaining housemates
-            subj    = u"%s has left your household" % curr_hmate.get_full_name()
-            tpl     = get_template("hholds/left_email.txt")
-            email_context = Context({"hmate": curr_hmate, "hhold": hhold})
-            send_mail(subj, tpl.render(email_context), "noreply@powrhouse.net",
-                zip(*hhold.hmates.values_list("user__email"))[0])
+            subj   = u"%s has left your household" % curr_hmate.get_full_name()
+            tpl    = get_template("hholds/left_email.txt")
+            contex = Context({"hmate": curr_hmate, "hhold": hhold,
+                "site": site})
+            send_mail(subj, tpl.render(email_context),
+                "noreply@powrhouse.net",
+                hhold.hmates.values_list("user__email", flat=True))
         else:
             # if there are no remaining housemates, delete the household
             hhold.delete()
@@ -81,4 +86,3 @@ def leave (request):
     
     return render_to_response("hholds/leave.html",
         context_instance=RequestContext(request))
-            

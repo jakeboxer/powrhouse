@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.template import Context
@@ -29,15 +30,18 @@ def create_user (username, email, first_name, last_name, pw):
     return user
 
 def send_user_added_email (hmate, pw, adder):
-    subj    = u"You've been registered for PowrHouse!"
+    site = Site.objects.get_current()
+    
+    subj    = _("You've been registered for %s!") % site.name
     tpl     = get_template("hmates/add_email.txt")
     context = Context({
         "adder": adder,
         "hmate": hmate,
-        "password": pw
+        "password": pw,
+        "site": site
     })
-    send_mail(subj, tpl.render(context),
-        "noreply@powrhouse.net", [hmate.user.email])
+    send_mail(subj, tpl.render(context), "noreply@powrhouse.net",
+        [hmate.user.email])
 
 attrs_dict = { 'class': 'required' }
 

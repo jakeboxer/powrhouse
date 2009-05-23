@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
+from django.contrib.sites.models import Site
 from django.template import RequestContext, Context
 from django.template.loader import get_template
 from django.core.mail import send_mail
@@ -139,11 +140,12 @@ def boot (request, object_id):
         if hmate.user and hmate.has_logged_in():
             # if she has a user, and she has logged in, save her and send an
             # email
+            site = Site.objects.get_current()
             subj = u"You've been booted from %s" % request.hmate.hhold
             tpl  = get_template("hmates/booted_email.txt")
-            email_context = Context({"hmate": hmate})
-            send_mail(subj, tpl.render(email_context),
-                "noreply@powrhouse.net", [hmate.user.email])
+            email_context = Context({"hmate": hmate, "site": site})
+            send_mail(subj, tpl.render(email_context), "noreply@powrhouse.net",
+                [hmate.user.email])
             
             hmate.hhold = None
             hmate.save()
@@ -192,11 +194,13 @@ def invite (request, object_id):
         hhold=request.hmate.hhold)
     
     # send an email to the invitee
+    site = Site.objects.get_current()
     subj = _("You've been invited to %s") % request.hmate.hhold
     tpl  = get_template("invites/invited_email.txt")
-    email_context = Context({"hmate": hmate, "curr_hmate": request.hmate})
-    send_mail(subj, tpl.render(email_context),
-        "noreply@powrhouse.net", [hmate.user.email])
+    email_context = Context({"hmate": hmate, "curr_hmate": request.hmate,
+        "site": site})
+    send_mail(subj, tpl.render(email_context), "noreply@powrhouse.net",
+        [hmate.user.email])
     
     # set a message
     msg = _("Successfully invited %s to your household.") % hmate

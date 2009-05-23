@@ -1,6 +1,7 @@
 from django.template import Context
 from django.template.loader import get_template
 from django.core.mail import send_mail
+from django.contrib.sites.models import Site
 from hholds.models import Household
 from hholds.timezones import get_tzids_by_local_hour
 from autoassign.classes import ChoreScheduler
@@ -34,11 +35,12 @@ def assign_chores (assign_set):
         for chore in assign_set[hmate]:
             chore.assign_to(hmate)
 
-def morning_digest_subj (hmate):
+def morning_digest_subj (hmate, site):
     """
     Create a subject line for the morning digest email
     
     @param: hmate Housemate to get the subject line for
+    @param: site Current site
     """
     num_chores = hmate.get_incomplete_assigns().count()
     today      = hmate.hhold.get_local_datetime()
@@ -53,13 +55,13 @@ def morning_digest_subj (hmate):
     
     return subj
 
-def morning_digest_body (hmate):
+def morning_digest_body (hmate, site):
     """
     Create a body for the morning digest email
     
     @param: hmate Housemate to get the body for
     """
-    context = Context({"hmate": hmate})
+    context = Context({"hmate": hmate, "site": site})
     return get_template("digest/morning_body.txt").render(context)
 
 def send_morning_digest (hhold):
@@ -72,10 +74,12 @@ def send_morning_digest (hhold):
     # Assign all the chores that should be assigned
     assign_chores(get_chore_assignments(hhold))
     
+    site = Sites.objects.get_current()
+    
     # Send the digest email to each member of the household
     for hmate in hhold.hmates.all():
-        subj = morning_digest_subj(hmate)
-        body = morning_digest_body(hmate)
+        subj = morning_digest_subj(hmate, site)
+        body = morning_digest_body(hmate, site)
         send_mail(subj, body, "noreply@powrhouse.net", [hmate.user.email])
     
 def send_evening_digest (hhold):
