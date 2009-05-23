@@ -8,8 +8,10 @@ class Housemate (models.Model):
     """
     A single person who lives in the household
     """
-    user  = models.ForeignKey(User, null=True, related_name="hmates")
-    hhold = models.ForeignKey(Household, null=True, related_name="hmates")
+    user  = models.ForeignKey(User, blank=True, null=True,
+        related_name="hmates")
+    hhold = models.ForeignKey(Household, blank=True, null=True,
+        related_name="hmates")
     
     # Used if the housemate isn't associated with a user
     first_name = models.CharField(_("First name"), max_length=255, blank=True)
