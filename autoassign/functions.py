@@ -1,6 +1,6 @@
 from django.template import Context
 from django.template.loader import get_template
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib.sites.models import Site
 from hholds.models import Household
 from hholds.timezones import get_tzids_by_local_hour
@@ -55,14 +55,25 @@ def morning_digest_subj (hmate, site):
     
     return subj
 
-def morning_digest_body (hmate, site):
+def morning_digest_body_txt (hmate, site):
     """
-    Create a body for the morning digest email
+    Create a text body for the morning digest email
     
     @param: hmate Housemate to get the body for
+    @param: site Current site
     """
     context = Context({"hmate": hmate, "site": site})
     return get_template("digest/morning_body.txt").render(context)
+
+def morning_digest_body_html (hmate, site):
+    """
+    Create an html body for the morning digest email
+    
+    @param: hmate Housemate to get the body for
+    @param: site Current site
+    """
+    context = Context({"hmate": hmate, "site": site})
+    return get_template("digest/morning_body.html").render(context)
 
 def send_morning_digest (hhold):
     """
@@ -78,9 +89,15 @@ def send_morning_digest (hhold):
     
     # Send the digest email to each member of the household
     for hmate in hhold.hmates.all():
-        subj = morning_digest_subj(hmate, site)
-        body = morning_digest_body(hmate, site)
-        send_mail(subj, body, "noreply@powrhouse.net", [hmate.user.email])
+        # Set up the content
+        subj       = morning_digest_subj(hmate, site)
+        txt_body   = morning_digest_body_txt(hmate, site)
+        html_body  = morning_digest_body_html(hmate, site)
+        
+        # Create the message
+        msg = EmailMultiAlternatives(subj, txt_body, "noreply@powrhouse.net",
+            [hmate.user.email])
+        msg.attach_alternative(html_body, "text/html")
     
 def send_evening_digest (hhold):
     raise NotImplementedError
