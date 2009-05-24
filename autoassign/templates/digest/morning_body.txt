@@ -2,10 +2,10 @@ Dear {{ hmate.get_full_name }},
 {% ifequal hmate.get_incomplete_assigns.count 0 %}You have no chores today.
 {% else %}You have {{ hmate.get_incomplete_assigns.count }} chore{{ hmate.get_incomplete_assigns.count|pluralize }} today:
 
-{% for assign in hmate.get_incomplete_assigns %}- {{ assign.chore.name }}{% if assign.is_late %}({{ assign.get_days_late }} day{{ assign.get_days_late }} late){% endif %}
-  * <a href="{{ assign.get_email_done_url }}">Click here if you've finished doing {{ assign.chore.name }}</a>
-  * <a href="{{ assign.chore.get_absolute_url }}">Click here for a description of {{ assign.chore.name }}</a>{% endfor %}
-
+{% for assign in hmate.get_incomplete_assigns %}{{ assign.chore.name }}{% if assign.is_late %}({{ assign.get_days_late }} day{{ assign.get_days_late|pluralize }} late){% endif %}
+  * If you've finished doing {{ assign.chore.name }}, click here: http://{{ site.domain }}{{ assign.get_email_done_url }}
+  * For a description of {{ assign.chore.name }}, click here: http://{{ site.domain }}{{ assign.chore.get_absolute_url }}
+{% endfor %}
 We'll send you another email at 8pm to remind you about your chore{{ hmate.get_incomplete_assigns.count|pluralize }}.
 {% endifequal %}
 Thanks
