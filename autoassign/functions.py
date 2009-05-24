@@ -74,7 +74,7 @@ def send_morning_digest (hhold):
     # Assign all the chores that should be assigned
     assign_chores(get_chore_assignments(hhold))
     
-    site = Sites.objects.get_current()
+    site = Site.objects.get_current()
     
     # Send the digest email to each member of the household
     for hmate in hhold.hmates.all():
