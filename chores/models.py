@@ -40,8 +40,10 @@ class Chore (models.Model):
         """
         if not at: at = datetime.datetime.now()
         
-        return Assignment.objects.create(chore=self, assigned_to=hmate,
+        a = self.assignments.create(chore=self, assigned_to=hmate,
             assigned_at=at)
+        
+        return a
     
     def get_interval_in_days (self):
         """

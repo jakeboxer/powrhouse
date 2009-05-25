@@ -130,3 +130,30 @@ class AssignmentTest (PowrTest):
         self.assigns[2].done_at     -= timedelta(days=5)
         self.assigns[2].save()
         self.failUnless(self.assigns[2].is_late())
+    
+    def test_get_num_completions_by (self):
+        # no chores have been completed yet, so all housemates should have 0
+        # completions for all chores
+        for chore in self.chores:
+            for hmate in self.hmates:
+                self.failUnlessEqual(chore.get_num_completions_by(hmate), 0)
+        
+        # in setUp, chore 0 was assigned to hmate 0. complete this, and then
+        # hmate 0's count on this chore should be 1
+        self.chores[0].get_last_assign().complete()
+        self.failUnlessEqual(\
+            self.chores[0].get_num_completions_by(self.hmates[0]), 1)
+        
+        # in setUp, chore 1 was assigned to hmate 1. have hmate 2 complete it,
+        # and then hmate 2's count on it should be 1 (and hmate 1's should be 0)
+        self.chores[1].get_last_assign().complete(self.hmates[2])
+        self.failUnlessEqual(\
+            self.chores[1].get_num_completions_by(self.hmates[1]), 0)
+        self.failUnlessEqual(\
+            self.chores[1].get_num_completions_by(self.hmates[2]), 1)
+        
+        # assign chore 0 to hmate 0 again, then complete again. his count should
+        # now be 2.
+        self.chores[0].assign_to(self.hmates[0]).complete()
+        self.failUnlessEqual(\
+            self.chores[0].get_num_completions_by(self.hmates[0]), 2)
