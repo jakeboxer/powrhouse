@@ -79,7 +79,7 @@ class ChoreTest (PowrTest):
         
         # after completing it, it should have a completed assignment equal to
         # the one we just made
-        c.complete()
+        a.complete()
         self.failUnlessEqual(c.get_last_done_assign(), a)
         
         # after assigning it again, it should have the same 'last done'
