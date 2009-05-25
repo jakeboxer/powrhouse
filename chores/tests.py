@@ -33,6 +33,36 @@ class ChoreTest (PowrTest):
         # assign a chore. now, it's assigned
         self.chores[0].assign_to(self.hmates[0])
         self.failUnless(self.chores[0].is_assigned())
+    
+    def test_should_be_assigned (self):
+        # find a chore with a 1-day interval
+        c1 = Chore.objects.filter(interval=1*SECS_PER_DAY)[0]
+        
+        # at first, it should be assigned
+        self.failUnless(c1.should_be_assigned())
+        
+        # after assigning it, it shouldnt be assigned
+        a = c1.assign_to(self.hmates[0])
+        self.failIf(c1.should_be_assigned())
+        
+        # after completing it, it should be assigned again
+        a.complete()
+        self.failUnless(c1.should_be_assigned())
+        
+        # find a chore with an interval bigger than 1 day
+        c2 = Chore.objects.filter(interval__gt=1*SECS_PER_DAY)[0]
+        
+        # at first, it should be assigned
+        self.failUnless(c2.should_be_assigned())
+        
+        # after assigning it, it shouldnt be assigned
+        a = c2.assign_to(self.hmates[1])
+        self.failIf(c2.should_be_assigned())
+        
+        # after completing it, it still shouldnt be assigned, cuz at least 1
+        # more day needs to go by
+        a.complete()
+        self.failIf(c2.should_be_assigned())
 
 class AssignmentTest (PowrTest):
     
