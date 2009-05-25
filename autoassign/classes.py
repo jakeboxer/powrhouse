@@ -4,6 +4,11 @@ class ChoreScheduler (object):
         self.hhold = hhold
     
     def get_assignments (self):
+        """
+        Return a dictionary of a valid way for chores to be assigned. Dictionary
+        has housemates as keys and a list as the value. The list contains the
+        chores that should be assigned to the housemate (key).
+        """
         # Set up everything
         self._setup_chores()
         self._setup_hmates()
