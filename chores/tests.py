@@ -4,7 +4,7 @@ from chores.models import *
 from hholds.models import *
 from hmates.models import *
 from django.test import TestCase
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 class ChoreTest (PowrTest):
     
@@ -63,6 +63,34 @@ class ChoreTest (PowrTest):
         # more day needs to go by
         a.complete()
         self.failIf(c2.should_be_assigned())
+    
+    def test_get_last_done_assign (self):
+        dt = datetime.utcnow()
+        c = self.chores[0]
+        
+        # at first, chore 0 should have no assignments/completions, so its last 
+        # completed assignment should be None
+        self.failUnlessEqual(c.get_last_done_assign(), None)
+        
+        # after assigning it, it should have an assignment, but no completed
+        # ones, so its last completed assignment should still be None
+        a = c.assign_to(self.hmates[0], dt - timedelta(minutes=10))
+        self.failUnlessEqual(c.get_last_done_assign(), None)
+        
+        # after completing it, it should have a completed assignment equal to
+        # the one we just made
+        c.complete()
+        self.failUnlessEqual(c.get_last_done_assign(), a)
+        
+        # after assigning it again, it should have the same 'last done'
+        # assignment as it did before
+        a2 = c.assign_to(self.hmates[1], dt - timedelta(minutes=5))
+        self.failUnlessEqual(c.get_last_done_assign(), a)
+        
+        # after completing the new assignment, the new assignment should be the
+        # 'last done' assignment
+        a2.complete()
+        self.failUnlessEqual(c.get_last_done_assign(), a2)
 
 class AssignmentTest (PowrTest):
     

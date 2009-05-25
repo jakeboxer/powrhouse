@@ -32,7 +32,7 @@ class Chore (models.Model):
         help_text=_("How often the chore is done. 1=every day, 2=every other \
         day, 7=every week, etc."))
     
-    def assign_to (self, hmate, at=None):
+    def assign_to (self, hmate, at=datetime.datetime.utcnow()):
         """
         Assigns the chore to the specified housemate, at the specified date (or
         now if none is specified)
@@ -40,12 +40,8 @@ class Chore (models.Model):
         @param: hmate Housemate the chore will be assigned to
         @param: at The date/time the chore is assigned
         """
-        if not at: at = datetime.datetime.now()
-        
-        a = self.assignments.create(chore=self, assigned_to=hmate,
+        return self.assignments.create(chore=self, assigned_to=hmate,
             assigned_at=at)
-        
-        return a
     
     def get_interval_in_days (self):
         """
@@ -88,8 +84,9 @@ class Chore (models.Model):
         """
         Returns this chore's most recent assignment that was completed
         """
-        if self.has_assignments():
-            done   = self.assignments.exclude(done_by=None)
+        done = self.assignments.exclude(done_by=None)
+        
+        if self.has_assignments() and done.count() > 0:
             assign = done.order_by("-assigned_at")[0]
         else:
             assign = None
