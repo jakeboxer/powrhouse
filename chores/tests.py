@@ -24,6 +24,15 @@ class ChoreTest (PowrTest):
         self.failUnlessEqual(self.chores[1].get_interval_in_days(), 1)
         self.failUnlessEqual(self.chores[2].get_interval_in_days(), 3)
         self.failUnlessEqual(self.chores[3].get_interval_in_days(), 7)
+    
+    def test_is_assigned (self):
+        # at first, no chores are assigned
+        for chore in self.chores:
+            self.failIf(chore.is_assigned())
+        
+        # assign a chore. now, it's assigned
+        self.chores[0].assign_to(self.hmates[0])
+        self.failUnless(self.chores[0].is_assigned())
 
 class AssignmentTest (PowrTest):
     
