@@ -28,7 +28,9 @@ class Chore (models.Model):
     name     = models.CharField(max_length=255)
     details  = models.TextField(blank=True)
     
-    interval = models.PositiveIntegerField(default=SECS_PER_DAY)
+    interval = models.PositiveIntegerField(default=SECS_PER_DAY,
+        help_text=_("How often the chore is done. 1=every day, 2=every other \
+        day, 7=every week, etc."))
     
     def assign_to (self, hmate, at=None):
         """
