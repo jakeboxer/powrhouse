@@ -98,6 +98,7 @@ def send_morning_digest (hhold):
         msg = EmailMultiAlternatives(subj, txt_body, "noreply@powrhouse.net",
             [hmate.user.email])
         msg.attach_alternative(html_body, "text/html")
+        msg.send()
     
 def send_evening_digest (hhold):
     raise NotImplementedError
