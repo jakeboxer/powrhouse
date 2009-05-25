@@ -71,11 +71,11 @@ def leave (request):
             site = Site.objects.get_current()
             
             # Send an email to all the remaining housemates
-            subj   = u"%s has left your household" % curr_hmate.get_full_name()
-            tpl    = get_template("hholds/left_email.txt")
-            contex = Context({"hmate": curr_hmate, "hhold": hhold,
+            subj    = u"%s has left your household" % curr_hmate.get_full_name()
+            tpl     = get_template("hholds/left_email.txt")
+            context = Context({"hmate": curr_hmate, "hhold": hhold,
                 "site": site})
-            send_mail(subj, tpl.render(email_context),
+            send_mail(subj, tpl.render(context),
                 "noreply@powrhouse.net",
                 hhold.hmates.values_list("user__email", flat=True))
         else:
