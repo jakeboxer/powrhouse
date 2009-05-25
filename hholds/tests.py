@@ -7,9 +7,6 @@ from django.test import TestCase
 from chores.models import SECS_PER_DAY
 
 class HouseholdTest (PowrTest):
-    def test_sanity (self):
-        self.failUnless(self.hholds)
-    
     def test_get_chores_to_assign (self):
         hhold = self.hholds[0]
         num_chores = hhold.chores.count()
@@ -47,8 +44,32 @@ class HouseholdTest (PowrTest):
         c2.get_last_assign().complete()
         num_unassigned_chores = len(hhold.get_chores_to_assign())
         self.failUnlessEqual(num_unassigned_chores, num_chores - 1)
+    
+    def test_get_unfinished_chores (self):
+        hhold  = self.hholds[0]
         
+        # At first, none of the chores are unfinished, cuz none are assigned
+        self.failUnlessEqual(set(hhold.get_unfinished_chores()), set([]))
         
+        # After assigning the first one, it's the only unfinished chore
+        a1 = self.chores[0].assign_to(self.hmates[0])
+        self.failUnlessEqual(set(hhold.get_unfinished_chores()),
+            set([self.chores[0]]))
+        
+        # After assigning the second one, they are the 2 unfinished chores
+        a2 = self.chores[1].assign_to(self.hmates[1])
+        self.failUnlessEqual(set(hhold.get_unfinished_chores()),
+            set([self.chores[0], self.chores[1]]))
+        
+        # After completing the first one, only the 2nd remains in the unfinished
+        # list
+        a1.complete()
+        self.failUnlessEqual(set(hhold.get_unfinished_chores()),
+            set([self.chores[1]]))
+        
+        # After completing the second one, there are no unfinished chores left
+        a2.complete()
+        self.failUnlessEqual(set(hhold.get_unfinished_chores()), set([]))
 
 class HousemateTest (PowrTest):
     
