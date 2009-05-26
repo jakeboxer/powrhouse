@@ -4,7 +4,6 @@ Dear {{ hmate.get_full_name }},
 
 {% for assign in hmate.get_incomplete_assigns %}{{ assign.chore.name }}{% if assign.is_late %}({{ assign.get_days_late }} day{{ assign.get_days_late|pluralize }} late){% endif %}
   * If you've finished doing {{ assign.chore.name }}, click here: http://{{ site.domain }}{{ assign.get_email_done_url }}
-  * For a description of {{ assign.chore.name }}, click here: http://{{ site.domain }}{{ assign.chore.get_absolute_url }}
 {% endfor %}
 We'll send you another email at 8pm to remind you about your chore{{ hmate.get_incomplete_assigns.count|pluralize }}.
 {% endifequal %}
