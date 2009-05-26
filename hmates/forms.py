@@ -12,6 +12,16 @@ from hmates.models import Housemate, Invite
 from random import choice
 import string
 
+def get_uname_from_email (email):
+    """
+    Return a munged email address that's fit to be a username
+    """
+    import re
+    return re.sub(r"[^a-zA-Z0-9]+", "", email)[:30]
+
+def get_normalized_username (user):
+    return "u%d" % user.pk
+
 def get_random_password (length):
     valid_chars = string.letters + string.digits
     return "".join([choice(valid_chars) for i in xrange(length)])
@@ -268,6 +278,7 @@ class SmallHousemateEditForm (SmallHousemateForm):
 
 
 class HousemateRegForm (RegistrationFormUniqueEmail):
+    username   = forms.CharField(widget=forms.HiddenInput(), required=False)
     first_name = forms.CharField(max_length=255)
     last_name  = forms.CharField(max_length=255)
     tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
@@ -275,9 +286,21 @@ class HousemateRegForm (RegistrationFormUniqueEmail):
         error_messages={
             'required': u"You must agree to the terms to register."
         })
+    
+    def clean_username (self):
+        # allow any username cuz we're going to munge it anyway
+        return self.cleaned_data["username"]
+    
+    def clean (self):
+        # temporarily use a munged version of the email address for the username
+        email_uname = get_uname_from_email(self.cleaned_data["email"])
+        self.cleaned_data["username"] = email_uname
+        return self.cleaned_data
+        
 
     def save (self):
          user = super(HousemateRegForm, self).save()
+         user.username   = get_normalized_username(user)
          user.first_name = self.cleaned_data["first_name"]
          user.last_name  = self.cleaned_data["last_name"]
          
