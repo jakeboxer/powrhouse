@@ -1,4 +1,6 @@
-# Django settings for powr_local project.
+"""
+Django settings for PowrHouse.
+"""
 import loc_settings as loc
 
 DEBUG = loc.DEBUG
