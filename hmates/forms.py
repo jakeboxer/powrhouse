@@ -59,10 +59,6 @@ class NumberOfHousematesForm (forms.Form):
     num_hmates = forms.IntegerField()
 
 class HousemateForm (forms.ModelForm):
-    username = forms.RegexField(label=_("Username"), max_length=30,
-        regex=r'^\w+$',
-        error_message=_("This value must contain only letters, numbers and \
-        underscores."))
     email    = forms.EmailField(label=_("E-mail"), max_length=255)
     
     class Meta:
@@ -78,22 +74,9 @@ class HousemateForm (forms.ModelForm):
     
     def _populate_from_user (self):
         user = self.instance.user
-        self.initial["username"]   = user.username
         self.initial["email"]      = user.email
         self.initial["first_name"] = user.first_name
         self.initial["last_name"]  = user.last_name
-    
-    def clean_username (self):
-        uname = self.cleaned_data["username"].strip().lower()
-
-        # if the user changed her username, make sure it's not taken
-        new_uname   = uname != self.instance.user.username
-        dupe_unames = User.objects.filter(username__iexact=uname)
-        if new_uname and dupe_unames.count() > 0:
-            msg = "The username '%s' is already taken."
-            raise forms.ValidationError(msg % uname)
-
-        return uname
     
     def clean_email (self):
         email = self.cleaned_data["email"].strip().lower()
@@ -108,7 +91,6 @@ class HousemateForm (forms.ModelForm):
         return email
     
     def save (self, *args, **kwargs):
-        self.instance.user.username   = self.cleaned_data["username"]
         self.instance.user.email      = self.cleaned_data["email"]
         self.instance.user.first_name = self.cleaned_data["first_name"]
         self.instance.user.last_name  = self.cleaned_data["last_name"]
