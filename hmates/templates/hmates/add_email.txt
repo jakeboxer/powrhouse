@@ -4,7 +4,7 @@ Dear {{ hmate.user.first_name }},
 If you're in his/her household, go to {{ site.name }} ( http://{{ site.domain }}/ )
 and log in with this info:
 
-Username: {{ hmate.user.username }}
+Email: {{ hmate.user.email }}
 Password: {{ password }}
 
 Once you've logged in, be sure to change your password to something you'll

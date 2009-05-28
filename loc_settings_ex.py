@@ -95,7 +95,7 @@ INSTALLED_APPS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
+    'emailauth.backends.EmailModelBackend',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

@@ -80,7 +80,7 @@ def num (request):
 @target_must_be_user
 @must_live_together
 def edit_inactive (request, object_id):
-    hmate = get_object_or_404(int(object_id))
+    hmate = get_object_or_404(Housemate, pk=int(object_id))
     
     # make sure the housemate hasn't logged in
     if hmate.has_logged_in():
