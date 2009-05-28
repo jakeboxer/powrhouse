@@ -278,6 +278,8 @@ class SmallHousemateEditForm (SmallHousemateForm):
 
 
 class HousemateRegForm (RegistrationFormUniqueEmail):
+    # We only need this username field so that it doesn't show up in the form.
+    # There's no danger in this, since we ignore and overwrite the value anyway
     username   = forms.CharField(widget=forms.HiddenInput(), required=False)
     first_name = forms.CharField(max_length=255)
     last_name  = forms.CharField(max_length=255)
@@ -293,8 +295,10 @@ class HousemateRegForm (RegistrationFormUniqueEmail):
     
     def clean (self):
         # temporarily use a munged version of the email address for the username
-        email_uname = get_uname_from_email(self.cleaned_data["email"])
-        self.cleaned_data["username"] = email_uname
+        if "email" in self.cleaned_data:
+            email_uname = get_uname_from_email(self.cleaned_data["email"])
+            self.cleaned_data["username"] = email_uname
+        
         return self.cleaned_data
         
 
