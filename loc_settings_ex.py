@@ -81,6 +81,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.flatpages',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.sites',
 #    'debug_toolbar',

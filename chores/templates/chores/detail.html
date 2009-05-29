@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block title %}{{ chore.name }}{% endblock %}
 
@@ -29,7 +30,7 @@
 				<a href="{{ assign.assigned_to.get_absolute_url }}">{{ assign.assigned_to.get_full_name }}</a>
 			{% endifequal %}
 		{% else %}
-			Done on {{ assign.done_at|date:"l, M jS, Y" }} by
+			Done {{ assign.done_at|naturalday:"l, M jS, Y" }} by
 			{# Who was it done by? #}
 			{% ifequal assign.done_by curr_hmate %}
 				you
