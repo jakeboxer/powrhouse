@@ -35,8 +35,7 @@ class must_live_together (object):
 
 class target_must_be_inactive (object):
     """
-    Requires the housemate being edited to either not be attached to a user, or
-    to be attached to an inactive user.
+    Requires the housemate being edited to be attached to an inactive user.
     """
     def __init__ (self, view_func):
         self.view_func = view_func
@@ -61,8 +60,7 @@ class target_must_be_inactive (object):
 
 class target_must_be_active (object):
     """
-    Requires the housemate being edited to either not be attached to a user, or
-    to be attached to an inactive user.
+    Requires the housemate being edited to be attached to an active user.
     """
     def __init__ (self, view_func):
         self.view_func = view_func
@@ -81,31 +79,6 @@ class target_must_be_active (object):
 
         # make sure the housemate isn't an active user
         if not hmate.is_active():
-            raise Http404
-
-        return self.view_func(request, *args, **kwargs)
-
-class target_must_be_user (object):
-    """
-    Requires the housemate being edited to be a user
-    """
-    def __init__ (self, view_func):
-        self.view_func = view_func
-        update_wrapper(self, view_func)
-
-    def __get__ (self, obj, cls=None):
-        view_func = self.view_func.__get__(obj, cls)
-        return target_must_be_user(view_func)
-
-    def __call__ (self, request, *args, **kwargs):
-        # make sure we were passed an object id
-        if "object_id" not in kwargs: raise Http404
-
-        # get the housemate represented by the object ID
-        hmate = get_object_or_404(Housemate, pk=int(kwargs["object_id"]))
-
-        # make sure the housemate isn't an active user
-        if not hmate.user:
             raise Http404
 
         return self.view_func(request, *args, **kwargs)

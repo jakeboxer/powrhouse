@@ -8,15 +8,10 @@ class Housemate (models.Model):
     """
     A single person who lives in the household
     """
-    user  = models.ForeignKey(User, blank=True, null=True,
-        related_name="hmates")
+    user  = models.ForeignKey(User, related_name="hmates")
     hhold = models.ForeignKey(Household, blank=True, null=True,
         related_name="hmates")
-    
-    # Used if the housemate isn't associated with a user
-    first_name = models.CharField(_("First name"), max_length=255, blank=True)
-    last_name  = models.CharField(_("Last name"), max_length=255, blank=True)
-    pic        = models.ImageField(_("Upload a picture"), 
+    pic   = models.ImageField(_("Upload a picture"), 
         upload_to="img/uploads/hmates/%Y/%m/%d", blank=True)
     
     def is_anonymous (self):
@@ -39,10 +34,7 @@ class Housemate (models.Model):
         """
         Returns the housemate's name
         """
-        if self.user:
-            return self.user.get_full_name()
-        else:
-            return u"%s %s" % (self.first_name, self.last_name)
+        return self.user.get_full_name()
     
     def get_hhold_name (self):
         """

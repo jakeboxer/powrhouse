@@ -101,15 +101,13 @@ class HousemateForm (forms.ModelForm):
 class SmallHousemateForm (forms.Form):
     first_name = forms.CharField(label=_("First name"), max_length=255)
     last_name  = forms.CharField(label=_("Last name"), max_length=255)
-    email      = forms.EmailField(label=_("E-mail"), max_length=255,
-        required=False)
+    email      = forms.EmailField(label=_("E-mail"), max_length=255)
     
     def clean_email (self):
         email = self.cleaned_data["email"].strip().lower()
-        ct    = User.objects.filter(email__iexact=email).count()
         
-        # Make sure the email, if it exists, is unique
-        if email and (ct > 0):
+        # Make sure the email is unique
+        if User.objects.filter(email__iexact=email).count() > 0:
             msg = "The address '%s' is already taken."
             raise forms.ValidationError(msg % email)
         
@@ -136,14 +134,8 @@ class SmallHousemateAddForm (SmallHousemateForm):
     def save (self, adder):
         hmate = Housemate(hhold=adder.hhold)
         
-        if self.cleaned_data.get("email"):
-            # If an email was provided, set the user up
-            self.setup_new_user(hmate, adder)
-        else:
-            # If no email was provided, just save the first and last name
-            hmate.first_name = self.cleaned_data["first_name"]
-            hmate.last_name  = self.cleaned_data["last_name"]
-        
+        # Set the user up
+        self.setup_new_user(hmate, adder)
         hmate.save()
         
         return hmate
@@ -156,48 +148,29 @@ class SmallHousemateEditForm (SmallHousemateForm):
         self.instance = Housemate.objects.get(pk=int(pk))
         
         if not self.is_bound:
-            if self.instance.user:
-                self.initial["email"]      = self.instance.user.email
-                self.initial["first_name"] = self.instance.user.first_name
-                self.initial["last_name"]  = self.instance.user.last_name
-            else:
-                self.initial["first_name"] = self.instance.first_name
-                self.initial["last_name"]  = self.instance.last_name
+            self.initial["email"]      = self.instance.user.email
+            self.initial["first_name"] = self.instance.user.first_name
+            self.initial["last_name"]  = self.instance.user.last_name
         
     def clean_email (self):
         email = self.cleaned_data["email"].strip().lower()
         
-        
-        if self.instance.user:
-            # run the normal email clean, but only if the user changed her email
-            if email != self.instance.user.email:
-                email = super(SmallHousemateEditForm, self).clean_email()
-            
-            # if the email is blank but there's a user, it means they tried to
-            # remove an existing email
-            if not email:
-                msg = _("You cannot remove your housemate's existing email (but you can change it).")
-                raise forms.ValidationError(msg)
+        # run the normal email clean, but only if the user changed her email
+        if email != self.instance.user.email:
+            email = super(SmallHousemateEditForm, self).clean_email()
 
         return email
     
     def save (self, adder):
-        user = self.instance.user
-        
-        if self.cleaned_data.get("email"):
-            if user:
-                # if there's already a set user, just update her info
-                user.email      = self.cleaned_data["email"]
-                user.first_name = self.cleaned_data["first_name"]
-                user.last_name  = self.cleaned_data["last_name"]
-                user.save()
-            else:
-                # otherwise, a new one needs to be created
-                self.setup_new_user(self.instance, adder)
+        if self.instance.user:
+            # if there's already a set user, just update her info
+            self.instance.user.email      = self.cleaned_data["email"]
+            self.instance.user.first_name = self.cleaned_data["first_name"]
+            self.instance.user.last_name  = self.cleaned_data["last_name"]
+            self.instance.user.save()
         else:
-            # if no email was set, just update the housemate
-            self.instance.first_name = self.cleaned_data["first_name"]
-            self.instance.last_name  = self.cleaned_data["last_name"]
+            # otherwise, a new one needs to be created
+            self.setup_new_user(self.instance, adder)
         
         self.instance.save()
         return self.instance

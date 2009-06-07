@@ -24,7 +24,7 @@ class PowrTest (TestCase):
             ("Jake", "Boxer", self.hholds[0], "jboxer",),
             ("Alicia", "Wood", self.hholds[0], "akwood01",),
             ("Evelyn", "Peppas", self.hholds[0], "epeppas01", False,),
-            ("Trenton", "Bollinger", self.hholds[0],),
+            ("Trenton", "Bollinger", self.hholds[0], "tbolling01", False),
             ("Home", "Less", None, "homeless01",)
         )
         for hmate in hmates_tuple: self.create_hmate(*hmate)

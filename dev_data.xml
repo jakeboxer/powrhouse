@@ -75,29 +75,21 @@
 	<object pk="1" model="hmates.housemate">
 		<field to="auth.user" name="user" rel="ManyToOneRel">1</field>
 		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
-		<field type="CharField" name="first_name"/>
-		<field type="CharField" name="last_name"/>
 		<field type="FileField" name="pic"/>
 	</object>
 	<object pk="2" model="hmates.housemate">
 		<field to="auth.user" name="user" rel="ManyToOneRel">2</field>
 		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
-		<field type="CharField" name="first_name"/>
-		<field type="CharField" name="last_name"/>
 		<field type="FileField" name="pic"/>
 	</object>
 	<object pk="3" model="hmates.housemate">
 		<field to="auth.user" name="user" rel="ManyToOneRel">3</field>
 		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
-		<field type="CharField" name="first_name"/>
-		<field type="CharField" name="last_name"/>
 		<field type="FileField" name="pic"/>
 	</object>
 	<object pk="4" model="hmates.housemate">
 		<field to="auth.user" name="user" rel="ManyToOneRel">4</field>
 		<field to="hholds.household" name="hhold" rel="ManyToOneRel">1</field>
-		<field type="CharField" name="first_name"/>
-		<field type="CharField" name="last_name"/>
 		<field type="FileField" name="pic"/>
 	</object>
 	<object pk="5" model="hmates.housemate">
@@ -105,8 +97,6 @@
 		<field to="hholds.household" name="hhold" rel="ManyToOneRel">
 			<None/>
 		</field>
-		<field type="CharField" name="first_name"/>
-		<field type="CharField" name="last_name"/>
 		<field type="FileField" name="pic"/>
 	</object>
 <!-- Households -->

@@ -14,7 +14,7 @@ from hmates.forms import HousemateForm, SmallHousemateAddForm,\
     SmallHousemateEditForm, HousemateEmailSearchForm, send_user_added_email,\
     get_random_password
 from hmates.decorators import target_must_be_inactive, target_must_be_active,\
-    must_live_together, target_must_be_user
+    must_live_together
 from hholds.decorators import hhold_required, target_cant_have_hhold
 from hmates.models import Housemate, Invite
 import datetime
@@ -77,7 +77,6 @@ def num (request):
     raise Http404
 
 @login_required
-@target_must_be_user
 @must_live_together
 def edit_inactive (request, object_id):
     hmate = get_object_or_404(Housemate, pk=int(object_id))
@@ -100,7 +99,6 @@ def edit_inactive (request, object_id):
         context_instance=RequestContext(request))
 
 @login_required
-@target_must_be_user
 @target_must_be_active
 @must_live_together
 def resend_add_email (request, object_id):
@@ -108,7 +106,8 @@ def resend_add_email (request, object_id):
     hmate = get_object_or_404(Housemate, pk=int(object_id))
     
     # make sure the housemate hasn't logged in
-    if hmate.has_logged_in(): raise Http404
+    if hmate.has_logged_in():
+        raise Http404
     
     # Reset her password
     pw = get_random_password(ConfigOption.vals.get("starting_pw_length", 
@@ -137,9 +136,8 @@ def boot (request, object_id):
         msg = u"%s was successfully booted from your household." \
             % hmate.get_full_name()
         
-        if hmate.user and hmate.has_logged_in():
-            # if she has a user, and she has logged in, save her and send an
-            # email
+        if hmate.has_logged_in():
+            # if she has logged in, save her and send an email
             site = Site.objects.get_current()
             subj = u"You've been booted from %s" % request.hmate.hhold
             tpl  = get_template("hmates/booted_email.txt")
@@ -150,8 +148,9 @@ def boot (request, object_id):
             hmate.hhold = None
             hmate.save()
         else:
-            if hmate.user: hmate.user.delete()
-            hmate.delete() # otherwise, delete her
+            # otherwise, delete her
+            hmate.user.delete()
+            hmate.delete()
         
         request.user.message_set.create(message=msg)
         
@@ -183,7 +182,6 @@ def invite_search (request):
 
 @login_required
 @target_cant_have_hhold
-@target_must_be_user
 @hhold_required
 def invite (request, object_id):
     # Get the housemates in question
