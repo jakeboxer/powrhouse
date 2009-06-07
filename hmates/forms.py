@@ -59,32 +59,34 @@ class NumberOfHousematesForm (forms.Form):
     num_hmates = forms.IntegerField()
 
 class HousemateForm (forms.ModelForm):
+    first_name = forms.CharField(label=_("First name"), max_length=255)
+    last_name  = forms.CharField(label=_("Last name"), max_length=255)
     email    = forms.EmailField(label=_("E-mail"), max_length=255)
     
     class Meta:
         model   = Housemate
-        exclude = ("user", "hhold", "username_changed")
+        exclude = ("user", "hhold")
     
     def __init__ (self, *args, **kwargs):
         super(HousemateForm, self).__init__(*args, **kwargs)
         
         # if there's an instance, the initial values for some fields should be
         # populated by the instance's user
-        if self.instance: self._populate_from_user()
+        if self.instance:
+            self._populate_from_user()
     
     def _populate_from_user (self):
-        user = self.instance.user
-        self.initial["email"]      = user.email
-        self.initial["first_name"] = user.first_name
-        self.initial["last_name"]  = user.last_name
+        self.initial["email"]      = self.instance.user.email
+        self.initial["first_name"] = self.instance.user.first_name
+        self.initial["last_name"]  = self.instance.user.last_name
     
     def clean_email (self):
         email = self.cleaned_data["email"].strip().lower()
 
         # if the user changed her email, make sure it's not taken
-        new_email   = email != self.instance.user.email
-        dupe_emails = User.objects.filter(email__iexact=email)
-        if new_email and dupe_emails.count() > 0:
+        changed_email = email != self.instance.user.email
+        dupe_email_ct = User.objects.filter(email__iexact=email).count()
+        if changed_email and dupe_email_ct > 0:
             msg = "The email '%s' is already taken."
             raise forms.ValidationError(msg % email)
 
