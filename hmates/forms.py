@@ -56,7 +56,7 @@ def send_user_added_email (hmate, pw, adder):
 attrs_dict = { 'class': 'required' }
 
 class NumberOfHousematesForm (forms.Form):
-    num_hmates = forms.IntegerField()
+    num_hmates = forms.IntegerField(min_value=1, max_value=50)
 
 class HousemateForm (forms.ModelForm):
     first_name = forms.CharField(label=_("First name"), max_length=255)
