@@ -4,6 +4,8 @@ from chores.models import Chore, SECS_PER_DAY
     
 class ChoreForm (forms.ModelForm):
     
+    interval = forms.IntegerField(min_value=1, max_value=365)
+    
     class Meta:
         model   = Chore
         exclude = ("hhold",)
