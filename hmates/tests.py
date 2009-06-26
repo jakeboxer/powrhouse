@@ -34,6 +34,27 @@ class HousemateTest (PowrTest):
         # After completing another, he should be back to no incompletes
         a2.complete()
         self.failUnlessEqual(hm.get_incomplete_assignments().count(), 0)
+    
+    def test_has_incomplete_assignments (self):
+        # Housemate should have no incomplete chores at first
+        hm = self.hmates[0]
+        self.failIf(hm.has_incomplete_assignments())
+        
+        # After being assigned one chore, he should have one incomplete
+        a1 = self.chores[0].assign_to(self.hmates[0])
+        self.failUnless(hm.has_incomplete_assignments())
+        
+        # After being assigned another, he should have another
+        a2 = self.chores[1].assign_to(self.hmates[0])
+        self.failUnless(hm.has_incomplete_assignments())
+        
+        # After completing one, he should be back to 1 incomplete
+        a1.complete()
+        self.failUnless(hm.has_incomplete_assignments())
+        
+        # After completing another, he should be back to no incompletes
+        a2.complete()
+        self.failIf(hm.has_incomplete_assignments())
 
 
 class InviteTest (PowrTest):
