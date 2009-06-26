@@ -87,18 +87,19 @@ def send_morning_digest (hhold):
     
     site = Site.objects.get_current()
     
-    # Send the digest email to each member of the household
+    # Send the digest email to each member of the household who has chores to do
     for hmate in hhold.hmates.all():
-        # Set up the content
-        subj       = morning_digest_subj(hmate, site)
-        txt_body   = morning_digest_body_txt(hmate, site)
-        html_body  = morning_digest_body_html(hmate, site)
-        
-        # Create the message
-        msg = EmailMultiAlternatives(subj, txt_body, "noreply@powrhouse.net",
-            [hmate.user.email])
-        msg.attach_alternative(html_body, "text/html")
-        msg.send()
+        if hmate.has_incomplete_assignments():
+            # Set up the content
+            subj       = morning_digest_subj(hmate, site)
+            txt_body   = morning_digest_body_txt(hmate, site)
+            html_body  = morning_digest_body_html(hmate, site)
+            
+            # Create the message
+            msg = EmailMultiAlternatives(subj, txt_body, 
+                "noreply@powrhouse.net", [hmate.user.email])
+            msg.attach_alternative(html_body, "text/html")
+            msg.send()
     
 def send_evening_digest (hhold):
     raise NotImplementedError
