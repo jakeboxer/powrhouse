@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.views import password_change_done
 from django.contrib.sites.models import Site
 from django.template import RequestContext, Context
 from django.template.loader import get_template
@@ -237,3 +238,12 @@ def invite_decline (request, object_id):
     invite.save()
     
     return redirect("hhold_branch")
+
+@login_required
+def pw_edit_done (request):
+    # record the time that the housemate's password was changed
+    request.hmate.password_changed = datetime.datetime.utcnow()
+    request.hmate.save()
+    
+    # show the normal password changed view
+    return password_change_done(request)
