@@ -1,4 +1,6 @@
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from hmates.models import Housemate, Invite
 from notices import Notice, itr_to_notices
@@ -25,6 +27,14 @@ def notices (request):
 
 def get_notices (hmate):
     notices = []
+    
+    # see if the user's got a temporary password or not
+    if(hmate.has_temp_pw()):
+        temp_pw_notice =  _("""
+            You still have the temporary password that was given to you.
+            Please <a href="%s">change it</a> ASAP.
+            """) % reverse("pw_edit")
+        notices.append(Notice(temp_pw_notice))
     
     # get all the invites for the user
     invites = hmate.invites_rcvd.filter(declined=None).order_by('sent')

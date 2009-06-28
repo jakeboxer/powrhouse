@@ -77,6 +77,12 @@ class Housemate (models.Model):
     def get_absolute_url (self):
         return reverse("hmate_detail", args=[self.pk])
     
+    def has_temp_pw (self):
+        """
+        Returns whether or not this housemate still has a temporary password
+        """
+        return not self.password_chosen
+    
     def __unicode__ (self):
         return self.get_full_name()
 
