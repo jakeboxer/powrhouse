@@ -13,7 +13,7 @@ class Housemate (models.Model):
         related_name="hmates")
     pic   = models.ImageField(_("Upload a picture"), 
         upload_to="img/uploads/hmates/%Y/%m/%d", blank=True)
-    password_changed = models.DateTimeField(blank=True, null=True)
+    password_chosen = models.DateTimeField(blank=True, null=True)
     
     def is_anonymous (self):
         """

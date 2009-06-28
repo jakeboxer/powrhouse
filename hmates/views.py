@@ -242,7 +242,7 @@ def invite_decline (request, object_id):
 @login_required
 def pw_edit_done (request):
     # record the time that the housemate's password was changed
-    request.hmate.password_changed = datetime.datetime.utcnow()
+    request.hmate.password_chosen = datetime.datetime.utcnow()
     request.hmate.save()
     
     # show the normal password changed view

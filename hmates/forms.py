@@ -11,6 +11,7 @@ from configoptions.models import ConfigOption
 from hmates.models import Housemate, Invite
 from random import choice
 import string
+import datetime
 
 def get_uname_from_email (email):
     """
@@ -211,8 +212,10 @@ class HousemateRegForm (RegistrationFormUniqueEmail):
          
          user.save()
 
-         # Attach the user to a new Housemate
-         hmate = Housemate.objects.create(user=user)
+         # Attach the user to a new Housemate and set their password chosen time
+         # to now (since they created it when they registered)
+         hmate = Housemate.objects.create(user=user,
+            password_chosen=datetime.datetime.utcnow())
 
          return user
 
