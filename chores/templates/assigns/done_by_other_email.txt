@@ -1,0 +1,6 @@
+Dear {{ assign.assigned_to.user.first_name }},
+We'd just like to inform you that {{ assign.done_by.get_full_name }} has done {{ assign.chore.name }} for you, and has received credit for it. No action is required on your part.
+
+
+Thanks,
+- The {{ site.name }} Team

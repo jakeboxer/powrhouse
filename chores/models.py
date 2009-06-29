@@ -239,7 +239,6 @@ class Assignment (models.Model):
     def get_email_done_url (self):
         return reverse("assign_done_no_login", args=[
             self.pk, self.assigned_to.pk, self.url_key])
-        
     
     def __unicode__ (self):
         return _("%s (assigned to %s)") % (self.chore, self.assigned_to)
