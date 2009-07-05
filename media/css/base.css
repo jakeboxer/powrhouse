@@ -75,3 +75,39 @@ body {
 #content p.help_text {
     color: #666;
 }
+
+/* Content end */
+
+/* Sidehelp start */
+
+#side_help {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+#side_help h2 {
+    font-size: 140%;
+    color: #666;
+    margin: 23px 0 10px 0;
+}
+
+#side_help .bubble {
+    width: 220px;
+    background: transparent url(../img/help_bubble_bg_mid.gif) 0 0 repeat-y;
+}
+
+#side_help .bubble .top {
+    width: 220px;
+    height: 11px;
+    background: transparent url(../img/help_bubble_bg_top.gif) 0 0 no-repeat;
+}
+
+#side_help .bubble .bottom {
+    width: 220px;
+    height: 11px;
+    background: transparent url(../img/help_bubble_bg_bot.gif) 0 0 no-repeat;
+}
+
+#side_help .bubble p {
+    margin: 0 14px;
+}
+/* Sidehelp end */
