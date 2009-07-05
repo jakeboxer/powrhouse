@@ -7,6 +7,9 @@
     <title>{% block site_title %}PowrHouse - {% block title %}{% endblock %}{% endblock %}</title>
 
 {% block main_stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/framework/reset.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/framework/960.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/framework/text.css">
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css">
 {% endblock %}
 {% block extra_stylesheets %}{% endblock %}
@@ -25,66 +28,33 @@
 
 <body id="{% block body_id %}{% endblock %}">
 
-<div id="container">
-    <h1 id="logo"><a href="/">PowrHouse</a></h1>
-    <div id="account_nav">
-        <ul>
-        {% if not user.is_anonymous %}
-            <li><a href="{% url auth_logout %}">Log Out</a></li>
-        {% else %}
-            <li><a href="{% url auth_login %}">Log In</a></li>
-			<li><a href="{% url registration_register %}">Register</a></li>
-        {% endif %}
-        </ul>
-    </div>
-
-    <div id="nav">
-        <ul>
-        {% if not user.is_anonymous %}
-			<li>
-			{% if curr_hmate.hhold %}
-				<a href="{% url my_hhold %}">My Household</a>
-			{% else %}
-				<a href="{% url hhold_create %}">Create My Household</a>
-			{% endif %}
-			</li>
-			<li>
-				<a href="{% url my_day %}">My Day</a>
-			</li>
-			<li>
-				<a href="{% url me %}">My Account</a>
-			</li>
-        {% endif %}
-        </ul>
-    </div>
-    
-    <hr>
-    
-    <div id="content">
-        <div id="top_content"></div>
-        <div id="inner_content">
-			{% if messages %}
-			<ul id="messages">
-				{% for msg in messages %}
-				<li>{{ msg|safe }}</li>
-				{% endfor %}
+<div class="container_16" id="outer_container">
+	<div class="grid_16" id="header">
+		<div class="grid_1 alpha">&nbsp;</div>
+		<div class="grid_4 logo">
+			<a href="http://powrhouse.net/">PowrHouse</a>
+		</div>
+		<div class="grid_11 omega" id="top_nav">
+			<ul>
+				<li><a href="#">My Chores</a></li>
+				<li><a href="#">My Household</a></li>
+				<li><a href="#">My Account</a></li>
+				<li><a href="#">Log Out</a></li>
 			</ul>
-			{% endif %}
-			
-			{% if notices %}
-			<ul id="notices">
-				{% for notice in notices %}
-				<li>{{ notice|safe }}</li>
-				{% endfor %}
-			</ul>
-			{% endif %}
-			
-            {% block content %}
-            {% endblock %}
-        </div>
-        <div id="bottom_content"></div>
-    </div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	
+	<div class="grid_1">&nbsp;</div>
+	<div class="grid_10" id="content">
+		<h1>New Chore</h1>
+		
+		<h2>Give the chore a name.</h2>
+		<p class="help_text">Something like "Kitchen", "Bathrooms", "Vacuum", etc.</p>
+	</div>
+	<div class="grid_1"></div>
+	<div class="grid_4"></div>
+	<div class="clear"></div>
 </div>
-
 </body>
 </html>

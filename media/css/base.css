@@ -1,7 +1,77 @@
-#logo a {
+body {
+    background: #fff url(../img/header_bg.gif) 0 0 repeat-x;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Header start */
+#outer_container {
+    background: transparent url(../img/logo_icon.png) 0 29px no-repeat;
+}
+
+#header {
+    height: 98px;
+}
+
+#header .logo {
     display: block;
-    width: 203px;
-    height: 158px;
+    width: 181px;
+    height: 28px;
+    margin-top: 41px;
+    background: transparent url(../img/logo_txt.png) 0 0 no-repeat;
     text-indent: -9000px;
-    background: transparent url(../img/tmp_logo.jpg) 0 0 no-repeat;
+}
+
+#top_nav {
+    margin-top: 52px;
+}
+
+#top_nav ul {
+    list-style-type: none;
+    float: right;
+}
+
+#top_nav li {
+    display: block;
+    float: left;
+    margin: 0;
+}
+
+#top_nav a, #top_nav a:visited, #top_nav a:active {
+    display: block;
+    padding: 0 15px;
+    text-decoration: none;
+    font-size: 110%;
+    font-weight: bold;
+    color: #000;
+}
+
+#top_nav a:hover {
+    background-color: #000;
+    color: #e3e9ff;
+}
+
+/* Header end */
+
+/* Content start */
+
+#content {
+    padding-top: 8px;
+}
+
+#content h1 {
+    font-size: 270%;
+    border: solid #aaa;
+    border-width: 0 0 1px 0;
+}
+
+#content h2 {
+    margin-bottom: 4px;
+}
+
+#content p {
+    font-size: 110%;
+}
+
+#content p.help_text {
+    color: #666;
 }
