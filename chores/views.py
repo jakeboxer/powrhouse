@@ -60,7 +60,7 @@ def assign_done (request, object_id):
         assign.complete(request.hmate)
         send_emails(assign)
     
-    return redirect("my_day")
+    return redirect("my_chores")
 
 def assign_done_no_login (request, object_id, hmate_id, key):
     # get the assignment

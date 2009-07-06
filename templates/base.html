@@ -36,32 +36,33 @@
 		</div>
 		<div class="grid_11 omega" id="top_nav">
 			<ul>
+				{% if not user.is_anonymous %}
 				<li><a href="#">My Chores</a></li>
 				<li><a href="#">My Household</a></li>
 				<li><a href="#">My Account</a></li>
-				<li><a href="#">Log Out</a></li>
+				<li><a href="{% url auth_logout %}">Log Out</a></li>
+				{% else %}
+				<li><a href="{% url registration_register %}">Register</a></li>
+				<li><a href="{% url auth_login %}">Log In</a></li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>
 	<div class="clear"></div>
 	
+	{% block outer_content %}
 	<div class="grid_1">&nbsp;</div>
 	<div class="grid_10" id="content">
-		<h1>New Chore</h1>
-		
-		<h2>Give the chore a name.</h2>
-		<p class="help_text">Something like "Kitchen", "Bathrooms", "Vacuum", etc.</p>
+		{% block content %}{% endblock %}
 	</div>
 	<div class="grid_1">&nbsp;</div>
 	<div class="grid_4" id="side_help">
-		<h2>Need help?</h2>
-		<div class="bubble">
-			<div class="top"></div>
-			<p>Hey.</p>
-			<div class="bottom"></div>
-		</div>
+		<h2 class="top">Need help?</h2>
+		{% block sidehelp %}{% endblock %}
+		<h2 class="bottom"><a href="#">Need more help?</a></h2>
 	</div>
 	<div class="clear"></div>
+	{% endblock %}
 </div>
 </body>
 </html>

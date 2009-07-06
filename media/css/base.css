@@ -3,6 +3,10 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+a {
+    color: #039;
+}
+
 /* Header start */
 #outer_container {
     background: transparent url(../img/logo_icon.png) 0 29px no-repeat;
@@ -85,14 +89,23 @@ body {
 }
 
 #side_help h2 {
-    font-size: 140%;
+    font-size: 130%;
     color: #666;
+}
+
+#side_help h2.top {
     margin: 23px 0 10px 0;
+}
+
+#side_help h2.bottom {
+    text-align: right;
+    margin: 0;
 }
 
 #side_help .bubble {
     width: 220px;
     background: transparent url(../img/help_bubble_bg_mid.gif) 0 0 repeat-y;
+    margin-bottom: 11px;
 }
 
 #side_help .bubble .top {
