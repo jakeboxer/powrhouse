@@ -16,7 +16,7 @@ a {
     height: 98px;
 }
 
-#header .logo {
+#header .logo a {
     display: block;
     width: 181px;
     height: 28px;
