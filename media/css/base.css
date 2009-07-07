@@ -7,6 +7,18 @@ a {
     color: #039;
 }
 
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.inline {
+    display: inline;
+}
+
 /* Header start */
 #outer_container {
     background: transparent url(../img/logo_icon.png) 0 29px no-repeat;
@@ -152,4 +164,17 @@ a {
 /* Add chore start */
 #add_chore_form fieldset.details textarea {
     height: 5em;
+}
+
+#add_chore_form fieldset.interval #id_interval {
+    margin-top: 5px;
+    margin-right: 1em;
+}
+
+#add_chore_form fieldset.interval #id_interval_other {
+    padding: 10px 1em;
+}
+
+#add_chore_form fieldset.interval #id_interval_other input {
+    width: 30px;
 }

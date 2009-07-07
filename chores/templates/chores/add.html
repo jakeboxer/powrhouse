@@ -19,6 +19,13 @@
 		{{ form.details }}
 	</fieldset>
 	
+	<fieldset class="interval">
+		<h2>{{ form.interval.label }}</h2>
+		<p class="help_text">{{ form.interval.help_text }}</p>
+		{{ form.interval.errors }}
+		{{ form.interval }}
+	</fieldset>
+	
 	<span id="submit_wrapper">
 		<input type="submit" name="submit" value="Save Chore" />
 	</span>

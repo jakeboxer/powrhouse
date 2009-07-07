@@ -1,9 +1,12 @@
+from chores.models import Chore, SECS_PER_DAY, DEFAULT_INTERVAL
+from chores.widgets import IntervalInput
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from chores.models import Chore, SECS_PER_DAY, DEFAULT_INTERVAL
     
 class ChoreForm (forms.ModelForm):
-    interval = forms.IntegerField(min_value=1, max_value=365)
+    interval = forms.IntegerField(\
+        label=_('How often should this chore be done?'), min_value=1,
+        max_value=365, widget=IntervalInput())
     
     class Meta:
         model   = Chore
