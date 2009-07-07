@@ -95,14 +95,13 @@ a {
     border: 1px solid #666;
 }
 
-#submit {
-    display: block;
-    padding: 8px;
+#submit_wrapper {
+    padding: 12px;
     border: 2px solid #000;
-    background-color: #e3e9ff;
+    background-color: #e3e9ff;/*
     color: #000;
     font-size: 140%;
-    font-weight: bold;
+    font-weight: bold;*/
 }
 
 /* Content end */
