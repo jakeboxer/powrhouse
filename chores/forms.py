@@ -1,9 +1,8 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from chores.models import Chore, SECS_PER_DAY
+from chores.models import Chore, SECS_PER_DAY, DEFAULT_INTERVAL
     
 class ChoreForm (forms.ModelForm):
-    
     interval = forms.IntegerField(min_value=1, max_value=365)
     
     class Meta:
@@ -19,8 +18,7 @@ class ChoreForm (forms.ModelForm):
         else:
             # if there's no initial value yet, take the one that there's going
             # to be and turn it from seconds to days
-            val = self.fields["interval"].initial
-            self.initial["interval"] = val / SECS_PER_DAY
+            self.initial["interval"] = DEFAULT_INTERVAL / SECS_PER_DAY
     
     def clean_interval (self):
         return str(int(self.cleaned_data["interval"]) * SECS_PER_DAY)

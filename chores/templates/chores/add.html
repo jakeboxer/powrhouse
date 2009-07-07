@@ -1,14 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Add a chore{% endblock %}
+{% block title %}New Chore{% endblock %}
 
 {% block content %}
-<form action="" method="POST">
-    <table cellpadding="0" cellspacing="0">
-        {{ form.as_table }}
-        <tr>
-            <td><input type="submit" name="submit" value="Save" /></td>
-        </tr>
-    </table>
+<h1>New Chore</h1>
+<form action="" method="POST" id="add_chore_form">
+	<fieldset class="name">
+		<h2>{{ form.name.label }}</h2>
+		<p class="help_text">{{ form.name.help_text }}</p>
+		{{ form.name.errors }}
+		{{ form.name }}
+	</fieldset>
+	
+	<fieldset class="details">
+		<h2>{{ form.details.label }}</h2>
+		<p class="help_text">{{ form.details.help_text }}</p>
+		{{ form.details.errors }}
+		{{ form.details }}
+	</fieldset>
+	
+	<input type="submit" name="submit" id="submit" value="Save Chore" />
 </form>
 {% endblock %}

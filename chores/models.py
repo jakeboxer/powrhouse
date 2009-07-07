@@ -15,6 +15,8 @@ SECS_PER_HR  = SECS_PER_MIN * MINS_PER_HR
 SECS_PER_DAY = SECS_PER_HR  * HRS_PER_DAY
 SECS_PER_WK  = SECS_PER_DAY * DAYS_PER_WK
 
+DEFAULT_INTERVAL = SECS_PER_DAY
+
 def get_assignment_key ():
     import random
     algo = 'sha1'
@@ -25,10 +27,16 @@ class Chore (models.Model):
     A single chore (such as "sweeping" or "dishes")
     """
     hhold    = models.ForeignKey(Household, related_name="chores")
-    name     = models.CharField(max_length=255)
-    details  = models.TextField(blank=True)
+    name     = models.CharField(_("Give the chore a name."), max_length=255,
+        help_text=_('Something like "Kitchen", "Bathrooms", "Vacuum", etc.'))
+    details  = models.TextField(_("Describe the chore. (optional)"),
+        blank=True,
+        help_text=_("""
+        In our household, our description for "Bathrooms" is "wipe down the
+        mirror and counter, scrub the toilet, and mop the floors."
+        """))
     
-    interval = models.PositiveIntegerField(default=SECS_PER_DAY,
+    interval = models.PositiveIntegerField(default=DEFAULT_INTERVAL,
         help_text=_("How often the chore is done. 1=every day, 2=every other \
         day, 7=every week, etc."))
     

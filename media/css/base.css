@@ -66,6 +66,7 @@ a {
     font-size: 270%;
     border: solid #aaa;
     border-width: 0 0 1px 0;
+    margin-bottom: 40px;
 }
 
 #content h2 {
@@ -78,6 +79,30 @@ a {
 
 #content p.help_text {
     color: #666;
+    margin-bottom: 8px;
+}
+
+#content fieldset {
+    margin-bottom: 40px;
+}
+
+#content fieldset input,
+#content fieldset textarea {
+    width: 500px;
+    padding: 4px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 120%;
+    border: 1px solid #666;
+}
+
+#submit {
+    display: block;
+    padding: 8px;
+    border: 2px solid #000;
+    background-color: #e3e9ff;
+    color: #000;
+    font-size: 140%;
+    font-weight: bold;
 }
 
 /* Content end */
@@ -124,3 +149,8 @@ a {
     margin: 0 14px;
 }
 /* Sidehelp end */
+
+/* Add chore start */
+#add_chore_form fieldset.details textarea {
+    height: 5em;
+}
