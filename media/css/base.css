@@ -5,6 +5,13 @@ body {
 
 a {
     color: #039;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #fff;
+    background-color: #039;
+    text-decoration: none;
 }
 
 .hidden {

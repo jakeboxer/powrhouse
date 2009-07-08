@@ -31,9 +31,6 @@ class Household (models.Model):
     state      = USStateField(_("State"), blank=True)
     zipcode    = models.CharField(_("Zip Code"), blank=True, max_length=5)
     
-    pic = models.ImageField(_("Upload a picture"),
-        upload_to="img/uploads/hholds/%Y/%m/%d", blank=True)
-    
     def __init__ (self, *args, **kwargs):
         super(Household, self).__init__(*args, **kwargs)
         
