@@ -1,14 +1,41 @@
 {% extends "base.html" %}
 
-{% block title %}Edit {{ chore.name }}{% endblock %}
+{% block title %}Edit Chore{% endblock %}
 
 {% block content %}
-<form action="" method="POST">
-    <table cellpadding="0" cellspacing="0">
-        {{ form.as_table }}
-        <tr>
-            <td><input type="submit" name="submit" value="Save" /></td>
-        </tr>
-    </table>
+<h1>Edit Chore</h1>
+<form action="" method="POST" id="add_chore_form">
+	<fieldset class="name">
+		<h2>{{ form.name.label }}</h2>
+		<p class="help_text">{{ form.name.help_text }}</p>
+		{{ form.name.errors }}
+		{{ form.name }}
+	</fieldset>
+	
+	<fieldset class="details">
+		<h2>{{ form.details.label }}</h2>
+		<p class="help_text">{{ form.details.help_text }}</p>
+		{{ form.details.errors }}
+		{{ form.details }}
+	</fieldset>
+	
+	<fieldset class="interval">
+		<h2>{{ form.interval.label }}</h2>
+		<p class="help_text">{{ form.interval.help_text }}</p>
+		{{ form.interval.errors }}
+		{{ form.interval }}
+	</fieldset>
+	
+	<p><span id="submit_wrapper"><input type="submit" name="submit" value="Save Chore" /></span> or <a href="{% url my_hhold %}">go back</a>.</p>
 </form>
+{% endblock %}
+
+{% block sidehelp %}
+<div class="bubble">
+	<p>If you're wondering how to assign this chore to someone, stop worrying; PowrHouse does all the assigning automatically!</p>
+</div>
+
+<div class="bubble">
+	<p>While the chore description is optional, we strongly recommend filling one in. It's really helpful if there are any disputes about what a certain chore entails (and believe us, there will be).</p>
+</div>
 {% endblock %}

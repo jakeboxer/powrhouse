@@ -3,23 +3,18 @@
 {% block title %}{{ curr_hmate.get_hhold_name }}{% endblock %}
 
 {% block content %}
-<p>This is {{ curr_hmate.get_hhold_name }}.</p>
+<h1 id="hhold_title">{{ curr_hmate.get_hhold_name }}</h1>
 
 {% if curr_hmate.hhold.get_address_str %}
 <address>
-	{{ curr_hmate.hhold.get_address_str|linebreaksbr }}
+	{{ curr_hmate.hhold.get_address_str|linebreaksbr }}<br>
+	<a href="{% url hhold_edit %}">Edit {{ curr_hmate.get_hhold_name }} details &raquo;</a>
 </address>
 {% endif %}
 
-<ul>
-	<li>Current Date: {{ curr_hmate.hhold.get_local_datetime|date }}</li>
-	<li>Current Time: {{ curr_hmate.hhold.get_local_datetime|time }}</li>
-	<li><a href="{% url hhold_edit %}">Edit</a></li>
-	<li><a href="{% url hhold_leave %}">Leave</a></li>
-</ul>
 
-<h2>Housemates ({{ curr_hmate.hhold.hmates.count }})</h2>
-<ul>
+<h2>Housemates</h2>
+<ul class="separated">
 {% for hmate in curr_hmate.hhold.hmates.all %}
     <li>
 		{% ifnotequal curr_hmate hmate %}
@@ -39,22 +34,15 @@
 	</li>
 {% endfor %}
 </ul>
-
-<p>
-<form action="{% url num_hmates %}" method="POST">
-	Add <input type="text" name="num_hmates" value="1" size="1" /> new housemate(s)
-	<input type="submit" name="submit" value="Go!" /> or <a href="{% url invite_search %}">invite a housemate</a>.
-</form>
-</p>
+<p class="add_after_list"><a href="#">Add more housemates &raquo;</a></p>
 
 <h2>Chores</h2>
-<ul>
+<ul class="separated">
 {% for chore in curr_hmate.hhold.chores.all %}
 	<li><a href="{{ chore.get_absolute_url }}">{{ chore.name }}</a></li>
 {% endfor %}
 </ul>
-
-<p><a href="{% url chore_add %}">Add a chore</a></p>
+<p class="add_after_list"><a href="{% url chore_add %}">Add a chore &raquo;</a></p>
 
 <img src="{{ MEDIA_URL }}{{ curr_hmate.hhold.pic }}" />
 {% endblock %}
