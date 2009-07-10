@@ -40,10 +40,9 @@ def me_edit (request):
 
 @login_required
 @hhold_required
-def add_multiple (request, num_hmates):
-    num_hmates = int(num_hmates)
+def add (request):
     SmallHousemateAddFormSet = formset_factory(SmallHousemateAddForm,
-        extra=num_hmates)
+        extra=100)
 
     if request.method == "POST":
         fset = SmallHousemateAddFormSet(request.POST)
@@ -56,9 +55,11 @@ def add_multiple (request, num_hmates):
             return redirect("my_hhold")
     else:
         fset = SmallHousemateAddFormSet()
+    
+    hmates = list(request.hmate.hhold.hmates.all())
 
     return render_to_response(
-        "hmates/add.html", {"fset": fset, "num_hmates": num_hmates},
+        "hmates/add.html", {"fset": fset, "hmates": hmates},
         context_instance=RequestContext(request))
 
 @login_required

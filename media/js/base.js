@@ -1,9 +1,23 @@
+var nextToShow = 0;
+
 $(document).ready(function(){
     setupHelpBubbles();
     checkIntervalField();
+    hideHmateForms();
+    
+    showNextHmateForm(true);
+    
+    // set events
     $("#id_interval").change(function(){
-        console.debug("hey");
         checkIntervalField(); 
+    });
+    $("#hmate_add_form .add a").click(function(e){
+        e.preventDefault();
+        showNextHmateForm();
+    });
+    $("#hmate_add_form .identifier a").click(function(e){
+        e.preventDefault();
+        removeHmateForm($(e.target).attr('remove'));
     });
 });
 
@@ -35,4 +49,40 @@ function checkIntervalField () {
         $("#interval_other").remove();
         $("#id_interval").attr("name", "interval");
     }
+}
+
+function hideHmateForms () {
+    $("#hmate_add_form .form").each(function(){
+        var hasValue = false;
+        $("input", this).each(function(){
+            if($(this).val() != ""){
+                hasValue = true;
+            }
+        });
+        
+        if(!hasValue){
+            $(this).hide();
+        }
+    });
+}
+
+function showNextHmateForm (noAnim) {
+    $("#hmate_add_form_" + nextToShow).show();
+    
+    if(noAnim === undefined || !noAnim){
+        $("#hmate_add_form_" + nextToShow).animate({
+            backgroundColor: "#0f0"
+        }, 500, "linear").animate({
+            backgroundColor: "#fff"
+        }, 500, "linear");
+    }
+    
+    nextToShow++;
+}
+
+function removeHmateForm (formId) {
+    // remove the specified form
+    $("#hmate_add_form_" + formId).animate({
+        backgroundColor: "#f00"
+    }, 250, "linear", function(){$(this).remove()});
 }

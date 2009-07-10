@@ -14,6 +14,14 @@ a:hover {
     text-decoration: none;
 }
 
+fieldset input,
+dd input,
+fieldset textarea,
+dd textarea {
+    font-family: Helvetica, Arial, sans-serif;
+    border: 1px solid #666;
+}
+
 .hidden {
     display: none;
 }
@@ -125,9 +133,7 @@ p.add_after_list {
 #content fieldset textarea {
     width: 500px;
     padding: 4px;
-    font-family: Helvetica, Arial, sans-serif;
     font-size: 120%;
-    border: 1px solid #666;
 }
 
 #submit_wrapper {
@@ -207,3 +213,75 @@ p.add_after_list {
     margin-bottom: 0;
 }
 /* My Household end */
+
+/* Add housemates begin */
+#hmate_add_form .elem {
+    width: 234px;
+    height: 111px;
+    border: 2px solid #000;
+    float: left;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    padding: 16px;
+}
+
+#hmate_add_form .add {
+    background-color: #e3ffe9;
+    border-color: #709f35;
+    padding: 0;
+    width: 266px;
+    height: 143px;
+    margin-bottom: 32px;
+}
+
+#hmate_add_form .add a {
+    display: block;
+    width: 266px;
+    background: transparent url(../img/plus_64.png) 50% 50% no-repeat;
+    text-align: center;
+    color: #709f35;
+    padding-top: 111px;
+}
+
+#hmate_add_form .add a:hover {
+    background-image: url(../img/plus_64_hover.png);
+}
+
+#hmate_add_form .hmate {
+    background-color: #eee;
+}
+
+#hmate_add_form .identifier {
+    font-size: 70%;
+    float: right;
+    margin: 0;
+    color: #999;
+}
+
+#hmate_add_form dt {
+    margin-top: 1em;
+    font-size: 90%;
+}
+
+#hmate_add_form dd input {
+    padding: 2px;
+    font-size: 100%;
+}
+
+#hmate_add_form dd p {
+    font-weight: bold;
+    margin: 0;
+}
+
+#hmate_add_form .name input {
+    width: 97px;
+}
+
+#hmate_add_form .email input {
+    width: 203px;
+}
+
+#hmate_add_form .first_name {
+    margin-right: 3px;
+}
+/* Add housemates end */

@@ -3,16 +3,58 @@
 {% block title %}Add Housemates{% endblock %}
 
 {% block content %}
-<h1>Add {{ num_hmates }} Housemate{{ num_hmates|pluralize }}</h1>
+<h1>Add Housemates</h1>
 
-<p>Note: This form is for adding users who don't already have PowrHouse accounts. If one of your housemates already has a PowrHouse account, you should <a href="{% url invite_search %}">invite him or her</a> to your household.</p>
-
-<form action="" method="POST">
-    <table cellpadding="0" cellspacing="0">
-        {{ fset }}
-        <tr>
-            <td><input type="submit" name="submit" value="Save" /></td>
-        </tr>
-    </table>
+<form action="" method="POST" id="hmate_add_form">
+	<div class="clearfix">
+		{{ fset.management_form }}
+		{% for hmate in hmates %}
+			<div class="elem hmate">
+				<p class="identifier">
+					{% ifequal hmate curr_hmate %}
+						This is you.
+					{% else %}
+						{{ hmate.user.first_name }} has already been added.
+					{% endifequal %}
+				</p>
+			
+				<dl>
+					<dt>Name</dt>
+					<dd class="name"><p>{{ hmate.get_full_name }}</p></dd>
+					<dt>E-mail address</dt>
+					<dd class="email"><p>{{ hmate.user.email }}</p></dd>
+				</dl>
+			</div>
+		{% endfor %}
+	
+		{% for form in fset.forms %}
+			<div class="elem form" id="hmate_add_form_{{ forloop.counter0 }}">
+				<p class="identifier"><a href="#" remove="{{ forloop.counter0 }}">Remove</a></p>
+			
+				<dl>
+					<dt>Name</dt>
+					<dd class="name"><span class="first_name">{{ form.first_name }}</span><span class="last_name">{{ form.last_name }}</span>{{ form.first_name.errors }}{{ form.last_name.errors }}</dd>
+					<dt>E-mail address</dt>
+					<dd class="email">{{ form.email }}{{ form.email.errors }}</dd>
+				</dl>
+			</div>
+		{% endfor %}
+	
+		<div class="elem add">
+			<a href="#">Add another housemate</a>
+		</div>
+	</div>
+	
+	<p>
+		<span id="submit_wrapper"><input type="submit" name="submit" value="Save Housemates" /></span>
+		or <a href="{% url my_hhold %}">go back</a>.
+	</p>
 </form>
+
+{% endblock %}
+
+{% block sidehelp %}
+	<div class="bubble">
+		<p>Don't forget to click <strong>Save Housemates</strong> at the bottom after you've added all your housemates.</p>
+	</div>
 {% endblock %}

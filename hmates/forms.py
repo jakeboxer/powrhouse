@@ -134,14 +134,23 @@ class SmallHousemateForm (forms.Form):
 
 class SmallHousemateAddForm (SmallHousemateForm):
     
+    def clean (self):
+        if "first_name" not in self.cleaned_data and\
+            "last_name" not in self.cleaned_data and\
+            "email"     not in self.cleaned_data:
+            return self.cleaned_data
+        else:
+            return super(SmallHousemateAddForm, self).clean()
+    
     def save (self, adder):
-        hmate = Housemate(hhold=adder.hhold)
+        if "email" in self.cleaned_data:
+            hmate = Housemate(hhold=adder.hhold)
         
-        # Set the user up
-        self.setup_new_user(hmate, adder)
-        hmate.save()
+            # Set the user up
+            self.setup_new_user(hmate, adder)
+            hmate.save()
         
-        return hmate
+            return hmate
 
 
 class SmallHousemateEditForm (SmallHousemateForm):
