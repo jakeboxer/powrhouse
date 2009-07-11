@@ -216,27 +216,31 @@ p.add_after_list {
 
 /* Add housemates begin */
 #hmate_add_form .elem {
-    width: 234px;
-    height: 111px;
+    width: 244px;
+    height: 127px;
     border: 2px solid #000;
     float: left;
-    margin-right: 16px;
     margin-bottom: 16px;
     padding: 16px;
+}
+
+#hmate_add_form .alt {
+    margin-right: 16px;
 }
 
 #hmate_add_form .add {
     background-color: #e3ffe9;
     border-color: #709f35;
     padding: 0;
-    width: 266px;
-    height: 143px;
+    width: 276px;
+    height: 159px;
     margin-bottom: 32px;
+    margin-right: 0;
 }
 
 #hmate_add_form .add a {
     display: block;
-    width: 266px;
+    width: 276px;
     background: transparent url(../img/plus_64.png) 50% 50% no-repeat;
     text-align: center;
     color: #709f35;
@@ -259,8 +263,8 @@ p.add_after_list {
 }
 
 #hmate_add_form dt {
-    margin-top: 1em;
     font-size: 90%;
+    margin-top: 8px;
 }
 
 #hmate_add_form dd input {
@@ -284,4 +288,16 @@ p.add_after_list {
 #hmate_add_form .first_name {
     margin-right: 3px;
 }
+
+#hmate_add_form .elem .errorlist {
+    font-size: 80%;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+#hmate_add_form .elem .errorlist li {
+    margin: 0;
+    color: #900;
+}
+
 /* Add housemates end */

@@ -30,12 +30,21 @@
 		{% for form in fset.forms %}
 			<div class="elem form" id="hmate_add_form_{{ forloop.counter0 }}">
 				<p class="identifier"><a href="#" remove="{{ forloop.counter0 }}">Remove</a></p>
-			
 				<dl>
-					<dt>Name</dt>
-					<dd class="name"><span class="first_name">{{ form.first_name }}</span><span class="last_name">{{ form.last_name }}</span>{{ form.first_name.errors }}{{ form.last_name.errors }}</dd>
-					<dt>E-mail address</dt>
-					<dd class="email">{{ form.email }}{{ form.email.errors }}</dd>
+					<dt>
+						Name
+						{% if form.first_name.errors or form.last_name.errors %}
+						<ul class="errorlist">
+							<li>First and last name required.</li>
+						</ul>
+						{% endif %}
+					</dt>
+					<dd class="name"><span class="first_name">{{ form.first_name }}</span><span class="last_name">{{ form.last_name }}</span></dd>
+					<dt>
+						E-mail address
+						{{ form.email.errors }}
+					</dt>
+					<dd class="email">{{ form.email }}</dd>
 				</dl>
 			</div>
 		{% endfor %}
@@ -56,5 +65,9 @@
 {% block sidehelp %}
 	<div class="bubble">
 		<p>Don't forget to click <strong>Save Housemates</strong> at the bottom after you've added all your housemates.</p>
+	</div>
+	
+	<div class="bubble">
+		<p>Are you trying to add a housemate who already has a PowrHouse account in another household (maybe they're about to move in)? <a href="{% url invite_search %}">Invite your new housemate here.</a></p>
 	</div>
 {% endblock %}

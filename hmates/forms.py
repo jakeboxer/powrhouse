@@ -102,17 +102,19 @@ class HousemateForm (forms.ModelForm):
 
 
 class SmallHousemateForm (forms.Form):
-    first_name = forms.CharField(label=_("First name"), max_length=255)
-    last_name  = forms.CharField(label=_("Last name"), max_length=255)
-    email      = forms.EmailField(label=_("E-mail"), max_length=255)
+    first_name = forms.CharField(label=_("First name"), max_length=255,
+        error_messages={'required': _("First name is required.")})
+    last_name  = forms.CharField(label=_("Last name"), max_length=255,
+        error_messages={'required': _("Last name is required.")})
+    email      = forms.EmailField(label=_("E-mail"), max_length=255,
+        error_messages={'required': _("E-mail address is required.")})
     
     def clean_email (self):
         email = self.cleaned_data["email"].strip().lower()
         
         # Make sure the email is unique
         if User.objects.filter(email__iexact=email).count() > 0:
-            msg = "The address '%s' is already taken."
-            raise forms.ValidationError(msg % email)
+            raise forms.ValidationError(_("This email is already taken."))
         
         return email
     

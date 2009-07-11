@@ -3,9 +3,11 @@ var nextToShow = 0;
 $(document).ready(function(){
     setupHelpBubbles();
     checkIntervalField();
+    setAlternatingHmateForms();
     hideHmateForms();
     
     showNextHmateForm(true);
+    
     
     // set events
     $("#id_interval").change(function(){
@@ -72,9 +74,9 @@ function showNextHmateForm (noAnim) {
     if(noAnim === undefined || !noAnim){
         $("#hmate_add_form_" + nextToShow).animate({
             backgroundColor: "#0f0"
-        }, 500, "linear").animate({
+        }, 250, "linear").animate({
             backgroundColor: "#fff"
-        }, 500, "linear");
+        }, 250, "linear", function(){setAlternatingHmateForms();});
     }
     
     nextToShow++;
@@ -84,5 +86,17 @@ function removeHmateForm (formId) {
     // remove the specified form
     $("#hmate_add_form_" + formId).animate({
         backgroundColor: "#f00"
-    }, 250, "linear", function(){$(this).remove()});
+    }, 250, "linear", function(){
+        $(this).remove();
+        setAlternatingHmateForms();
+    });
+}
+
+function setAlternatingHmateForms () {
+    $("#hmate_add_form .elem").each(function(i){
+        $(this).removeClass("alt");
+        if(i % 2 == 0){
+            $(this).addClass("alt");
+        }
+    });
 }
