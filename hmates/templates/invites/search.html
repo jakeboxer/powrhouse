@@ -21,15 +21,16 @@
 {% if searched %}
 <hr>
 {% if hmate %}
-		{% if hmate.hhold %}
-		<p>The user you searched for is already in another household. If this person is moving in with you soon (or already has), he or she will need to leave his or her current household (<a href="#">click here for help</a>) before joining yours.</p>
+	<div class="search_result">
+		{% ifequal hmate.hhold curr_hmate.hhold %}
+		<h2>The user you searched for is already in your household!</h2>
 		{% else %}
-		<p>Is this who you were looking for?</p>
-		<div class="search_result">
+		<h2>Is this who you were looking for?</h2>
 			<h2>{{ hmate.get_full_name }}</h2>
 			<p><a href="{% url invite hmate.pk %}">Invite to your household</a></p>
 		</div>
-		{% endif %}
+		{% endifequal %}'
+	</div>
 {% else %}
 	<p>Sorry, there are no PowrHouse users with this email address (who aren't already in a household or invited to this household).</p>
 {% endif %} 
@@ -38,6 +39,6 @@
 
 {% block sidehelp %}
 <div class="bubble">
-	<p>Of course, if your buddy doesn't have a PowrHouse account yet, you should use the <a href="{% url hmate_add}">Add Housemates form</a>.</p>
+	<p>Of course, if your buddy doesn't have a PowrHouse account yet, you should use the <a href="{% url hmate_add %}">Add Housemates form</a>.</p>
 </div>
 {% endblock %}
