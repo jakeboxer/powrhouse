@@ -48,9 +48,14 @@ def add (request):
         fset = SmallHousemateAddFormSet(request.POST)
 
         if fset.is_valid():
-            # Save every housemate if theyre all valid
+            # Save every housemate if theyre all valid. If an email address
+            # appears in multiple forms, only create the first account
+            emails = set([None])
             for form in fset.forms:
-                form.save(adder=request.hmate)
+                print form.cleaned_data
+                if form.cleaned_data.get("email") not in emails:
+                    form.save(adder=request.hmate)
+                    emails.add(form.cleaned_data["email"])
             
             return redirect("my_hhold")
     else:
