@@ -231,7 +231,7 @@ class HousemateRegForm (RegistrationFormUniqueEmail):
          return user
 
 class HousemateEmailSearchForm (forms.Form):
-    email = forms.EmailField(label=_("E-mail"), max_length=30)
+    email = forms.EmailField(label=_("Enter your friend's e-mail address."), max_length=30)
     
     def get_result (self, hhold):
         try:

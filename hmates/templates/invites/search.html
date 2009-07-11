@@ -3,16 +3,19 @@
 {% block title %}Invite a New Housemate{% endblock %}
 
 {% block content %}
-<h1>Invite a New Housemate to Your Household</h1>
+<h1>Invite a New Housemate</h1>
+<p>If you want to invite someone to your household, but they already have a PowrHouse account (so you can't add them the <a href="{% url hmate_add %}">normal way</a>), but they're currently in another household (or they're not in any household), ask them for their e-mail address, search for them using this form, and then send them an invitation!</p>
 
 <form action="" method="GET">
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-			<th>{{ form.email.label }}</th>
-			<td>{{ form.email }}{{ form.email.errors }}</td>
-            <td><input type="submit" name="submit" value="Search" /></td>
-        </tr>
-    </table>
+	<fieldset class="email">
+		<h2>{{ form.email.label }}</h2>
+		{{ form.email.errors }}
+		{{ form.email }}
+	</fieldset>
+    <p>
+		<span id="submit_wrapper"><input type="submit" name="submit" value="Find Account" /></span>
+		or <a href="{% url my_hhold %}">go back</a>.
+	</p>
 </form>
 
 {% if searched %}
@@ -31,4 +34,10 @@
 	<p>Sorry, there are no PowrHouse users with this email address (who aren't already in a household or invited to this household).</p>
 {% endif %} 
 {% endif %}
+{% endblock %}
+
+{% block sidehelp %}
+<div class="bubble">
+	<p>Of course, if your buddy doesn't have a PowrHouse account yet, you should use the <a href="{% url hmate_add}">Add Housemates form</a>.</p>
+</div>
 {% endblock %}
