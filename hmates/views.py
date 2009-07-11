@@ -52,7 +52,6 @@ def add (request):
             # appears in multiple forms, only create the first account
             emails = set([None])
             for form in fset.forms:
-                print form.cleaned_data
                 if form.cleaned_data.get("email") not in emails:
                     form.save(adder=request.hmate)
                     emails.add(form.cleaned_data["email"])
