@@ -21,8 +21,5 @@ urlpatterns = patterns('',
         name='resend_add_email'),
     url(r'^(?P<object_id>[0-9]+)/boot/$', 'hmates.views.boot',
         name='hmate_boot'),
-    url(r'^number/$', 'hmates.views.num', name='num_hmates'),
-    #url(r'^add/(?P<num_hmates>[0-9]+)/$', 'hmates.views.add_multiple', 
-    #    name='hmate_add_multiple'),
     url(r'^add/', 'hmates.views.add', name='hmate_add')
 )

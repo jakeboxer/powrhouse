@@ -3,11 +3,10 @@
 {% block title %}Deleting {{ chore.name }}{% endblock %}
 
 {% block content %}
-<h1>Are you sure you want to delete the "{{ chore.name }}" chore?</h1>
+<h1>Are you sure you want to delete "{{ chore.name }}"?</h1>
 
 <form action="" method="POST">
-<input type="submit" name="submit" value="Delete {{ chore.name }}">
+<p><span id="submit_wrapper"><input type="submit" name="submit" value="Delete {{ chore.name }}" /></span> or <a href="{{ chore.get_absolute_url }}">cancel and go back</a>.</p>
 </form>
-<p><a href="{{ chore.get_absolute_url }}">&laquo; Cancel and go back</a></p>
 
 {% endblock %}

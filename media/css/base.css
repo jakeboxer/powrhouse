@@ -71,6 +71,22 @@ p.add_after_list {
     margin-left: 0;
 }
 
+.sub_nav {
+    list-style: none;
+    border-left: 1px solid #aaa;
+}
+
+.sub_nav li {
+    float: left;
+    border-right: 1px solid #aaa;
+    margin: 0;
+}
+
+.sub_nav a {
+    display: block;
+    padding: 8px 16px;
+}
+
 /* Header start */
 #outer_container {
     background: transparent url(../img/logo_icon.png) 0 29px no-repeat;
@@ -131,7 +147,7 @@ p.add_after_list {
     font-size: 245%;
     border: solid #aaa;
     border-width: 0 0 1px 0;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 #content h2 {
@@ -357,3 +373,56 @@ p.add_after_list {
 }
 
 /* Edit account end */
+
+/* Housemate detail start */
+
+/* Housemate detail end */
+
+/* Chore detail start */
+
+.fields {
+    padding: 8px;
+    background: #eee;
+    border: 1px solid #aaa;
+    margin-bottom: 16px;
+}
+
+.fields p {
+    margin: 0;
+}
+
+/* Chore detail end */
+
+/* My chores start */
+
+.chore {
+    padding: 8px;
+    background: #eee;
+    border: 1px solid #aaa;
+    margin-bottom: 16px;
+}
+
+.chore a, .chore a:visited, .chore a:active {
+    float: right;
+    display: block;
+    background-color: #e3e9ff;
+    border: 1px solid #039;
+    text-decoration: none;
+    padding: 4px 6px;
+}
+
+.chore a:hover {
+    background-color: #039;
+    color: #e3e9ff;
+    border-color: #e3e9ff;
+}
+
+.chore h3 {
+    margin-bottom: 8px;
+}
+
+.chore p {
+    margin: 0;
+}
+
+/* My chores end */

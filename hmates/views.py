@@ -30,7 +30,7 @@ def me_edit (request):
         if form.is_valid():
             # if the form is valid, save and redirect
             form.save()
-            return redirect("me")
+            return redirect("my_hhold")
     else:
         form = HousemateForm(instance=curr_hmate)
     
@@ -65,22 +65,6 @@ def add (request):
     return render_to_response(
         "hmates/add.html", {"fset": fset, "hmates": hmates},
         context_instance=RequestContext(request))
-
-@login_required
-def num (request):
-    if request.method != "POST" or "num_hmates" not in request.POST:
-        raise Http404
-
-    try:
-        num_hmates = int(request.POST["num_hmates"])
-    except ValueError: raise Http404
-
-    if request.method == "POST" and "num_hmates" in request.POST:
-        return redirect("hmate_add_multiple", num_hmates=num_hmates)
-
-    # If we've made it this far, it means we didn't redirect, so something's
-    # wrong with the request
-    raise Http404
 
 @login_required
 @must_live_together

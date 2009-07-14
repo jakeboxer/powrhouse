@@ -6,18 +6,20 @@
 {% block content %}
 
 <h1>{{ chore.name }}</h1>
-<h2>Done every {{ chore.get_humanized_interval }}</h2>
 
-<p>{{ chore.details }}</p>
-
-<ul>
+<ul class="sub_nav clearfix">
 	<li><a href="{% url chore_edit chore.pk %}">Edit</a></li>
 	<li><a href="{% url chore_delete chore.pk %}">Delete</a></li>
 </ul>
 
+<div class="fields">
+<p><strong>Interval:</strong> Done every {{ chore.get_humanized_interval }}.</p>
+<p><strong>Description:</strong> {{ chore.details }}</p>
+</div>
+
 <h2>History</h2>
 {% if chore.has_assignments %}
-	<ul>
+	<ul class="separated">
 	{% for assign in chore.get_recent_history %}
 		<li>
 		{# When was it done (or is it still not done) #}
@@ -47,7 +49,7 @@
 		
 		{# If it hasn't been done, allow the viewer to mark it done #}
 		{% if not assign.is_done %}
-			(<a href="{% url assign_done assign.pk %}">I did {{ chore.name }} today.</a>)
+			(<a href="{% url assign_done assign.pk %}">I did this chore today</a>)
 		{% endif %}
 		</li>
 	{% endfor %}
@@ -56,4 +58,10 @@
 	<p>No one has had this chore yet.</p>
 {% endif %}
 
+{% endblock %}
+
+{% block sidehelp %}
+<div class="bubble">
+	<p>If you've completed a chore that someone else was assigned, you can still get credit for it. Just click <strong>"I did this chore today"</strong> next to the latest assignment in the history, and you'll get credit!</p>
+</div>
 {% endblock %}

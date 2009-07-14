@@ -1,29 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}My Day{% endblock %}
+{% block title %}My Chores{% endblock %}
 
 {% block content %}
-<h1>My Day ({{ curr_hmate.hhold.get_local_datetime|date:"l, M jS" }})</h1>
+<h1>My Chores</h1>
 
-<h2>Chores To Do</h2>
 {% if curr_hmate.has_incomplete_assignments %}
-<ul class="chores">
-	{% for assign in curr_hmate.get_incomplete_assignments.all %}
-	<li>
-		<a href="{{ assign.chore.get_absolute_url }}">{{ assign.chore.name }}</a>
-		{% if assign.is_late %}
-		({{ assign.get_days_late }} day{{ assign.get_days_late|pluralize }} late)
-		{% endif %}
-		<ul>
-			<li>
-				<a href="{% url assign_done assign.pk %}">Done</a>
-			</li>
-		</ul>
-	</li>
-	{% endfor %}
-</ul>
+<h2>It's your turn turn to do:</h2>
+
+{% for assign in curr_hmate.get_incomplete_assignments.all %}
+<div class="chore clearfix">
+	<a href="{% url assign_done assign.pk %}">Done!</a>
+	<h3>{{ assign.chore.name }}</h3>
+	{% if assign.is_late %}
+	<p class="late">({{ assign.get_days_late }} day{{ assign.get_days_late|pluralize }} late)</p>
+	{% endif %}
+	<p class="details">{{ assign.chore.details }}</p>
+</div>
+{% endfor %}
+
 {% else %}
-<p>None!</p>
+<p>You've got no chores to do!</p>
 {% endif %}
 
+{% endblock %}
+
+{% block sidehelp %}
+<div class="bubble">
+	<p>If you want to add some new chores to be done in your household, go to <a href="{% url my_hhold %}">your household</a> and add them there.</p>
+</div>
 {% endblock %}
