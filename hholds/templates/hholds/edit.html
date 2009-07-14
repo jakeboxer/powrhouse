@@ -3,12 +3,73 @@
 {% block title %}Edit Household{% endblock %}
 
 {% block content %}
-<form action="" method="POST" enctype="multipart/form-data">
-	<table cellpadding="0" cellspacing="0">
-	    {{ form.as_table }}
-	    <tr>
-	       <td><input type="submit" name="submit" value="Save" /></td>
-	    </tr>
-	</table>
+<form action="" method="POST" id="hhold_edit_form">
+	<fieldset class="name">
+		<h2>{{ form.name.label }}</h2>
+		<p class="help_text">{{ form.name.help_text }}</p>
+		{{ form.name.errors }}
+		{{ form.name }}
+	</fieldset>
+	
+	<fieldset name="timezone_id">
+		<h2>{{ form.timezone_id.label }}</h2>
+		<p class="help_text">{{ form.timezone_id.help_text }}</p>
+		{{ form.timezone_id.errors }}
+		{{ form.timezone_id }}
+	</fieldset>
+	
+	<fieldset name="address">
+		<h2>What's your household's address? (optional)</h2>
+		<table cellpadding="0" cellspacing="0" class="form_table">
+			<tr>
+				<th>
+					<label for="addr_line1">{{ form.addr_line1.label }}</label>
+				</th>
+				<td>
+					{{ form.addr_line1.errors}}
+					{{ form.addr_line1 }}
+				</td>
+			</tr>
+			<tr>
+				<th>&nbsp;</th>
+				<td>
+					{{ form.addr_line2.errors}}
+					{{ form.addr_line2 }}
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="town">{{ form.town.label }}</label>
+				</th>
+				<td>
+					{{ form.town.errors}}
+					{{ form.town }}
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="town">{{ form.state.label }}</label>
+				</th>
+				<td>
+					{{ form.state.errors}}
+					{{ form.state }}
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="town">{{ form.zipcode.label }}</label>
+				</th>
+				<td>
+					{{ form.zipcode.errors}}
+					{{ form.zipcode }}
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	
+	<p>
+		<span id="submit_wrapper"><input type="submit" name="submit" value="Save Household" /></span>
+		or <a href="{% url my_hhold %}">go back</a>.
+	</p>
 </form>
 {% endblock %}

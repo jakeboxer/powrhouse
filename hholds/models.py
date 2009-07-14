@@ -11,25 +11,26 @@ class Household (models.Model):
     """
     A single household of housemates
     """
-    name = models.CharField(_("Name"), max_length=255, blank=True,
-        help_text=_("Examples: \"Jake's House\", \"100 Rolling Green Dr.\", \
-        etc."))
+    name = models.CharField(_("Give your household a name"), max_length=255,
+        blank=True,
+        help_text=_("""Examples: "Jake's House", "100 Rolling Green Dr.", 
+        etc."""))
     
     # Time Zone
-    timezone_id = models.PositiveSmallIntegerField(_("Time Zone"),
-        choices=TZ_CHOICES,
-        help_text=_("We ask for your time zone so that, when the clock strikes \
-        midnight (on your side of the globe), we can schedule your household's \
-        next day of chores."))
+    timezone_id = models.PositiveSmallIntegerField(\
+        _("What time zone is your household in?"), choices=TZ_CHOICES,
+        help_text=_("""We ask for your time zone so that, when the clock strikes
+        midnight (on your side of the globe), we can schedule your household's
+        next day of chores."""))
     
     # Address
-    addr_line1 = models.CharField(_("Address (line 1)"), blank=True,
+    addr_line1 = models.CharField(_("Street"), blank=True,
         max_length=255)
-    addr_line2 = models.CharField(_("Address (line 2)"), blank=True, 
+    addr_line2 = models.CharField(_("Street (line 2)"), blank=True, 
         max_length=255)
     town       = models.CharField(_("Town"), blank=True, max_length=255)
     state      = USStateField(_("State"), blank=True)
-    zipcode    = models.CharField(_("Zip Code"), blank=True, max_length=5)
+    zipcode    = models.CharField(_("Zip code"), blank=True, max_length=5)
     
     def __init__ (self, *args, **kwargs):
         super(Household, self).__init__(*args, **kwargs)

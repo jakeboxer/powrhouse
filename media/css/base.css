@@ -71,22 +71,6 @@ p.add_after_list {
     margin-left: 0;
 }
 
-.sub_nav {
-    list-style: none;
-    border-left: 1px solid #aaa;
-}
-
-.sub_nav li {
-    float: left;
-    border-right: 1px solid #aaa;
-    margin: 0;
-}
-
-.sub_nav a {
-    display: block;
-    padding: 8px 16px;
-}
-
 /* Header start */
 #outer_container {
     background: transparent url(../img/logo_icon.png) 0 29px no-repeat;
@@ -169,6 +153,40 @@ p.add_after_list {
     width: 500px;
     padding: 4px;
     font-size: 120%;
+}
+
+#content .sub_nav {
+    list-style: none;
+    border-left: 1px solid #aaa;
+}
+
+#content .sub_nav li {
+    float: left;
+    border-right: 1px solid #aaa;
+    margin: 0;
+}
+
+#content .sub_nav a {
+    display: block;
+    padding: 8px 16px;
+}
+
+#content .form_table th {
+    text-align: right;
+    padding-right: 16px;
+}
+
+#content .form_table th label {
+    display: block;
+    width: 96px;
+}
+
+#content .form_table td {
+    padding-bottom: 8px;
+}
+
+#content .form_table td input {
+    width: 388px;
 }
 
 #submit_wrapper {
@@ -426,3 +444,9 @@ p.add_after_list {
 }
 
 /* My chores end */
+
+/* Edit household start */
+
+#hhold_edit_form {}
+
+/* Edit household end */
