@@ -9,27 +9,21 @@
 
 {{ form.non_field_errors }}
 <form action="" method="POST">
-	<table cellpadding="0" cellspacing="0" class="form_table">
-		<tr>
-			<th><label for="id_username">E-mail:</label></th>
-			<td>
-				{{ form.username.errors }}
-				{{ form.username }}
-			</td>
-		</tr>
-		<tr>
-			<th>{{ form.password.label }}:</th>
-			<td>
-				{{ form.password.errors }}
-				{{ form.password }}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="submit" name="submit" value="Log In">
-			</td>
-		</tr>
-	</table>
+	<fieldset class="email">
+		<h2>E-mail</h2>
+		{{ form.username.errors }}
+		{{ form.username }}
+	</fieldset>
+	
+	<fieldset class="email">
+		<h2>{{ form.password.label }}</h2>
+		{{ form.password.errors }}
+		{{ form.password }}
+	</fieldset>
+	
+	<p>
+		<span id="submit_wrapper"><input type="submit" name="submit" value="Log In" /></span>
+	</p>
 </form>
 
 {% endblock %}
