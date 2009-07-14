@@ -386,7 +386,7 @@ p.add_after_list {
 
 /* Edit account start */
 
-#account_edit_form .name input {
+#account_edit_form .name input, #registration_form .name input {
     width: 200px;
 }
 
@@ -450,3 +450,15 @@ p.add_after_list {
 #hhold_edit_form {}
 
 /* Edit household end */
+
+/* Registration start */
+
+#registration_form .tos p {
+    margin: 0;
+}
+
+/* Registration end */
+
+#registration_form #id_password1 {
+    margin-bottom: 8px;
+}

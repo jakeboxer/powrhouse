@@ -5,12 +5,46 @@
 {% block content %}
 <h1>Register</h1>
 
-<form action="" method="POST">
-    <table cellpadding="0" cellspacing="0">
-		{{ form.as_table }}
-        <tr>
-            <td><input type="submit" name="submit" value="Save" /></td>
-        </tr>
-    </table>
+<form action="" method="POST" id="registration_form">
+	{{ form.non_field_errors }}
+	<fieldset class="email">
+		<h2>E-mail Address</h2>
+		{{ form.email.errors }}
+		{{ form.email }}
+	</fieldset>
+	
+	<fieldset class="password">
+		<h2>Password</h2>
+		{{ form.password1.errors }}
+		{{ form.password2.errors }}
+		<p class="help_text">Type your password once in each of these boxes (this helps avoid typos).</p>
+		{{ form.password1 }}
+		{{ form.password2 }}
+	</fieldset>
+	
+	<fieldset class="name">
+		<h2>Name</h2>
+		{{ form.first_name.errors }}
+		{{ form.last_name.errors }}
+		<p class="help_text">Type your first and last name.</p>
+		{{ form.first_name }}
+		{{ form.last_name }}
+	</fieldset>
+	
+	<fieldset class="tos">
+		<h2>Terms of Service</h2>
+		{{ form.tos.errors }}
+		<p>{{ form.tos.label }} {{ form.tos }}</p>
+	</fieldset>
+	
+	<p>
+		<span id="submit_wrapper"><input type="submit" name="submit" value="Register" /></span>
+	</p>
 </form>
+{% endblock %}
+
+{% block sidehelp %}
+<div class="bubble">
+	<p>Don't worry if you haven't actually read the terms of service; we haven't either yet, because there isn't one. We'll have one written before we leave public beta.</p>
+</div>
 {% endblock %}
