@@ -66,7 +66,7 @@ class HousemateForm (forms.ModelForm):
     
     class Meta:
         model   = Housemate
-        exclude = ("user", "hhold")
+        exclude = ("user", "hhold", "password_chosen")
     
     def __init__ (self, *args, **kwargs):
         super(HousemateForm, self).__init__(*args, **kwargs)

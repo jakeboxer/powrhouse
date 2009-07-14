@@ -11,8 +11,6 @@ class Housemate (models.Model):
     user  = models.ForeignKey(User, related_name="hmates")
     hhold = models.ForeignKey(Household, blank=True, null=True,
         related_name="hmates")
-    pic   = models.ImageField(_("Upload a picture"), 
-        upload_to="img/uploads/hmates/%Y/%m/%d", blank=True)
     password_chosen = models.DateTimeField(blank=True, null=True)
     
     def is_anonymous (self):
