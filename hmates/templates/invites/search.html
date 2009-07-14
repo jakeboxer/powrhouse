@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Invite a New Housemate{% endblock %}
+{% block title %}Invite a Housemate{% endblock %}
 
 {% block content %}
-<h1>Invite a New Housemate</h1>
+<h1>Invite a Housemate</h1>
 <p>If you want to invite someone to your household, but they already have a PowrHouse account (so you can't add them the <a href="{% url hmate_add %}">normal way</a>), but they're currently in another household (or they're not in any household), ask them for their e-mail address, search for them using this form, and then send them an invitation!</p>
 
-<form action="" method="GET">
+<form action="" method="GET" {% if searched %}style="display: none;"{% endif %} id="invite_search_form">
 	<fieldset class="email">
 		<h2>{{ form.email.label }}</h2>
-		{{ form.email.errors }}
+		{% if form.email.errors %}
+			<ul class="errorlist">
+				{% for error in form.email.errors %}
+					<li>{{ error|safe }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
 		{{ form.email }}
 	</fieldset>
     <p>
@@ -17,23 +23,17 @@
 		or <a href="{% url my_hhold %}">go back</a>.
 	</p>
 </form>
+<p class="invite_search_again_link" {% if not searched %}style="display: none;" {% endif %}><a href="#">Search Again?</a></p>
 
 {% if searched %}
 <hr>
-{% if hmate %}
-	<div class="search_result">
-		{% ifequal hmate.hhold curr_hmate.hhold %}
-		<h2>The user you searched for is already in your household!</h2>
-		{% else %}
-		<h2>Is this who you were looking for?</h2>
-			<h2>{{ hmate.get_full_name }}</h2>
-			<p><a href="{% url invite hmate.pk %}">Invite to your household</a></p>
-		</div>
-		{% endifequal %}'
+<div class="hmate_search_results">
+	<h2>Is this who you were looking for?</h2>
+	<div class="hmate_search_result clearfix">
+		<h3>{{ hmate.get_full_name }} ({{ hmate.user.email }})</h3>
 	</div>
-{% else %}
-	<p>Sorry, there are no PowrHouse users with this email address (who aren't already in a household or invited to this household).</p>
-{% endif %} 
+	<p><a href="{% url invite hmate.pk %}">Invite <strong>{{ hmate.user.first_name }}</strong> to my household</a><span class="invite_search_again_link"> or <a href="#">search again.</a></span></p>
+</div>
 {% endif %}
 {% endblock %}
 

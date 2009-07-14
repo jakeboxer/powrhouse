@@ -233,16 +233,44 @@ class HousemateRegForm (RegistrationFormUniqueEmail):
 class HousemateEmailSearchForm (forms.Form):
     email = forms.EmailField(label=_("Enter your friend's e-mail address."), max_length=30)
     
-    def get_result (self, hhold):
+    def __init__ (self, *args, **kwargs):
+        # If there's no searcher, an error should be raised
+        s = kwargs.pop("searcher")
+        
+        super(HousemateEmailSearchForm, self).__init__(*args, **kwargs)
+        self.searcher = s
+            
+    
+    def clean_email (self):
+        # Make sure the user exists
         try:
             user = User.objects.get(email=self.cleaned_data["email"])
         except User.DoesNotExist:
-            return None
+            raise forms.ValidationError(_("""There's no one on PowrHouse with
+                the e-mail address '%s'. If you want to invite '%s' to join
+                PowrHouse, please use the <a href="%s">Add Housemates page</a>.
+                """) % \
+                (self.cleaned_data["email"], self.cleaned_data["email"],
+                reverse("hmate_add")))
         
+        hmate = user.hmates.all()[0]
+        
+        # Make sure the housemate isn't in the same household as the one
+        # searched for
+        if hmate.hhold == self.searcher.hhold:
+            raise forms.ValidationError(_("""'%s' (%s) is already in your
+                household.""") % (hmate.user.email, hmate.get_full_name()))
+        
+        return self.cleaned_data["email"]
+    
+    def get_result (self):
+        
+        user  = User.objects.get(email=self.cleaned_data["email"])
         hmate = user.hmates.all()[0]
         
         # see if there are any invites for the housemate, in the current
         # household
-        invites = Invite.objects.filter(invitee=hmate, hhold=hhold)
+        invites = Invite.objects.filter(invitee=hmate,
+            hhold=self.searcher.hhold)
         
         return hmate if invites.count() < 1 else None

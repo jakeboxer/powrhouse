@@ -52,6 +52,18 @@ p.add_after_list {
     font-size: 90%;
 }
 
+.errorlist {
+    color: #900;
+    background-color: #fee;
+    list-style: none;
+    padding: 12px 8px 8px 8px;
+}
+
+.errorlist li {
+    margin-bottom: 4px;
+    margin-left: 0;
+}
+
 /* Header start */
 #outer_container {
     background: transparent url(../img/logo_icon.png) 0 29px no-repeat;
@@ -301,3 +313,32 @@ p.add_after_list {
 }
 
 /* Add housemates end */
+
+/* Invite housemate start */
+.hmate_search_result {
+    background-color: #e3e9ff;
+    border: 2px solid #000;
+    padding: 12px;
+    margin-bottom: 1em;
+}
+
+.hmate_search_result h3 {
+    font-size: 120%;
+    margin-bottom: 0;
+    float: left;
+}
+
+.hmate_search_results p {
+    font-size: 110%;
+    margin-bottom: 0;
+}
+
+.hmate_search_results span.invite_search_again_link {
+    font-size: 80%;
+    color: #666;
+}
+
+.hmate_search_results span.invite_search_again_link a {
+    color: #669;
+}
+/* Invite housemate end */

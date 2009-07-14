@@ -174,13 +174,13 @@ def invite_search (request):
     hmate    = None
     
     if request.method == "GET" and "email" in request.GET:
-        form = HousemateEmailSearchForm(request.GET)
+        form = HousemateEmailSearchForm(request.GET, searcher=request.hmate)
         
         if form.is_valid():
             searched = True
-            hmate    = form.get_result(request.hmate.hhold)
+            hmate    = form.get_result()
     else:
-        form = HousemateEmailSearchForm()
+        form = HousemateEmailSearchForm(searcher=request.hmate)
     
     return render_to_response("invites/search.html",
         {"form": form, "searched": searched, "hmate": hmate},

@@ -21,6 +21,10 @@ $(document).ready(function(){
         e.preventDefault();
         removeHmateForm($(e.target).attr('remove'));
     });
+    $(".invite_search_again_link").click(function(e){
+        e.preventDefault();
+        showInviteSearchForm();
+    });
 });
 
 function setupHelpBubbles () {
@@ -99,4 +103,11 @@ function setAlternatingHmateForms () {
             $(this).addClass("alt");
         }
     });
+}
+
+function showInviteSearchForm () {
+    $("#invite_search_form").show()
+        .animate({backgroundColor: "#ff6"}, 250)
+        .animate({backgroundColor: "#fff"}, 250);
+    $(".invite_search_again_link").hide();
 }
