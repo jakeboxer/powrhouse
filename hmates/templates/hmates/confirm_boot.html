@@ -5,11 +5,13 @@
 {% block content %}
 <h1>Are you sure you want to boot {{ hmate.get_full_name }} from your household?</h1>
 
-<p>Please remember that this is totally anonymous; he or she will not know that you were the one who did the booting. However, this is not intended for argument resolution, but to remove people from your household when they're moving out. If you're having disagreements, please settle them in person.</p>
+<p>Please remember that this is <strong>totally anonymous</strong>; {{ hmate.user.first_name }} will not know that you were the one who did the booting. However, this is not intended for argument resolution, but to remove people from your household when they're moving out. If you're having disagreements, please settle them in person.</p>
 
 <form action="" method="POST">
-<input type="submit" name="submit" value="Boot {{ hmate.get_full_name }}">
+	<p>
+		<span id="submit_wrapper"><input type="submit" name="submit" value="Boot {{ hmate.get_full_name }}" /></span>
+		or <a href="{{ hmate.get_absolute_url }}">cancel and go back</a>.
+	</p>
 </form>
-<p><a href="{{ hmate.get_absolute_url }}">&laquo; Cancel and go back</a></p>
 
 {% endblock %}

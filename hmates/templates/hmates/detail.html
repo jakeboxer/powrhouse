@@ -3,17 +3,7 @@
 {% block title %}{{ hmate.get_full_name }}{% endblock %}
 
 {% block content %}
-<h1>{{ hmate.get_full_name }}</h1>
-
-<ul class="sub_nav clearfix">
-	{% if not hmate.has_logged_in %}
-		<li><a href="{% url hmate_edit_inactive hmate.pk %}">Edit</a></li>
-	{% endif %}
-	<li><a href="{% url hmate_boot hmate.pk %}">Boot from household (anonymously)</a></li>
-</ul>
-
-
-
+<h1>{{ hmate.get_full_name }} <span class="sub_nav">({% if not hmate.has_logged_in %}<a href="{% url hmate_edit_inactive hmate.pk %}">edit</a>, {% endif %}<a href="{% url hmate_boot hmate.pk %}">boot</a>)</span></h1>
 
 <h2>Chores To Do</h2>
 {% if hmate.has_incomplete_assignments %}

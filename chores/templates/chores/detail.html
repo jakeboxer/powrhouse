@@ -5,17 +5,14 @@
 
 {% block content %}
 
-<h1>{{ chore.name }}</h1>
-
-<ul class="sub_nav clearfix">
-	<li><a href="{% url chore_edit chore.pk %}">Edit</a></li>
-	<li><a href="{% url chore_delete chore.pk %}">Delete</a></li>
-</ul>
-
-<div class="fields">
-<p><strong>Interval:</strong> Done every {{ chore.get_humanized_interval }}.</p>
-<p><strong>Description:</strong> {{ chore.details }}</p>
-</div>
+<h1>{{ chore.name }} <span class="sub_nav"></span>(<a href="{% url chore_edit chore.pk %}">edit</a>, <a href="{% url chore_delete chore.pk %}">delete</a>)</h1>
+<p>
+	Bathrooms is done <strong>every {{ chore.get_humanized_interval }}</strong>.
+	{% if chore.details %}
+	<br>
+	<strong>Details:</strong> {{ chore.details }}
+	{% endif %}
+</p>
 
 <h2>History</h2>
 {% if chore.has_assignments %}
