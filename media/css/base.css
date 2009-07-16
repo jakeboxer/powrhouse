@@ -240,6 +240,20 @@ p.add_after_list {
 }
 /* Sidehelp end */
 
+/* Notices/messages start */
+
+#notices, #messages {
+    background-color: #ffc;
+    padding: 8px 16px;
+    list-style: none;
+}
+
+#notices li, #messages li {
+    margin: 0;
+}
+
+/* Notices/messages end
+
 /* Add chore start */
 #add_chore_form fieldset.details textarea {
     height: 5em;
