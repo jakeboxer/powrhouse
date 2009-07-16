@@ -124,11 +124,11 @@ p.add_after_list {
 
 #content {
     padding-top: 8px;
-    font-size: 110%;
+    font-size: 100%;
 }
 
 #content h1 {
-    font-size: 245%;
+    font-size: 185%;
     border: solid #aaa;
     border-width: 0 0 1px 0;
     margin-bottom: 20px;
@@ -136,7 +136,7 @@ p.add_after_list {
 
 #content h2 {
     margin-bottom: 4px;
-    font-size: 160%;
+    font-size: 135%;
 }
 
 #content p.help_text {
@@ -145,7 +145,7 @@ p.add_after_list {
 }
 
 #content fieldset {
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 }
 
 #content fieldset input,
