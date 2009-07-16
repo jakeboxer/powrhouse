@@ -215,7 +215,7 @@ class HousemateRegForm (RegistrationFormUniqueEmail):
         return self.cleaned_data
         
 
-    def save (self):
+    def save (self, profile_callback=None):
          user = super(HousemateRegForm, self).save()
          user.username   = get_normalized_username(user)
          user.first_name = self.cleaned_data["first_name"]
@@ -273,4 +273,7 @@ class HousemateEmailSearchForm (forms.Form):
         invites = Invite.objects.filter(invitee=hmate,
             hhold=self.searcher.hhold)
         
-        return hmate if invites.count() < 1 else None
+        if invites.count() < 1:
+            return hmate
+        else:
+            return None

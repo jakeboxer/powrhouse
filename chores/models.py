@@ -127,7 +127,10 @@ class Chore (models.Model):
         assign = self.get_last_done_assign()
         
         # find the last time the chore was done (min date if never done)
-        last = assign.done_at if assign else datetime.datetime.min
+        if assign:
+            last = assign.done_at
+        else:
+            last = datetime.datetime.min
         
         # find and return the number of seconds between now and the last time
         # the chore was done
@@ -209,8 +212,8 @@ class Assignment (models.Model):
         @param: at Date/time the assignment was completed
         @param: commit Whether or not to save the assignment
         """
-        self.done_by = by if by else self.assigned_to
-        self.done_at = at if at else datetime.datetime.utcnow()
+        self.done_by = by or self.assigned_to
+        self.done_at = at or datetime.datetime.utcnow()
         
         if commit: self.save()
     

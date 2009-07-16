@@ -1,5 +1,5 @@
-from django.http import Http404
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -30,7 +30,7 @@ def me_edit (request):
         if form.is_valid():
             # if the form is valid, save and redirect
             form.save()
-            return redirect("my_hhold")
+            return HttpResponseRedirect(reverse("my_hhold"))
     else:
         form = HousemateForm(instance=curr_hmate)
     
@@ -56,7 +56,7 @@ def add (request):
                     form.save(adder=request.hmate)
                     emails.add(form.cleaned_data["email"])
             
-            return redirect("my_hhold")
+            return HttpResponseRedirect(reverse("my_hhold"))
     else:
         fset = SmallHousemateAddFormSet()
     
@@ -80,7 +80,7 @@ def edit_inactive (request, object_id):
 
         if form.is_valid():
             hmate = form.save(request.hmate)
-            return redirect(hmate)
+            return HttpResponseRedirect(hmate.get_absolute_url())
     else:
         form = SmallHousemateEditForm(hmate.pk)
 
@@ -113,7 +113,7 @@ def resend_add_email (request, object_id):
         % hmate.get_full_name()
     request.user.message_set.create(message=msg)
     
-    return redirect("my_hhold")
+    return HttpResponseRedirect(reverse("my_hhold"))
 
 @login_required
 @must_live_together
@@ -144,7 +144,7 @@ def boot (request, object_id):
         
         request.user.message_set.create(message=msg)
         
-        return redirect("my_hhold")
+        return HttpResponseRedirect(reverse("my_hhold"))
     
     # Otherwise, we want confirmation
     return render_to_response(
@@ -194,7 +194,7 @@ def invite (request, object_id):
     msg = _("Successfully invited %s to your household.") % hmate
     request.user.message_set.create(message=msg)
     
-    return redirect("my_hhold")
+    return HttpResponseRedirect(reverse("my_hhold"))
 
 @login_required
 def invite_accept (request, object_id):
@@ -211,7 +211,7 @@ def invite_accept (request, object_id):
     
     # delete the invitation and redirect to her new household
     invite.delete()
-    return redirect("hhold_branch")
+    return HttpResponseRedirect(reverse("hhold_branch"))
 
 @login_required
 def invite_decline (request, object_id):
@@ -226,7 +226,7 @@ def invite_decline (request, object_id):
     invite.declined = datetime.datetime.utcnow()
     invite.save()
     
-    return redirect("hhold_branch")
+    return HttpResponseRedirect(reverse("hhold_branch"))
 
 @login_required
 def pw_edit_done (request):

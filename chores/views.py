@@ -1,5 +1,5 @@
-from django.http import Http404
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext, Context
@@ -38,7 +38,7 @@ def add (request):
             chore = form.save(commit=False)
             chore.hhold = request.hmate.hhold
             chore.save()
-            return redirect(chore)
+            return HttpResponseRedirect(chore.get_absolute_url())
     else:
         form = ChoreForm()
     
@@ -60,7 +60,7 @@ def assign_done (request, object_id):
         assign.complete(request.hmate)
         send_emails(assign)
     
-    return redirect("my_chores")
+    return HttpResponseRedirect(reverse("my_chores"))
 
 def assign_done_no_login (request, object_id, hmate_id, key):
     # get the assignment

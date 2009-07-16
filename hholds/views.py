@@ -1,5 +1,5 @@
-from django.http import Http404
-from django.shortcuts import render_to_response, redirect
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import Site
@@ -11,9 +11,12 @@ from hholds.decorators import cannot_have_hhold, hhold_required
 
 @login_required
 def hhold_branch (request):
-    url_name = "my_hhold" if request.hmate.hhold else "hhold_create"
+    if request.hmate.hhold:
+        url_name = "my_hhold"
+    else:
+        url_name = "hhold_create"
     
-    return redirect(url_name)
+    return HttpResponseRedirect(reverse(url_name))
 
 @login_required
 @hhold_required
@@ -26,7 +29,7 @@ def edit (request):
         if form.is_valid():
             # if the form is valid, save and redirect
             hhold = form.save()
-            return redirect("my_hhold")
+            return HttpResponseRedirect(reverse("my_hhold"))
     else:
         form = HouseholdForm(instance=hhold)
     
@@ -48,7 +51,7 @@ def create (request):
             request.hmate.hhold = hhold
             request.hmate.save()
             
-            return redirect("my_hhold")
+            return HttpResponseRedirect(reverse("my_hhold"))
     else:
         form = HouseholdForm()
     
@@ -82,7 +85,7 @@ def leave (request):
             # if there are no remaining housemates, delete the household
             hhold.delete()
         
-        return redirect("hhold_branch")
+        return HttpResponseRedirect(reverse("hhold_branch"))
     
     return render_to_response("hholds/leave.html",
         context_instance=RequestContext(request))

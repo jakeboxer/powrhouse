@@ -109,9 +109,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 LOGIN_REDIRECT_URL = '/household/'
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
-
 # for django_registration
 ACCOUNT_ACTIVATION_DAYS = 7
 
@@ -124,3 +121,11 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': True,
     'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
 }
+
+# for email
+EMAIL_USE_TLS       = True
+EMAIL_HOST          = 'localhost'
+EMAIL_HOST_USER     = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT          = '25'
+DEFAULT_FROM_EMAIL  = 'noreply@powrhouse.net'
