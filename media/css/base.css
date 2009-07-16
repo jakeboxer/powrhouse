@@ -360,6 +360,8 @@ p.add_after_list {
     font-size: 80%;
     list-style: none;
     margin-bottom: 0;
+    padding: 0;
+    width: 209px;
 }
 
 #hmate_add_form .elem .errorlist li {
