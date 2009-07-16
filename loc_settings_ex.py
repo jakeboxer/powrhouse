@@ -109,6 +109,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 LOGIN_REDIRECT_URL = '/household/'
 
+SESSION_COOKIE_DOMAIN = None
+
 # for django_registration
 ACCOUNT_ACTIVATION_DAYS = 7
 
