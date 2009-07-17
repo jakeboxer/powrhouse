@@ -70,7 +70,17 @@ class Housemate (models.Model):
         """
         potential = chores or self.hhold.chores.all()
         
-        return max(potential, key=lambda c: c.get_num_completions_by(self))
+        # would just use max(potential, key), but no key in python < 2.5
+        most_chore       = None
+        most_completions = -sys.maxint
+        
+        for chore in potential:
+            curr_completions = chore.get_num_completions_by(self)
+            if curr_completions > most_completions:
+                most_chore       = curr_chore
+                most_completions = curr_completions
+        
+        return most_chore
     
     def get_absolute_url (self):
         return reverse("hmate_detail", args=[self.pk])

@@ -1,3 +1,5 @@
+import sys
+
 class ChoreScheduler (object):
     
     def __init__ (self, hhold):
@@ -57,14 +59,34 @@ class ChoreScheduler (object):
         Returns the housemate with the fewest chores (if there's a tie, an
         arbitrary member of the tie is returned).
         """
-        return min(self.hmates, key=lambda x: len(self.assigns[x]))
+        # would just use min(self.hmates, key), but no key in python < 2.5
+        fewest_hmate  = None
+        fewest_chores = sys.maxint
+        
+        for hmate in self.hmates:
+            curr_chores = len(self.assigns[hmate])
+            if curr_chores < fewest_chores:
+                fewest_hmate  = hmate
+                fewest_chores = curr_chores
+        
+        return fewest_hmate
     
     def _get_hmate_with_most_chores (self):
         """
         Returns the housemate with the most chores (if there's a tie, an
         arbitrary member of the tie is returned).
         """
-        return max(self.hmates, key=lambda x: len(self.assigns[x]))
+        # would just use max(self.hmates, key), but no key in python < 2.5
+        most_hmate  = None
+        most_chores = -sys.maxint
+        
+        for hmate in self.hmates:
+            curr_chores = len(self.assigns[hmate])
+            if curr_chores > most_chores:
+                most_hmate  = hmate
+                most_chores = curr_chores
+        
+        return most_hmate
     
     def _get_hmates_tied_for_fewest_chores (self):
         """
@@ -98,7 +120,17 @@ class ChoreScheduler (object):
         """
         potential = hmates or self.hmates
         
-        return min(potential, key=lambda h: chore.get_num_completions_by(h))
+        # would just use min(self.hmates, key), but no key in python < 2.5
+        fewest_hmate  = None
+        fewest_completions = sys.maxint
+        
+        for hmate in self.hmates:
+            curr_completions = chore.get_num_completions_by(hmate)
+            if curr_completions < fewest_completions:
+                fewest_hmate  = hmate
+                fewest_completions = curr_completions
+        
+        return fewest_hmate
     
     def _swap_chore (self, chore, from_hmate, to_hmate):
         """

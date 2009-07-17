@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import get_hexdigest
 from hholds.models import Household
 from hmates.models import Housemate
-import datetime, pytz
+import datetime, pytz, sys
 
 SECS_PER_MIN = 60
 MINS_PER_HR  = 60
@@ -155,8 +155,18 @@ class Chore (models.Model):
         Returns the housemate who's completed this chore the fewest times. If
         there's a tie, results are arbitrary.
         """
-        hmates = self.hhold.hmates.all()
-        return min(hmates, key=lambda x: self.get_num_completions_by(x))
+        hmates = list(self.hhold.hmates.all())
+        
+        # would just use min(hmates, key), but no key in python < 2.5
+        fewest_hmate       = None
+        fewest_completions = sys.maxint
+        for hmate in hmates:
+            curr_completions = self.get_num_completions_by(hmate)
+            if curr_completions < fewest_completions:
+                fewest_hmate       = hmate
+                fewest_completions = curr_completions
+        
+        return fewest_hmate
     
     def get_num_completions_by (self, hmate):
         """
