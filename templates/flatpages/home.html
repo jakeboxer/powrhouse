@@ -1,17 +1,30 @@
-{% extends "base.html" %}
+{% extends "base_no_sidehelp.html" %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>This software is currently in ALPHA TESTING.</h1>
+<h1>PowrHouse makes managing your chores <em>easy</em>.</h1>
 
-<p>This means that it's almost completely untested. I <em>know</em> there are bugs in it; I just don't know where they are. I also know there are areas that need some major design cleaning.</p>
-
-<p>To put it bluntly, it's very incomplete. Do not depend on this software for anything extremely important (like, don't make one of your chores "check grandpa's pacemaker").</p>
-{% endblock %}
-
-{% block sidehelp %}
-<div class="bubble">
-	<p>Yes, this page will eventually be replaced with something pretty that tries to convince people to register.</p>
+<div id="how_it_works">
+	<div class="top"></div>
+	<ul>
+		<li class="step_1">
+			<h2>Step 1: <span class="instruction">Just once, tell PowrHouse the chores that need to get done.</span></h2>
+			<div class="img_container">
+				<img src="{{ MEDIA_URL }}img/how_it_works_add.png">
+			</div>
+		</li>
+		<li class="step_2">
+			<h2>Step 2: <span class="instruction">Every night, PowrHouse automatically sends personal emails to you and your housemates, reminding everyone of the chores they need to do the next day.</span></h2>
+			<div class="img_container">
+				<img src="{{ MEDIA_URL }}img/how_it_works_mail.png">
+			</div>
+		</li>
+		<li class="last">
+			<h2>That's it! <a href="{% url registration_register %}">Sign up free now &raquo;</a></h2>
+		</li>
+	</ul>
+	<div class="bot"></div>
 </div>
+
 {% endblock %}

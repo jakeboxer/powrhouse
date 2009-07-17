@@ -475,8 +475,67 @@ p.add_after_list {
     margin: 0;
 }
 
-/* Registration end */
-
 #registration_form #id_password1 {
     margin-bottom: 8px;
 }
+
+/* Registration end */
+
+/* Front page start */
+
+#how_it_works {
+    background-color: #e3e9ff;
+}
+
+#how_it_works .top, #how_it_works .bot {
+    width: 880px;
+    height: 10px;
+    background-color: transparent;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+
+#how_it_works .top {
+    background-image: url(../img/how_it_works_bg_top.gif);
+}
+
+#how_it_works .bot {
+    background-image: url(../img/how_it_works_bg_bot.gif);
+}
+
+#how_it_works ul {
+    list-style: none;
+    padding: 6px 16px;
+    margin: 0;
+}
+
+#how_it_works li {
+    margin: 0;
+}
+
+#how_it_works p {
+    margin: 0;
+}
+
+#how_it_works h2 {
+    margin-bottom: 16px;
+}
+
+#how_it_works h2 .instruction {
+    font-weight: normal;
+}
+
+#how_it_works img {
+    margin-bottom: 16px;
+}
+
+#how_it_works .img_container {
+    text-align: center;
+}
+
+#how_it_works .last h2 {
+    text-align: right;
+    font-size: 160%;
+    margin: 0;
+}
+/* Front page end */

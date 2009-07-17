@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block outer_content %}
+<div class="grid_1">&nbsp;</div>
+<div class="grid_15" id="content">
+	{% if messages %}
+	<ul id="messages">
+		{% for msg in messages %}
+		<li>{{ msg|safe }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+	{% if notices %}
+	<ul id="notices">
+		{% for notice in notices %}
+		<li>{{ notice|safe }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% block content %}{% endblock %}
+</div>
+<div class="clear"></div>
+{% endblock %}
