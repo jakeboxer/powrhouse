@@ -124,7 +124,7 @@ class ChoreScheduler (object):
         fewest_hmate  = None
         fewest_completions = sys.maxint
         
-        for hmate in self.hmates:
+        for hmate in potential:
             curr_completions = chore.get_num_completions_by(hmate)
             if curr_completions < fewest_completions:
                 fewest_hmate  = hmate
@@ -164,7 +164,7 @@ class ChoreScheduler (object):
 
         # Find the hmate (amongst the fewest list) who has done it the least
         to_hmate = self._get_hmate_to_give_chore_to(chore, fewest_chores_hmates)
-
+        
         # Take the chore from the person who's done it the most and give it to
         # the person who's done it the least
         self._swap_chore(chore, from_hmate, to_hmate)
