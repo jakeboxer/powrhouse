@@ -405,7 +405,7 @@ p.add_after_list {
 /* Edit account start */
 
 #account_edit_form .name input, #registration_form .name input {
-    width: 200px;
+    width: 243px;
 }
 
 /* Edit account end */
