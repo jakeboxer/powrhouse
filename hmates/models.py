@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from hholds.models import Household
+import sys
 
 class Housemate (models.Model):
     """
@@ -77,7 +78,7 @@ class Housemate (models.Model):
         for chore in potential:
             curr_completions = chore.get_num_completions_by(self)
             if curr_completions > most_completions:
-                most_chore       = curr_chore
+                most_chore       = chore
                 most_completions = curr_completions
         
         return most_chore
