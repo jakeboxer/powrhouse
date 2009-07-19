@@ -1,13 +1,14 @@
-from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import Site
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.template import RequestContext, Context
 from django.template.loader import get_template
-from django.core.mail import send_mail
-from hholds.forms import HouseholdForm
+from django.utils.translation import ugettext_lazy as _
 from hholds.decorators import cannot_have_hhold, hhold_required
+from hholds.forms import HouseholdForm
 
 @login_required
 def hhold_branch (request):

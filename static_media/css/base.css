@@ -244,7 +244,7 @@ p.add_after_list {
 
 /* Notices/messages start */
 
-#notices, #messages {
+#notices, #messages, .highlight {
     background-color: #ffc;
     padding: 8px 16px;
     list-style: none;
