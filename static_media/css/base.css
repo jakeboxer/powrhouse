@@ -41,6 +41,10 @@ dd input:focus {
     display: inline;
 }
 
+.highlight {
+    background-color: #ffc;
+}
+
 ul.separated {
     border-top: 1px solid #ccc;
     list-style-type: none;
@@ -244,7 +248,7 @@ p.add_after_list {
 
 /* Notices/messages start */
 
-#notices, #messages, .highlight {
+#notices, #messages {
     background-color: #ffc;
     padding: 8px 16px;
     list-style: none;
