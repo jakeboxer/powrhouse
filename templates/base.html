@@ -38,8 +38,12 @@
 		<div class="grid_11 omega" id="top_nav">
 			<ul>
 				{% if not user.is_anonymous %}
+				{% if hmate.hhold %}
 				<li><a href="{% url my_chores %}">My Chores</a></li>
 				<li><a href="{% url my_hhold %}">My Household</a></li>
+				{% else %}
+				<li><a href="{% url hhold_create %}">Create Your Household</a></li>
+				{% endif %}
 				<li><a href="{% url me_edit %}">My Account</a></li>
 				<li><a href="{% url auth_logout %}">Log Out</a></li>
 				{% else %}
