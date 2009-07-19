@@ -15,6 +15,17 @@
 			<object pk="1"/>
 		</field>
 	</object>
+	<object pk="2" model="flatpages.flatpage">
+		<field type="CharField" name="url">/contact/</field>
+		<field type="CharField" name="title">Contact Us</field>
+		<field type="TextField" name="content"/>
+		<field type="BooleanField" name="enable_comments">0</field>
+		<field type="CharField" name="template_name">flatpages/contact.html</field>
+		<field type="BooleanField" name="registration_required">0</field>
+		<field to="sites.site" name="sites" rel="ManyToManyRel">
+			<object pk="1"/>
+		</field>
+	</object>
 	<object pk="1" model="configoptions.configoption">
 		<field type="SlugField" name="slug">starting_pw_length</field>
 		<field type="TextField" name="value">10</field>

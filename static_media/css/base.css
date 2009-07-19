@@ -543,3 +543,11 @@ p.add_after_list {
     margin: 0;
 }
 /* Front page end */
+
+/* Contact start */
+
+#email_img {
+    margin-bottom: 16px;
+}
+
+/* Contact end */
