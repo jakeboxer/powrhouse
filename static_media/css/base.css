@@ -201,6 +201,10 @@ p.add_after_list {
     background-color: #e3e9ff;
 }
 
+#content input.tv-focused, #content input.tv-changed {
+    color: #000;
+}
+
 /* Content end */
 
 /* Sidehelp start */

@@ -17,6 +17,7 @@
 {% block main_javascript %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.toggleval.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/base.js"></script>
 {% endblock %}
 {% block extra_javascript %}
@@ -39,7 +40,7 @@
 			<ul>
 				<li><a href="/contact/">Contact Us</a></li>
 				{% if not user.is_anonymous %}
-				{% if hmate.hhold %}
+				{% if curr_hmate.hhold %}
 				<li><a href="{% url my_chores %}">My Chores</a></li>
 				<li><a href="{% url my_hhold %}">My Household</a></li>
 				{% else %}
