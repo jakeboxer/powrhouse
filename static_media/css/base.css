@@ -258,6 +258,10 @@ p.add_after_list {
     list-style: none;
 }
 
+#notices .close_link {
+    float: right;
+}
+
 #notices li, #messages li {
     margin: 0;
 }

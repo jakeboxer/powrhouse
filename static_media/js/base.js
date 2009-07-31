@@ -25,6 +25,25 @@ $(document).ready(function(){
         e.preventDefault();
         showInviteSearchForm();
     });
+    $(".close_link").click(function(e){
+        e.preventDefault();
+        
+        // find the link, the list item that contains the link, and the list
+        // that contains the list item
+        link     = e.target;
+        listItem = $(link).parent();
+        list     = $("#notices");
+        
+        if(list.children().length > 1){
+            // if there's more than one list item, just remove the list item
+            listItem.hide("fast", function(){$(this).remove();});
+        }
+        else{
+            // if there's only one list item, remove the whole list, since we're
+            // removing the last list item
+            list.hide("fast", function(){$(this).remove();});
+        }
+    });
 });
 
 function setupHelpBubbles () {
@@ -111,3 +130,4 @@ function showInviteSearchForm () {
         .animate({backgroundColor: "#fff"}, 250);
     $(".invite_search_again_link").hide();
 }
+
