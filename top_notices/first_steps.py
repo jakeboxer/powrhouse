@@ -25,7 +25,6 @@ class _SingleStep (object):
         """
         Returns whether or not there are steps to be completed before this one
         """
-        print self.prev_step is not None
         return self.prev_step is not None and not self.prev_step.done
     
     def __unicode__ (self):
@@ -93,9 +92,15 @@ class FirstSteps (object):
     steps = None
     
     def __init__ (self, hmate):
+        self.hmate = hmate
         self.steps = get_first_steps(hmate)
     
     def to_notice (self):
         str_steps = [unicode(step) for step in self.steps]
-        return _("""<h2>OK, I'm in. What do I do now?</h2>
-            <ul id="what_now">%s</ul>""") % u''.join(str_steps)
+        return _("""
+            <a href="#" class="close_link" slug="first-steps" hmateid="%d">
+            Close
+            </a>
+            <h2>OK, I'm in. What do I do now?</h2>
+            <ul id="what_now">%s</ul>
+            """) % (int(self.hmate.pk), u''.join(str_steps))
