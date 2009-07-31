@@ -555,3 +555,29 @@ p.add_after_list {
 }
 
 /* Contact end */
+
+/* What Do I Do Now start */
+
+#what_now {
+    list-style: none;
+    margin: 0;
+    font-size: 120%;
+}
+
+#what_now li {
+    font-weight: bold;
+}
+
+#what_now .done {
+    text-decoration: line-through;
+    font-weight: normal;
+    font-size: 80%;
+}
+
+#what_now .upcoming {
+    color: #ccc;
+    font-weight: normal;
+    font-size: 80%;
+}
+
+/* What Do I Do Now end */

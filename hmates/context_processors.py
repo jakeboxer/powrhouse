@@ -1,17 +1,18 @@
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 from hmates.models import Housemate, Invite
-from notices import Notice, itr_to_notices
+from top_notices.generic import Notice, itr_to_notices
+from top_notices.first_steps import FirstSteps
 
-def hmate (request):
+def get_hmate (request):
     """
     Sets the 'curr_hmate' key to the user's housemate account
     """
     return {"curr_hmate": request.hmate}
 
-def notices (request):
+def get_top_notices (request):
     """
     Sets the 'notices' key to an iterable of strings containing messages for the
     logged-in user
@@ -19,14 +20,14 @@ def notices (request):
     # if there's no logged in housemate, return an empty list. otherwise, return
     # a list of all the notices
     if request.hmate.is_anonymous():
-        notices = []
+        all_top_notices = []
     else:
-        notices = get_notices(request.hmate)
+        all_top_notices = find_top_notices(request.hmate)
     
-    return {"notices": notices}
+    return {"top_notices": all_top_notices}
 
-def get_notices (hmate):
-    notices = []
+def find_top_notices (hmate):
+    all_top_notices = []
     
     # see if the user's got a temporary password or not
     if(hmate.has_temp_pw()):
@@ -34,10 +35,13 @@ def get_notices (hmate):
             You still have the temporary password that was given to you.
             Please <a href="%s">change it</a> ASAP.
             """) % reverse("pw_edit")
-        notices.append(Notice(temp_pw_notice))
+        all_top_notices.append(Notice(temp_pw_notice))
     
     # get all the invites for the user
-    invites = hmate.invites_rcvd.filter(declined=None).order_by('sent')
-    notices += itr_to_notices(invites)
+    invites      = hmate.invites_rcvd.filter(declined=None).order_by('sent')
+    all_top_notices += itr_to_notices(invites)
     
-    return notices
+    # get "What Do I Do Now?"
+    all_top_notices.append(Notice(FirstSteps(hmate)))
+    
+    return all_top_notices

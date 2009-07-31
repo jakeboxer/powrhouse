@@ -11,10 +11,10 @@
 	</ul>
 	{% endif %}
 
-	{% if notices %}
+	{% if top_notices %}
 	<ul id="notices">
-		{% for notice in notices %}
-		<li>{{ notice|safe }}</li>
+		{% for top_notice in top_notices %}
+		<li>{{ top_notice|safe }}</li>
 		{% endfor %}
 	</ul>
 	{% endif %}
