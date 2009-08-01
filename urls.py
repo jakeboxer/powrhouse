@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^housemate/', include('hmates.urls')),
     url(r'^invite/', include('hmates.invite_urls')),
     url(r'^chore/', include('chores.urls')),
+    url(r'^topnotices/', include('top_notices.urls')),
     url(r'^prototype/add_hmate_success/$', direct_to_template,
         {"template": "prototypes/add_hmates_success.html"})
 )
