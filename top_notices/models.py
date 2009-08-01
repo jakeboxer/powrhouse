@@ -5,6 +5,16 @@ import datetime
 class TopNoticeSlug (models.Model):
     slug = models.SlugField(max_length=50, unique=True)
     
+    def has_been_closed_by (self, hmate):
+        """
+        Returns whether or not the top notice has been closed by the specified
+        hmate.
+        
+        @param: hmate The housemate who may have closed the top notice
+        """
+        closing = TopNoticeClosing.objects.filter(top_notice=self, hmate=hmate)
+        return int(closing.count()) > 0
+    
     def __unicode__ (self):
         return self.slug
 

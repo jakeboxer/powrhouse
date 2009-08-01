@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from hmates.models import Housemate, Invite
-from top_notices.generic import Notice, itr_to_notices
 from top_notices.first_steps import FirstSteps
+from top_notices.generic import Notice, itr_to_notices
+from top_notices.models import TopNoticeSlug
 
 def get_hmate (request):
     """
@@ -41,7 +42,10 @@ def find_top_notices (hmate):
     invites      = hmate.invites_rcvd.filter(declined=None).order_by('sent')
     all_top_notices += itr_to_notices(invites)
     
-    # get "What Do I Do Now?"
-    all_top_notices.append(Notice(FirstSteps(hmate)))
+    # get "What Do I Do Now?" if it hasn't been closed
+    first_steps_slug = TopNoticeSlug.objects.get('first-steps')
+    
+    if not first_steps_slug.has_been_closed_by(hmate):
+        all_top_notices.append(Notice(FirstSteps(hmate)))
     
     return all_top_notices
