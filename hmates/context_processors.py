@@ -43,7 +43,7 @@ def find_top_notices (hmate):
     all_top_notices += itr_to_notices(invites)
     
     # get "What Do I Do Now?" if it hasn't been closed
-    first_steps_slug = TopNoticeSlug.objects.get('first-steps')
+    first_steps_slug = TopNoticeSlug.objects.get(slug='first-steps')
     
     if not first_steps_slug.has_been_closed_by(hmate):
         all_top_notices.append(Notice(FirstSteps(hmate)))
