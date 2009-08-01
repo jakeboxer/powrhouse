@@ -98,7 +98,7 @@ class FirstSteps (object):
     def to_notice (self):
         str_steps = [unicode(step) for step in self.steps]
         return _("""
-            <a href="#" class="close_link" slug="first-steps" hmateid="%d">
+            <a href="#" class="close_link" slug="first-steps" hmatepk="%d">
             Close
             </a>
             <h2>OK, I'm in. What do I do now?</h2>
