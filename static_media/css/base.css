@@ -612,3 +612,37 @@ p.add_after_list {
 }
 
 /* What Do I Do Now end */
+
+/* About Us start */
+
+#content .person {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+}
+
+#content .person.last {
+    border: 0;
+}
+
+#content .person .photo {
+    float: left;
+    margin-right: 16px;
+}
+
+#content .person h2 {
+    font-size: 140%;
+    margin-bottom: 0;
+}
+
+#content .person h3 {
+    font-size: 100%;
+    font-style: italic;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+#content .person p {
+    margin-bottom: 8px;
+}
+/* About Us end */

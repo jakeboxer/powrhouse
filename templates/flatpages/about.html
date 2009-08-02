@@ -1,0 +1,31 @@
+{% extends "base_no_sidehelp.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<h1>About Us</h1>
+
+<div class="person clearfix">
+	<img src="{{ MEDIA_URL }}img/jake.jpg" alt="Photo of Jake Boxer" class="photo">
+	<h2>Jake Boxer</h2>
+	<h3>Lead Developer</h3>
+	<p>Jake is a software engineer at Cisco Systems, and has a BS in Computer Science from UMass Amherst. He lives in Cambridge, MA.</p>
+	
+	<p>Jake is passionate about creating useful and usable software, and derives much of his inspiration from <a href="http://www.37signals.com/">37signals</a> and <a href="http://www.balsamiq.com/">Balsamiq</a>.</p>
+</div>
+
+<div class="person clearfix">
+	<h2>Joan Goodman</h2>
+	<h3>Lead Designer</h3>
+	<p>Joan is a graphic designer with a BA from Mass Art. She lives in Carlisle, MA, and is Jake's mother.</p>
+	<p>She will have a picture and a more comprehensive blurb once she comes online and provides her son with them.</p>
+</div>
+
+<div class="person clearfix last">
+	<img src="{{ MEDIA_URL }}img/alex.jpg" alt="Photo of Alex Gontar" class="photo">
+	<h2>Alex Gontar</h2>
+	<h3>Lead Copywriter</h3>
+	<p>Alex recently graduated from Boston University with a BA in History. He lives in Cambridge, MA with Jake.</p>
+	<p>He is the author of many critically acclaimed paragraphs, and has an insatiable urge to make everything he sees more efficient.</p>
+</div>
+{% endblock %}
