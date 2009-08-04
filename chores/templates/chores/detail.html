@@ -7,7 +7,7 @@
 
 <h1>{{ chore.name }} <span class="sub_nav"></span>(<a href="{% url chore_edit chore.pk %}">edit</a>, <a href="{% url chore_delete chore.pk %}">delete</a>)</h1>
 <p>
-	Bathrooms is done <strong>every {{ chore.get_humanized_interval }}</strong>.
+	<strong>Done:</strong> every {{ chore.get_humanized_interval }}.
 	{% if chore.details %}
 	<br>
 	<strong>Details:</strong> {{ chore.details }}
