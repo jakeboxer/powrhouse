@@ -9,6 +9,7 @@ Django
 - django-debug-toolbar
 - xua_middleware (git://gist.github.com/113635.git)
 - django-flash (http://github.com/danielfm/django-flash/tree/master)
+- django-piston (http://bitbucket.org/jespern/django-piston/wiki/Home)
 
 JavaScript
 - jQuery
