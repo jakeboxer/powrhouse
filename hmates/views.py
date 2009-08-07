@@ -20,6 +20,16 @@ from hholds.decorators import hhold_required, target_cant_have_hhold
 from hmates.models import Housemate, Invite
 import datetime
 
+def index_branch (request):
+    if request.hmate.is_anonymous():
+        print("hey0")
+        redir = HttpResponseRedirect("/home/")
+    else:
+        print('hey1')
+        redir = HttpResponseRedirect(reverse("my_hhold"))
+    
+    return redir
+
 @login_required
 def me_edit (request):
     curr_hmate = request.hmate

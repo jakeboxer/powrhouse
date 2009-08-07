@@ -30,5 +30,6 @@ urlpatterns = patterns('',
     url(r'^topnotices/', include('top_notices.urls')),
     url(r'^api/', include('api.urls')),
     url(r'^prototype/add_hmate_success/$', direct_to_template,
-        {"template": "prototypes/add_hmates_success.html"})
+        {"template": "prototypes/add_hmates_success.html"}),
+    url(r'^$', 'hmates.views.index_branch', name='index')
 )
