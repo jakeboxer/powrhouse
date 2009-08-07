@@ -1,4 +1,4 @@
-import sys
+import sys, logging
 
 class ChoreScheduler (object):
     
@@ -52,7 +52,43 @@ class ChoreScheduler (object):
         
         # We know we're balanced when the difference between the hmate with the
         # most chores and the hmate with the least chores is 1 or less
-        return len(self.assigns[most]) - len(self.assigns[least]) <= 1
+        try:
+            balanced = len(self.assigns[most]) - len(self.assigns[least]) <= 1
+        except KeyError:
+            # Recently, we saw a KeyError here, meaning either "least" or "most"
+            # wasn't in self.assigns. Let's log a bunch of debug info.
+            
+            # Create the logger
+            from django.conf import settings
+            lgr = logging.getLogger("IsBalancedLogger")
+            lgr.setLevel(logging.DEBUG)
+            handler = logging.handlers.SMTPHandler(\
+                (settings.EMAIL_HOST, settings.EMAIL_PORT),
+                'debug@powrhouse.net', ['jake@powrhouse.net'],
+                (settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD))
+            lgr.addHandler(handler)
+            
+            # Least and most
+            lgr.debug("Least: %s (%d)" % (least, least.pk))
+            lgr.debug("Most: %s (%d)" % (most, most.pk))
+            
+            # Contents of self.assigns
+            for hmate in self.assigns:
+                if hmate in self.assigns:
+                    assign    = self.assigns[hmate]
+                    assign_pk = assign.pk
+                else:
+                    assign    = None
+                    assign_pk = 0
+                    
+                lgr.debug("%s (%d): %s (%d)"\
+                    % (hmate, hmate.pk assign, assign_pk)
+            
+            handler.emit()
+            
+            return True
+        
+        return balanced
     
     def _get_hmate_with_fewest_chores (self):
         """
