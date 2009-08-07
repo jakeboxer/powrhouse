@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'registration',
     'djangoflash',
+    'api',
     'configoptions',
     'notices',
     'hholds',
