@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from hmates.models import Housemate
 from top_notices.models import TopNoticeSlug, TopNoticeClosing
 
-def close (request, slug):
+def top_notices_close (request, slug):
     # Find the top notice
     top_notice = get_object_or_404(TopNoticeSlug, slug=slug)
     

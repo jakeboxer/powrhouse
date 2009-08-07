@@ -125,7 +125,7 @@ function showInviteSearchForm () {
 
 function closeTopNotice (link, hmatePk, slug) {
     // send the ajax request to close it for good
-    $.get("/topnotices/close/" + slug + "/" + hmatePk + "/");
+    $.get("/api/topnotices/close/" + slug + "/");
     
     // find the list item that contains the link and the list that contains
     // the list item
