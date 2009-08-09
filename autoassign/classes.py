@@ -1,4 +1,5 @@
 import sys, logging
+import logging.handlers
 
 class ChoreScheduler (object):
     
@@ -82,7 +83,7 @@ class ChoreScheduler (object):
                     assign_pk = 0
                     
                 lgr.debug("%s (%d): %s (%d)"\
-                    % (hmate, hmate.pk assign, assign_pk)
+                    % (hmate, hmate.pk, assign, assign_pk))
             
             handler.emit()
             
