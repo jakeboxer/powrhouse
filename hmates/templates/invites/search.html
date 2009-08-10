@@ -7,6 +7,7 @@
 <p>If you want to invite someone to your household, but they already have a PowrHouse account (so you can't add them the <a href="{% url hmate_add %}">normal way</a>), but they're currently in another household (or they're not in any household), ask them for their e-mail address, search for them using this form, and then send them an invitation!</p>
 
 <form action="" method="GET" {% if searched %}style="display: none;"{% endif %} id="invite_search_form">
+	{{ form.non_field_errors }}
 	<fieldset class="email">
 		<h2>{{ form.email.label }}</h2>
 		{% if form.email.errors %}

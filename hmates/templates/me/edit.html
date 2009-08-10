@@ -6,6 +6,8 @@
 <h1>Edit My Account</h1>
 
 <form action="" method="POST" enctype="multipart/form-data" id="account_edit_form">
+	{{ form.non_field_errors }}
+	
 	<fieldset class="name">
 		<h2>Name</h2>
 		{{ form.first_name.errors }}

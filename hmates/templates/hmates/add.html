@@ -30,6 +30,7 @@
 		{% for form in fset.forms %}
 			<div class="elem form" id="hmate_add_form_{{ forloop.counter0 }}">
 				<p class="identifier"><a href="#" remove="{{ forloop.counter0 }}">Remove</a></p>
+				{{ form.non_field_errors }}
 				<dl>
 					<dt>
 						Name

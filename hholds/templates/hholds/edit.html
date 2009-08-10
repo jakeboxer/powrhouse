@@ -4,6 +4,7 @@
 
 {% block content %}
 <form action="" method="POST" id="hhold_edit_form">
+	{{ form.non_field_errors }}
 	<fieldset class="name">
 		<h2>{{ form.name.label }}</h2>
 		<p class="help_text">{{ form.name.help_text }}</p>
