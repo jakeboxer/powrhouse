@@ -70,8 +70,18 @@ class ChoreScheduler (object):
             lgr.addHandler(handler)
             
             # Least and most
-            lgr.debug("Least: %s (%d)" % (least, least.pk))
-            lgr.debug("Most: %s (%d)" % (most, most.pk))
+            if least:
+                least_pk = int(least.pk)
+            else:
+                least_pk = -1
+            
+            if most:
+                most_pk = int(most.pk)
+            else:
+                most_pk = -1
+            
+            lgr.debug("Least: %s (%d)" % (least, least_pk))
+            lgr.debug("Most: %s (%d)" % (most, most_pk))
             
             # Contents of self.assigns
             for hmate in self.assigns:
