@@ -38,7 +38,17 @@ def add (request):
             chore = form.save(commit=False)
             chore.hhold = request.hmate.hhold
             chore.save()
-            return HttpResponseRedirect(chore.get_absolute_url())
+            msg = "%s added." % chore.name
+            request.user.message_set.create(message=msg)
+            
+            # Decide whether to go back to the household page or add another
+            # chore
+            if "go_back" in form.data:
+                redir_url = reverse("my_hhold")
+            else:
+                redir_url = reverse("chore_add")
+            
+            return HttpResponseRedirect(redir_url)
     else:
         form = ChoreForm()
     
