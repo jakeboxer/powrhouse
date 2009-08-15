@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
@@ -12,12 +13,14 @@ from django.core.mail import send_mail
 from django.forms.formsets import formset_factory
 from configoptions.models import ConfigOption
 from hmates.forms import HousemateForm, SmallHousemateAddForm,\
-    SmallHousemateEditForm, HousemateEmailSearchForm, send_user_added_email,\
-    get_random_password
+    SmallHousemateEditForm, HousemateEmailSearchForm, HousemateRegForm,\
+    send_user_added_email, get_random_password
 from hmates.decorators import target_must_be_inactive, target_must_be_active,\
     must_live_together
 from hholds.decorators import hhold_required, target_cant_have_hhold
 from hmates.models import Housemate, Invite
+from recaptcha.client import captcha
+from registration.views import register
 import datetime
 
 def index_branch (request):
@@ -246,3 +249,29 @@ def pw_edit_done (request):
     
     # show the normal password changed view
     return password_change_done(request)
+
+def custom_register (request, *args, **kwargs):
+    """
+    Wrap the django-registration register view in a custom view, so that we can
+    use reCAPTCHA.
+    """
+    if request.method == "POST":
+        # Check the captcha
+        check_captcha = captcha.submit(\
+            request.POST["recaptcha_challenge_field"],
+            request.POST["recaptcha_response_field"],
+            settings.RECAPTCHA_PRIVATE_KEY,
+            request.META["REMOTE_ADDR"])
+        
+        if not check_captcha.is_valid:
+            # If the captcha is wrong, error
+            form    = kwargs["form_class"](request.POST)
+            context = {"form": form, "recaptcha_failed": True}
+            
+            if "extra_context" in kwargs:
+                context.update(kwargs["extra_context"])
+            
+            return render_to_response("registration/registration_form.html",
+                context, context_instance=RequestContext(request))
+        
+    return register(request, *args, **kwargs)

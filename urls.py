@@ -1,9 +1,10 @@
+from django.conf import settings
 from django.conf.urls.defaults import *
 from django.contrib import admin
 from django.contrib.auth.views import password_reset, password_reset_confirm
 from django.views.generic.simple import direct_to_template
 from hmates.forms import HousemateRegForm
-from registration.views import register
+from recaptcha.client import captcha
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -11,7 +12,11 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     
     # for django-registration
-    url(r'^accounts/register/$', register, {'form_class': HousemateRegForm}, 
+    url(r'^accounts/register/$', 'hmates.views.custom_register', 
+        {'form_class': HousemateRegForm,
+        'extra_context': {\
+            'html_captcha':\
+                captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)}}, 
         name='registration_register'),
     (r'^accounts/', include('registration.urls')),
     

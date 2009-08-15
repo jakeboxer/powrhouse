@@ -2,6 +2,7 @@ Python
 - pytz
 - cmemcache or (if unavailable) python-memcached
 - PIL (Python Imaging Library) 1.1.6
+- recaptcha-client 1.0.4 (http://pypi.python.org/pypi/recaptcha-client)
 
 Django
 - django-registration

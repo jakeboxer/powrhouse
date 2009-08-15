@@ -31,11 +31,29 @@
 		{{ form.last_name }}
 	</fieldset>
 	
+	<fieldset class="captcha">
+		<h2>Prove you can read</h2>
+		{% if recaptcha_failed %}
+		<ul class="errorlist">
+			<li>You got at least one of the words wrong. Please try again.</li>
+		</ul>
+		{% endif %}
+		<p class="help_text">We don't actually care if you're human or not. If you can read distorted words like these, you're welcome here.</p>
+		<script type="text/javascript">
+		var RecaptchaOptions = {
+			"theme": "white"
+		};
+		</script>
+		{{ html_captcha|safe }}
+	</fieldset>
+	
 	<fieldset class="tos">
 		<h2>Terms of Service</h2>
 		{{ form.tos.errors }}
 		<p>{{ form.tos.label }} {{ form.tos }}</p>
 	</fieldset>
+	
+	
 	
 	<p>
 		<span id="submit_wrapper"><input type="submit" name="submit" value="Register" /></span>
