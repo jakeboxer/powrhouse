@@ -61,12 +61,11 @@ class ChoreScheduler (object):
             
             # Create the logger
             from django.conf import settings
-            lgr = logging.getLogger("IsBalancedLogger")
+            lgr = logging.getLogger("is_balanced")
             lgr.setLevel(logging.DEBUG)
-            handler = logging.handlers.SMTPHandler(\
-                (settings.EMAIL_HOST, settings.EMAIL_PORT),
-                'debug@powrhouse.net', ['jake@powrhouse.net'],
-                (settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD))
+            handler = logging.handlers.RotatingFileHandler(\
+                "/home/71517/users/.home/powr")
+            handler.setLevel(logging.DEBUG)
             lgr.addHandler(handler)
             
             # Least and most
@@ -94,8 +93,6 @@ class ChoreScheduler (object):
                     
                 lgr.debug("%s (%d): %s (%d)"\
                     % (hmate, hmate.pk, assign, assign_pk))
-            
-            handler.emit()
             
             return True
         
