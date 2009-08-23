@@ -320,6 +320,57 @@ p.add_after_list {
     border-width: 0;
     margin-bottom: 0;
 }
+
+#content #my_hhold_meta_info {
+    width: 380px;
+    float: left;
+}
+
+#content #add_buttons {
+    width: 168px;
+    float: right;
+    margin-top: 8px;
+    padding: 0 16px 16px 16px;
+}
+
+#content #add_buttons a,
+#content #add_buttons a:visited {
+    display: block;
+    background: transparent url(../img/blue_btn.gif) -1px -1px no-repeat;
+    height: 33px;
+    line-height: 31px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 5px;
+    margin-bottom: 8px;
+}
+
+#content #add_buttons a .end,
+#content #add_buttons a:visited .end {
+    display: block;
+    float: right;
+    width: 5px;
+    height: 33px;
+    background: transparent url(../img/blue_btn.gif) -950px -1px no-repeat;
+}
+
+#content #add_buttons a:hover {
+    background-position: -1px -37px;
+}
+
+#content #add_buttons a:hover .end {
+    background-position: -950px -37px;
+}
+
+#content #add_buttons a:active {
+    background-position: -1px -73px;
+}
+
+#content #add_buttons a:active .end {
+    background-position: -950px -73px;
+}
+
 /* My Household end */
 
 /* Add housemates begin */

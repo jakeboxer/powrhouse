@@ -3,15 +3,25 @@
 {% block title %}{{ curr_hmate.get_hhold_name }}{% endblock %}
 
 {% block content %}
-<h1 id="hhold_title">{{ curr_hmate.get_hhold_name }}</h1>
+<div class="clearfix">
+	
+	<div id="my_hhold_meta_info">
+		<h1 id="hhold_title">{{ curr_hmate.get_hhold_name }}</h1>
 
-{% if curr_hmate.hhold.get_address_str %}
-<address>
-	{{ curr_hmate.hhold.get_address_str|linebreaksbr }}<br>
-	<a href="{% url hhold_edit %}">Edit {{ curr_hmate.get_hhold_name }} details &raquo;</a>
-</address>
-{% endif %}
+		{% if curr_hmate.hhold.get_address_str %}
+		<address>
+			{{ curr_hmate.hhold.get_address_str|linebreaksbr }}<br>
+			<a href="{% url hhold_edit %}">Edit {{ curr_hmate.get_hhold_name }} details &raquo;</a>
+		</address>
+		{% endif %}
+	</div>
 
+	<div id="add_buttons">
+		<a href="{% url hmate_add %}" class="clearfix">Add more housemates<span class="end"></span></a>
+		<a href="{% url chore_add %}" class="clearfix">Add a chore<span class="end"></span></a>
+	</div>
+
+</div>
 
 <h2>Housemates</h2>
 <ul class="separated">
