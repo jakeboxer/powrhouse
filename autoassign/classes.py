@@ -64,7 +64,7 @@ class ChoreScheduler (object):
             lgr = logging.getLogger("is_balanced")
             lgr.setLevel(logging.DEBUG)
             handler = logging.handlers.RotatingFileHandler(\
-                "/home/71517/users/.home/powr")
+                "/home/71517/users/.home/powr/isbalanced.log")
             handler.setLevel(logging.DEBUG)
             lgr.addHandler(handler)
             
