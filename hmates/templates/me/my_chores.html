@@ -10,12 +10,18 @@
 
 {% for assign in curr_hmate.get_incomplete_assignments.all %}
 <div class="chore clearfix">
-	<a href="{% url assign_done assign.pk %}">Done!</a>
-	<h3>{{ assign.chore.name }}</h3>
-	{% if assign.is_late %}
-	<p class="late">({{ assign.get_days_late }} day{{ assign.get_days_late|pluralize }} late)</p>
-	{% endif %}
-	<p class="details">{{ assign.chore.details }}</p>
+	<div class="inner">
+		<a href="{% url assign_done assign.pk %}" class="clearfix blue_button chore_done">
+			<span class="begin">Done!</span>
+			<span class="end"></span>
+		</a>
+		<h3>{{ assign.chore.name }}{% if assign.is_late %}
+		 <span class="late">{{ assign.get_days_late }} day{{ assign.get_days_late|pluralize }} late</span>
+		{% endif %}</h3>
+		
+		<p class="details">{{ assign.chore.details }}</p>
+	</div>
+	<div class="bot"></div>
 </div>
 {% endfor %}
 

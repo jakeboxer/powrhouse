@@ -75,6 +75,52 @@ p.add_after_list {
     margin-left: 0;
 }
 
+#content a.blue_button,
+#content a.blue_button:visited {
+    display: block;
+    height: 33px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+#content a.blue_button .begin,
+#content a.blue_button:visited .begin {
+    display: block;
+    float: left;
+    background: url(../img/blue_btn.png) -1px -1px no-repeat;
+    height: 33px;
+    line-height: 31px;
+    text-indent: 5px;
+}
+
+#content a.blue_button .end,
+#content a.blue_button:visited .end  {
+    display: block;
+    float: left;
+    width: 5px;
+    height: 33px;
+    background: url(../img/blue_btn.png) -950px -1px no-repeat;
+}
+
+#content a.blue_button:hover .begin {
+	background-position: -1px -37px;
+}
+
+#content a.blue_button:hover .end {
+	background-position: -950px -37px;
+}
+
+#content a.blue_button:active .begin {
+	background-position: -1px -73px;
+}
+
+#content a.blue_button:active .end {
+	background-position: -950px -73px;
+}
+
+
 /* Header start */
 #outer_container {
     background: transparent url(../img/logo_icon.png) 0 29px no-repeat;
@@ -330,45 +376,15 @@ p.add_after_list {
     width: 168px;
     float: right;
     margin-top: 8px;
-    padding: 0 16px 16px 16px;
+    padding: 0 0 16px 16px;
 }
 
-#content #add_buttons a,
-#content #add_buttons a:visited {
-    display: block;
-    background: transparent url(../img/blue_btn.gif) -1px -1px no-repeat;
-    height: 33px;
-    line-height: 31px;
-    color: #fff;
-    text-align: center;
-    text-decoration: none;
-    text-indent: 5px;
+#content #add_buttons a {
     margin-bottom: 8px;
 }
 
-#content #add_buttons a .end,
-#content #add_buttons a:visited .end {
-    display: block;
-    float: right;
-    width: 5px;
-    height: 33px;
-    background: transparent url(../img/blue_btn.gif) -950px -1px no-repeat;
-}
-
-#content #add_buttons a:hover {
-    background-position: -1px -37px;
-}
-
-#content #add_buttons a:hover .end {
-    background-position: -950px -37px;
-}
-
-#content #add_buttons a:active {
-    background-position: -1px -73px;
-}
-
-#content #add_buttons a:active .end {
-    background-position: -950px -73px;
+#content #add_buttons a .begin {
+    width: 160px;
 }
 
 /* My Household end */
@@ -522,33 +538,39 @@ p.add_after_list {
 /* My chores start */
 
 .chore {
-    padding: 8px;
-    background: #eee;
-    border: 1px solid #aaa;
+    background: #e5e4e4 url(../img/my_chores_bg_top.gif) 0 0 no-repeat;
     margin-bottom: 16px;
 }
 
-.chore a, .chore a:visited, .chore a:active {
-    float: right;
-    display: block;
-    background-color: #e3e9ff;
-    border: 1px solid #039;
-    text-decoration: none;
-    padding: 4px 6px;
+.chore .inner {
+    padding: 8px 8px 3px 8px;
 }
 
-.chore a:hover {
-    background-color: #039;
-    color: #e3e9ff;
-    border-color: #e3e9ff;
+.chore .bot {
+    height: 5px;
+    background: transparent url(../img/my_chores_bg_bot.gif) 0 0 no-repeat;
 }
 
 .chore h3 {
     margin-bottom: 8px;
 }
 
+.chore h3 .late {
+    font-size: 75%;
+    font-style: italic;
+    color: #999;
+}
+
 .chore p {
     margin: 0;
+}
+
+.chore .chore_done {
+    float: right;
+}
+
+.chore .chore_done .begin {
+    padding: 0 5px;
 }
 
 /* My chores end */
